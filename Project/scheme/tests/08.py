@@ -9,16 +9,16 @@ test = {
           >>> formals = Pair('a', Pair('b', Pair('c', nil)))
           >>> vals = Pair(1, Pair(2, Pair(3, nil)))
           >>> frame = global_frame.make_child_frame(formals, vals)
-          >>> global_frame.lookup('a') # Type SchemeError if you think this errors
+          >>> global_frame.lookup('a') # 如果你认为会报错，输入 SchemeError
           ec908af60f03727428c7ee3f22ec3cd8
           # locked
-          >>> frame.lookup('a')        # Type SchemeError if you think this errors
+          >>> frame.lookup('a')        # 如果你认为会报错，输入 SchemeError
           eb892a26497f936d1f6cae54aacc5f51
           # locked
-          >>> frame.lookup('b')        # Type SchemeError if you think this errors
+          >>> frame.lookup('b')        # 如果你认为会报错，输入 SchemeError
           2b7cdec3904f986982cbd24a0bc12887
           # locked
-          >>> frame.lookup('c')        # Type SchemeError if you think this errors
+          >>> frame.lookup('c')        # 如果你认为会报错，输入 SchemeError
           3c7e8a3a2176a696c3a66418f78dff6b
           # locked
           """,
@@ -61,7 +61,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # More argument values than formal parameters
+          >>> # 实参值多于形参
           >>> global_frame.make_child_frame(Pair('a', nil), Pair(1, Pair(2, Pair(3, nil))))
           SchemeError
           """,
@@ -71,7 +71,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # More formal parameters than argument values
+          >>> # 形参多于实参值
           >>> global_frame.make_child_frame(Pair('a', Pair('b', Pair('c', nil))), Pair(1, nil))
           SchemeError
           """,
@@ -81,7 +81,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Values can be pairs.
+          >>> # 值可以是点对。
           >>> formals = Pair('a', Pair('b', nil))
           >>> values = Pair(Pair(1, nil), Pair(Pair(2, nil), nil))
           >>> frame = global_frame.make_child_frame(formals, values)
@@ -89,12 +89,12 @@ test = {
           Pair(1, nil)
           >>> frame.lookup('b')
           Pair(2, nil)
-          >>> frame2 = frame.make_child_frame(nil, nil) # Bind parents correctly
+          >>> frame2 = frame.make_child_frame(nil, nil) # 正确绑定父环境
           >>> frame2.lookup('a')
           Pair(1, nil)
-          >>> formals # Ensure that formals was not mutated
+          >>> formals # 确保没有修改 formals
           Pair('a', Pair('b', nil))
-          >>> values # Ensure that values was not mutated
+          >>> values # 确保没有修改 values
           Pair(Pair(1, nil), Pair(Pair(2, nil), nil))
           """,
           'hidden': False,

@@ -111,7 +111,7 @@ test = {
           ...        return 0
           ...    else:
           ...        return 1
-          >>> is_always_roll(s, 200) # GOAL is not always 100!
+          >>> is_always_roll(s, 200) # GOAL 并不总是 100！
           False
           """,
           'hidden': False,

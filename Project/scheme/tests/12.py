@@ -98,7 +98,7 @@ test = {
           (lambda () (and #t #t #t #t))
           scm> (no-mutation)
           #t
-          scm> no-mutation ; `and` should not cause mutation
+          scm> no-mutation ; and 不应修改原数据
           (lambda () (and #t #t #t #t))
           """,
           'hidden': False,
@@ -201,7 +201,7 @@ test = {
           (lambda () (or #f #f #f #f))
           scm> (no-mutation)
           #f
-          scm> no-mutation ; `or` should not cause mutation
+          scm> no-mutation ; or 不应修改原数据
           (lambda () (or #f #f #f #f))
           """,
           'hidden': False,
@@ -216,13 +216,13 @@ test = {
           other
           scm> (other 2)
           #f
-          scm> (other 6) ; test for mutation
+          scm> (other 6) ; 检查是否修改了原数据
           #t
           scm> (define (other y) (and (greater-than-5 y) #t))
           other
           scm> (other 2)
           #f
-          scm> (other 6) ; test for mutation
+          scm> (other 6) ; 检查是否修改了原数据
           #t
           """,
           'hidden': False,

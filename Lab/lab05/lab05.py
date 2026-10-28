@@ -2,7 +2,7 @@ HW_SOURCE_FILE=__file__
 
 
 def insert_items(s, before, after):
-    """Insert after into s after each occurrence of before and then return s.
+    """在 s 中每次出现的 before 后插入 after，然后返回 s。
 
     >>> test_s = [1, 5, 8, 5, 2, 3]
     >>> new_s = insert_items(test_s, 5, 7)
@@ -30,9 +30,7 @@ def insert_items(s, before, after):
 
 
 def group_by(s, fn):
-    """Return a dictionary of lists that together contain the elements of s.
-    The key for each list is the value that fn returns when called on any of the
-    values of that list.
+    """返回一个由列表组成的字典，这些列表合起来包含 s 的所有元素。每个列表对应的键，是对该列表中任意元素调用 fn 得到的值。
 
     >>> group_by([12, 23, 14, 45], lambda p: p // 10)
     {1: [12, 14], 2: [23], 4: [45]}
@@ -50,8 +48,7 @@ def group_by(s, fn):
 
 
 def count_occurrences(t, n, x):
-    """Return the number of times that x is equal to one of the
-    first n elements of iterator t.
+    """返回迭代器 t 的前 n 个元素中等于 x 的元素个数。
 
     >>> s = iter([10, 9, 10, 9, 9, 10, 8, 8, 8, 7])
     >>> count_occurrences(s, 10, 9)
@@ -60,11 +57,11 @@ def count_occurrences(t, n, x):
     >>> count_occurrences(t, 3, 10)
     2
     >>> u = iter([3, 2, 2, 2, 1, 2, 1, 4, 4, 5, 5, 5])
-    >>> count_occurrences(u, 1, 3)  # Only iterate over 3
+    >>> count_occurrences(u, 1, 3)  # 只迭代经过 3
     1
-    >>> count_occurrences(u, 3, 2)  # Only iterate over 2, 2, 2
+    >>> count_occurrences(u, 3, 2)  # 只迭代经过 2、2、2
     3
-    >>> list(u)                     # Ensure that the iterator has advanced the right amount
+    >>> list(u)                     # 确保迭代器恰好前进了指定步数
     [1, 2, 1, 4, 4, 5, 5, 5]
     >>> v = iter([4, 1, 6, 6, 7, 7, 6, 6, 2, 2, 2, 5])
     >>> count_occurrences(v, 6, 6)
@@ -74,8 +71,7 @@ def count_occurrences(t, n, x):
 
 
 def repeated(t, k):
-    """Return the first value in iterator t that appears k times in a row,
-    calling next on t as few times as possible.
+    """返回迭代器 t 中第一个连续出现 k 次的值，并尽可能少地对 t 调用 next。
 
     >>> s = iter([10, 9, 10, 9, 9, 10, 8, 8, 8, 7])
     >>> repeated(s, 2)
@@ -97,8 +93,7 @@ def repeated(t, k):
 
 
 def sprout_leaves(t, leaves):
-    """Sprout new leaves containing the labels in leaves at each leaf of
-    the original tree t and return the resulting tree.
+    """在原树 t 的每个叶节点处，添加标签来自 leaves 的新叶节点，返回得到的树。
 
     >>> t1 = tree(1, [tree(2), tree(3)])
     >>> print_tree(t1)
@@ -133,8 +128,7 @@ def sprout_leaves(t, leaves):
 
 
 def partial_reverse(s, start):
-    """Reverse part of a list in-place, starting with start up to the end of
-    the list.
+    """原地反转列表从 start 到末尾的部分。
 
     >>> a = [1, 2, 3, 4, 5, 6, 7]
     >>> partial_reverse(a, 2)
@@ -148,24 +142,24 @@ def partial_reverse(s, start):
 
 
 
-# Tree Data Abstraction
+# 树的数据抽象
 
 def tree(label, branches=[]):
-    """Construct a tree with the given label value and a list of branches."""
+    """用给定的标签值和分支列表构造一棵树。"""
     for branch in branches:
         assert is_tree(branch), 'branches must be trees'
     return [label] + list(branches)
 
 def label(tree):
-    """Return the label value of a tree."""
+    """返回树的标签值。"""
     return tree[0]
 
 def branches(tree):
-    """Return the list of branches of the given tree."""
+    """返回给定树的分支列表。"""
     return tree[1:]
 
 def is_tree(tree):
-    """Returns True if the given tree is a tree, and False otherwise."""
+    """如果给定对象是有效的树，返回 True，否则返回 False。"""
     if type(tree) != list or len(tree) < 1:
         return False
     for branch in branches(tree):
@@ -174,14 +168,12 @@ def is_tree(tree):
     return True
 
 def is_leaf(tree):
-    """Returns True if the given tree's list of branches is empty, and False
-    otherwise.
+    """如果给定树的分支列表为空，返回 True，否则返回 False。
     """
     return not branches(tree)
 
 def print_tree(t, indent=0):
-    """Print a representation of this tree in which each node is
-    indented by two spaces times its depth from the root.
+    """打印树的表示形式；每个节点的缩进空格数为它距根节点的深度乘以二。
 
     >>> print_tree(tree(1))
     1
@@ -203,7 +195,7 @@ def print_tree(t, indent=0):
         print_tree(b, indent + 1)
 
 def copy_tree(t):
-    """Returns a copy of t. Only for testing purposes.
+    """返回 t 的副本。仅用于测试。
 
     >>> t = tree(5)
     >>> copy = copy_tree(t)

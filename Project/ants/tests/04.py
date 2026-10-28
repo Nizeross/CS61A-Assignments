@@ -81,7 +81,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # Testing Long/ShortThrower parameters
+          >>> # 测试 LongThrower 和 ShortThrower 的参数
           >>> ShortThrower.food_cost
           20d533d3e06345c8bd7072212867f2d1
           # locked
@@ -115,7 +115,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Test ShortThrower hit
+          >>> # 测试 ShortThrower 命中
           >>> ant = ShortThrower()
           >>> in_range = Bee(2)
           >>> gamestate.places['tunnel_0_0'].add_insect(ant)
@@ -130,7 +130,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing ShortThrower miss
+          >>> # 测试 ShortThrower 未命中
           >>> ant = ShortThrower()
           >>> out_of_range = Bee(2)
           >>> gamestate.places["tunnel_0_0"].add_insect(ant)
@@ -145,7 +145,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Test LongThrower hit
+          >>> # 测试 LongThrower 命中
           >>> ant = LongThrower()
           >>> in_range = Bee(2)
           >>> gamestate.places['tunnel_0_0'].add_insect(ant)
@@ -160,7 +160,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing LongThrower miss
+          >>> # 测试 LongThrower 未命中
           >>> ant = LongThrower()
           >>> out_of_range = Bee(2)
           >>> gamestate.places["tunnel_0_0"].add_insect(ant)
@@ -175,7 +175,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing LongThrower hit after skipping an bee out of range
+          >>> # 测试 LongThrower 跳过射程外的蜜蜂后命中目标
           >>> ant = LongThrower()
           >>> out_of_range = Bee(2)
           >>> in_range = Bee(2)
@@ -194,10 +194,10 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing LongThrower miss next to the hive
+          >>> # 测试 LongThrower 在蜂巢旁边无法命中
           >>> ant = LongThrower()
           >>> gamestate.places["tunnel_0_4"].add_insect(ant)
-          >>> ant.action(gamestate) # should not error
+          >>> ant.action(gamestate) # 不应报错
           """,
           'hidden': False,
           'locked': False,
@@ -205,7 +205,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing LongThrower targets farther one
+          >>> # 测试 LongThrower 瞄准较远的蜜蜂
           >>> ant = LongThrower()
           >>> out_of_range = Bee(2)
           >>> in_range = Bee(2)
@@ -224,7 +224,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing LongThrower ignores bees outside range
+          >>> # 测试 LongThrower 忽略射程外的蜜蜂
           >>> thrower = LongThrower()
           >>> gamestate.places["tunnel_0_0"].add_insect(thrower)
           >>> bee1 = Bee(1001)
@@ -243,7 +243,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing LongThrower attacks nearest bee in range
+          >>> # 测试 LongThrower 攻击射程内最近的蜜蜂
           >>> thrower = LongThrower()
           >>> gamestate.places["tunnel_0_0"].add_insect(thrower)
           >>> bee1 = Bee(1001)
@@ -262,7 +262,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing case when lower_bound of LongThrower is outside of the tunnel
+          >>> # 测试 LongThrower 的 lower_bound 超出隧道长度的情况
           >>> bee = Bee(2)
           >>> ant = LongThrower()
           >>> gamestate.places["tunnel_0_6"].add_insect(ant)
@@ -277,11 +277,11 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing if upper_bound is looked up in the instance
-          >>> # and check that the code isnt dependent on the ants name
+          >>> # 测试是否从实例上查找 upper_bound
+          >>> # 并检查代码是否不依赖蚂蚁名称
           >>> ant = ShortThrower()
           >>> ant.name = 'short2'
-          >>> ant.upper_bound = 10   # Buff the ant's range
+          >>> ant.upper_bound = 10   # 增强蚂蚁的射程
           >>> gamestate.places["tunnel_0_0"].add_insect(ant)
           >>> bee = Bee(2)
           >>> gamestate.places["tunnel_0_6"].add_insect(bee)
@@ -295,7 +295,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing there is no new nearest_bee function in ShortThrower / LongThrower
+          >>> # 测试 ShortThrower / LongThrower 中没有新增 nearest_bee 函数
           >>> assert ShortThrower.nearest_bee is ThrowerAnt.nearest_bee
           >>> assert LongThrower.nearest_bee is ThrowerAnt.nearest_bee
           """,
@@ -319,7 +319,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # Testing if lower_bound is set appropriately in ThrowerAnt
+          >>> # 测试 ThrowerAnt 中的 lower_bound 是否设置正确
           >>> ant = ThrowerAnt()
           >>> gamestate.places["tunnel_0_0"].add_insect(ant)
           >>> bee = Bee(2)
@@ -334,7 +334,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing if upper_bound is set appropriately in ThrowerAnt
+          >>> # 测试 ThrowerAnt 中的 upper_bound 是否设置正确
           >>> ant = ThrowerAnt()
           >>> gamestate.places["tunnel_0_0"].add_insect(ant)
           >>> bee = Bee(2)
@@ -349,7 +349,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Special thrower class that just hits things 6 away
+          >>> # 只攻击距离为 6 的目标的特殊投掷蚁类
           >>> class JustSixThrower(ThrowerAnt):
           ...   lower_bound = upper_bound = 6
           >>> ant = JustSixThrower()
@@ -366,7 +366,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Special thrower class that just hits things 6 away
+          >>> # 只攻击距离为 6 的目标的特殊投掷蚁类
           >>> class JustSixThrower(ThrowerAnt):
           ...   lower_bound = upper_bound = 6
           >>> ant = JustSixThrower()
@@ -397,7 +397,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # Special thrower class that just hits things 6 away
+          >>> # 只攻击距离为 6 的目标的特殊投掷蚁类
           >>> class JustSixThrower(ThrowerAnt):
           ...   lower_bound = upper_bound = 6
           >>> ant = JustSixThrower()
@@ -414,7 +414,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing LongThrower Inheritance from ThrowerAnt
+          >>> # 测试 LongThrower 继承 ThrowerAnt
           >>> def new_action(self, gamestate):
           ...     raise NotImplementedError()
           >>> def new_throw_at(self, target):
@@ -443,7 +443,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing ShortThrower Inheritance from ThrowerAnt
+          >>> # 测试 ShortThrower 继承 ThrowerAnt
           >>> def new_action(self, gamestate):
           ...     raise NotImplementedError()
           >>> def new_throw_at(self, target):

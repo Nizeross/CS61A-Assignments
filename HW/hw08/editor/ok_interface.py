@@ -8,7 +8,7 @@ from contextlib import contextmanager
 
 from scheme_exceptions import TerminatedError
 
-# CODE TAKEN FROM OK-CLIENT : https://github.com/okpy/ok-client/blob/master/client/cli/ok.py
+# 代码来自 OK-CLIENT：https://github.com/okpy/ok-client/blob/master/client/cli/ok.py
 
 FAILURE_SETUP_HEADER = '''; There was an error in running the setup code (probably in loading your file)
 ; Raw ok output follows'''
@@ -172,7 +172,7 @@ def process(output, success):
         expected = remove_comments_and_combine(lines[expected_index + 1:but_got_idx])
         actual = remove_comments_and_combine(lines[but_got_idx + 1:])
         actual = re.sub(r"Traceback.*\n\.\.\.\n(.*)", r"\1", actual)
-        if re.match("[0-9a-f]{32}", expected):  # looks like a hash
+        if re.match("[0-9a-f]{32}", expected):  # 看起来像哈希值
             return Locked()
         else:
             return AreDifferent("\n".join(prompt), expected, actual)
@@ -225,7 +225,7 @@ def run_tests():
 
     LOGGING_FORMAT = '%(levelname)s  | %(filename)s:%(lineno)d | %(message)s'
     logging.basicConfig(format=LOGGING_FORMAT)
-    log = logging.getLogger('client')  # Get top-level logger
+    log = logging.getLogger('client')  # 获取顶层日志记录器
 
     # noinspection PyUnresolvedReferences
     from client.cli.ok import parse_input
@@ -245,12 +245,12 @@ def run_tests():
         result = []
         for test in assign.specified_tests:
             if isinstance(test, (Doctest, SchemeTest)):
-                # doctests are python
+                # 文档测试使用 Python
                 continue
             suites = []
             for suite in test.suites:
                 if not isinstance(suite, SchemeSuite):
-                    # python ok test
+                    # Python 的 ok 测试
                     continue
                 suites.append([process_case(case).dictionary for case in suite.cases])
             if not suites:

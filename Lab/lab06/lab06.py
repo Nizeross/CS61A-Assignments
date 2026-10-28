@@ -5,11 +5,11 @@ class Transaction:
         self.after = after
 
     def changed(self):
-        """Return whether the transaction resulted in a changed balance."""
+        """返回该笔交易是否改变了余额。"""
         "*** YOUR CODE HERE ***"
 
     def report(self):
-        """Return a string describing the transaction.
+        """返回描述该笔交易的字符串。
 
         >>> Transaction(3, 20, 10).report()
         '3: decreased 20->10'
@@ -24,21 +24,21 @@ class Transaction:
         return str(self.id) + ': ' + msg
 
 class BankAccount:
-    """A bank account that tracks its transaction history.
+    """记录交易历史的银行账户。
 
     >>> a = BankAccount('Eric')
-    >>> a.deposit(100)    # Transaction 0 for a
+    >>> a.deposit(100)    # a 的第 0 笔交易
     100
     >>> b = BankAccount('Erica')
-    >>> a.withdraw(30)    # Transaction 1 for a
+    >>> a.withdraw(30)    # a 的第 1 笔交易
     70
-    >>> a.deposit(10)     # Transaction 2 for a
+    >>> a.deposit(10)     # a 的第 2 笔交易
     80
-    >>> b.deposit(50)     # Transaction 0 for b
+    >>> b.deposit(50)     # b 的第 0 笔交易
     50
-    >>> b.withdraw(10)    # Transaction 1 for b
+    >>> b.withdraw(10)    # b 的第 1 笔交易
     40
-    >>> a.withdraw(100)   # Transaction 3 for a
+    >>> a.withdraw(100)   # a 的第 3 笔交易
     'Insufficient funds'
     >>> len(a.transactions)
     4
@@ -50,9 +50,9 @@ class BankAccount:
     1: decreased 100->70
     2: increased 70->80
     3: no change
-    >>> b.withdraw(100)   # Transaction 2 for b
+    >>> b.withdraw(100)   # b 的第 2 笔交易
     'Insufficient funds'
-    >>> b.withdraw(30)    # Transaction 3 for b
+    >>> b.withdraw(30)    # b 的第 3 笔交易
     10
     >>> for t in b.transactions:
     ...     print(t.report())
@@ -62,22 +62,20 @@ class BankAccount:
     3: decreased 40->10
     """
 
-    # *** YOU NEED TO MAKE CHANGES IN SEVERAL PLACES IN THIS CLASS ***
+    # *** 你需要修改此类中的多个位置 ***
 
     def __init__(self, account_holder):
         self.balance = 0
         self.holder = account_holder
 
     def deposit(self, amount):
-        """Increase the account balance by amount, add the deposit
-        to the transaction history, and return the new balance.
+        """将账户余额增加 amount，把存款记入交易历史，并返回新余额。
         """
         self.balance = self.balance + amount
         return self.balance
 
     def withdraw(self, amount):
-        """Decrease the account balance by amount, add the withdraw
-        to the transaction history, and return the new balance.
+        """将账户余额减少 amount，把取款记入交易历史，并返回新余额。
         """
         if amount > self.balance:
             return 'Insufficient funds'
@@ -86,11 +84,9 @@ class BankAccount:
 
 
 class Email:
-    """An email has the following instance attributes:
+    """电子邮件具有以下实例属性：
 
-        msg (str): the contents of the message
-        sender (Client): the client that sent the email
-        recipient_name (str): the name of the recipient (another client)
+        msg（str）：邮件内容；sender（Client）：发送邮件的客户端；recipient_name（str）：收件人（另一个客户端）的名称。
     """
     def __init__(self, msg, sender, recipient_name):
         self.msg = msg
@@ -98,27 +94,23 @@ class Email:
         self.recipient_name = recipient_name
 
 class Server:
-    """Each Server has one instance attribute called clients that is a
-    dictionary from client names to client objects.
+    """每个 Server 都有一个名为 clients 的实例属性，它是从客户端名称到客户端对象的字典。
     """
     def __init__(self):
         self.clients = {}
 
     def send(self, email):
-        """Append the email to the inbox of the client it is addressed to.
-            email is an instance of the Email class.
+        """将邮件添加到收件客户端的收件箱。email 是 Email 类的实例。
         """
         ____.inbox.append(email)
 
     def register_client(self, client):
-        """Add a client to the clients mapping (which is a 
-        dictionary from client names to client instances).
-            client is an instance of the Client class.
+        """将客户端添加到 clients 映射（从客户端名称到客户端实例的字典）。client 是 Client 类的实例。
         """
         ____[____] = ____
 
 class Client:
-    """A client has a server, a name (str), and an inbox (list).
+    """客户端包含服务器 server、名称 name（str）和收件箱 inbox（list）。
 
     >>> s = Server()
     >>> a = Client(s, 'Alice')
@@ -141,15 +133,15 @@ class Client:
         server.register_client(____)
 
     def compose(self, message, recipient_name):
-        """Send an email with the given message to the recipient."""
+        """向收件人发送内容为给定消息的邮件。"""
         email = Email(message, ____, ____)
         self.server.send(email)
 
 
 class Mint:
-    """A mint creates coins by stamping on years.
+    """铸币厂通过压印年份来制造硬币。
 
-    The update method sets the mint's stamp to Mint.present_year.
+    update 方法将铸币厂的年份印记设置为 Mint.present_year。
 
     >>> mint = Mint()
     >>> mint.year
@@ -157,22 +149,22 @@ class Mint:
     >>> dime = mint.create(Dime)
     >>> dime.year
     2024
-    >>> Mint.present_year = 2104  # Time passes
+    >>> Mint.present_year = 2104  # 时间流逝
     >>> nickel = mint.create(Nickel)
-    >>> nickel.year     # The mint has not updated its stamp yet
+    >>> nickel.year     # 铸币厂尚未更新年份印记
     2024
-    >>> nickel.worth()  # 5 cents + (80 - 50 years)
+    >>> nickel.worth()  # 5 美分 +（80 - 50 年）
     35
-    >>> mint.update()   # The mint's year is updated to 2104
-    >>> Mint.present_year = 2179     # More time passes
-    >>> mint.create(Dime).worth()    # 10 cents + (75 - 50 years)
+    >>> mint.update()   # 铸币厂的年份更新为 2104
+    >>> Mint.present_year = 2179     # 又过了一段时间
+    >>> mint.create(Dime).worth()    # 10 美分 +（75 - 50 年）
     35
-    >>> Mint().create(Dime).worth()  # A new mint has the current year
+    >>> Mint().create(Dime).worth()  # 新的铸币厂使用当前年份
     10
-    >>> dime.worth()     # 10 cents + (155 - 50 years)
+    >>> dime.worth()     # 10 美分 +（155 - 50 年）
     115
-    >>> Dime.cents = 20  # Upgrade all dimes!
-    >>> dime.worth()     # 20 cents + (155 - 50 years)
+    >>> Dime.cents = 20  # 提升所有 dime 硬币的面值！
+    >>> dime.worth()     # 20 美分 +（155 - 50 年）
     125
     """
     present_year = 2024
@@ -187,7 +179,7 @@ class Mint:
         "*** YOUR CODE HERE ***"
 
 class Coin:
-    cents = None # will be provided by subclasses, but not by Coin itself
+    cents = None # 由子类提供，而非由 Coin 类本身提供
 
     def __init__(self, year):
         self.year = year

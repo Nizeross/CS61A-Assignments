@@ -1,6 +1,5 @@
 def divide(quotients, divisors):
-    """Return a dictonary in which each quotient q is a key for the list of
-    divisors that it divides evenly.
+    """返回一个字典：以 quotients 中的每个 q 为键，值为 divisors 中能被 q 整除的元素列表。
 
     >>> divide([3, 4, 5], [8, 9, 10, 11, 12])
     {3: [9, 12], 4: [8, 12], 5: [10]}
@@ -11,10 +10,10 @@ def divide(quotients, divisors):
 
 
 def buy(fruits_to_buy, prices, total_amount):
-    """Print ways to buy some of each fruit so that the sum of prices is amount.
+    """打印各种购买方案：fruits_to_buy 中每种水果至少买一些，且总价为 total_amount。
 
     >>> prices = {'oranges': 4, 'apples': 3, 'bananas': 2, 'kiwis': 9}
-    >>> buy(['apples', 'oranges', 'bananas'], prices, 12)  # We can only buy apple, orange, and banana, but not kiwi
+    >>> buy(['apples', 'oranges', 'bananas'], prices, 12)  # 只能购买 apple、orange 和 banana，不能购买 kiwi
     [2 apples][1 orange][1 banana]
     >>> buy(['apples', 'oranges', 'bananas'], prices, 16)
     [2 apples][1 orange][3 bananas]
@@ -31,13 +30,13 @@ def buy(fruits_to_buy, prices, total_amount):
             fruit = fruits[0]
             price = ____
             for k in ____:
-                # Hint: The display function will help you add fruit to the cart.
+                # 提示：display 函数可以帮助你向购物车中添加水果。
                 add(____, ____, ____)
     add(fruits_to_buy, total_amount, '')
 
 
 def display(fruit, count):
-    """Display a count of a fruit in square brackets.
+    """在方括号中显示水果的数量和名称。
 
     >>> display('apples', 3)
     '[3 apples]'
@@ -48,7 +47,7 @@ def display(fruit, count):
     """
     assert count >= 1 and fruit[-1] == 's'
     if count == 1:
-        fruit = fruit[:-1]  # get rid of the plural s
+        fruit = fruit[:-1]  # 去掉复数词尾 s
     return '[' + str(count) + ' ' + fruit + ']'
 
 
@@ -70,9 +69,7 @@ def distance(city_a, city_b):
 
 def closer_city(lat, lon, city_a, city_b):
     """
-    Returns the name of either city_a or city_b, whichever is closest to
-    coordinate (lat, lon). If the two cities are the same distance away
-    from the coordinate, consider city_b to be the closer city.
+    返回 city_a 和 city_b 中距离坐标 (lat, lon) 较近的城市名称。如果距离相同，选择 city_b。
 
     >>> berkeley = make_city('Berkeley', 37.87, 112.26)
     >>> stanford = make_city('Stanford', 34.05, 118.25)
@@ -87,7 +84,7 @@ def closer_city(lat, lon, city_a, city_b):
 
 def check_city_abstraction():
     """
-    There's nothing for you to do for this function, it's just here for the extra doctest
+    此函数无需修改，它只是为了增加一个文档测试用例
     >>> change_abstraction(True)
     >>> city_a = make_city('city_a', 0, 1)
     >>> city_b = make_city('city_b', 0, 2)
@@ -108,8 +105,8 @@ def check_city_abstraction():
     >>> change_abstraction(False)
     """
 
-# Treat all the following code as being behind an abstraction layer,
-# you shouldn't need to look at it.
+# 下面的代码都位于抽象屏障之后，
+# 你应该不需要查看它们。
 def make_city(name, lat, lon):
     """
     >>> city = make_city('Berkeley', 0, 1)
@@ -163,7 +160,7 @@ def get_lon(city):
 
 def change_abstraction(change):
     """
-    For testing purposes.
+    用于测试。
     >>> change_abstraction(True)
     >>> change_abstraction.changed
     True

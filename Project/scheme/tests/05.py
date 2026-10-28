@@ -44,7 +44,7 @@ test = {
           95448591e64e04a7a7885d5fb9b45583
           # locked
           >>> expr = Pair(Pair('+', Pair('x', Pair(2, nil))), nil)
-          >>> do_quote_form(expr, global_frame) # Make sure to use Pair notation
+          >>> do_quote_form(expr, global_frame) # 务必使用 Pair 表示法
           2301ee746b57783004f00f39498fdaed
           # locked
           """,

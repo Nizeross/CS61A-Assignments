@@ -62,26 +62,26 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing HarvesterAnt action
-          >>> # Create a test layout where the colony is a single row with 9 tiles
+          >>> # 测试 HarvesterAnt 的行动
+          >>> # 创建单行、包含 9 个地块的蚁群测试布局
           >>> beehive = Hive(make_test_assault_plan())
           >>> gamestate = GameState(beehive, ant_types(), dry_layout, (1, 9))
           >>> #
           >>> gamestate.food = 4
           >>> harvester = HarvesterAnt()
-          >>> # Note: initializing an Ant doesn't cost food,
-          >>> # only deploying an Ant in the game layout does.
-          >>> # For this test case, Ants can still take actions
-          >>> # without being deployed in the game layout.
+          >>> # 注意：初始化 Ant 不消耗食物，
+          >>> # 只有将 Ant 部署到游戏地图中才消耗食物。
+          >>> # 在此测试中，蚂蚁即使没有
+          >>> # 部署到游戏地图中，也能行动。
           >>> #
           >>> gamestate.food
           c9452203eb0b0f0bd2454586a6c2fc5c
           # locked
-          >>> harvester.action(gamestate) # executing harvester's action method. this symbolizes the ant taking one turn.
+          >>> harvester.action(gamestate) # 执行 harvester 的 action 方法，表示这只蚂蚁行动一回合。
           >>> gamestate.food
           62674984f877ec783f37e8b8b9c264d0
           # locked
-          >>> harvester.action(gamestate) # harvester's action is executed again.
+          >>> harvester.action(gamestate) # 再次执行 harvester 的行动。
           >>> gamestate.food
           50ae32be3e31df6c59633df7fdfb3a72
           # locked

@@ -27,7 +27,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> dice = make_test_dice(3)   # dice always returns 3
+          >>> dice = make_test_dice(3)   # dice 始终返回 3
           >>> max_scoring_num_rolls(dice, times_called=1000)
           70e71b420a966665c548a3bb2cb30d7d
           # locked
@@ -48,8 +48,8 @@ test = {
         },
         {
           'code': r"""
-          >>> dice = make_test_dice(*([2] * 55 + [1, 2] * 500)) # test that you are not rolling the dice more than necessary
-          >>> max_scoring_num_rolls(dice, times_called=1) # dice is 2 for the first 55 rolls, then is 1 followed by 2 for 1000 rolls
+          >>> dice = make_test_dice(*([2] * 55 + [1, 2] * 500)) # 检查是否没有进行多余的掷骰调用
+          >>> max_scoring_num_rolls(dice, times_called=1) # dice 前 55 次返回 2，随后一次返回 1，再连续 1000 次返回 2
           10
           """,
           'hidden': False,
@@ -68,7 +68,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> dice = make_test_dice(2)     # dice always rolls 2
+          >>> dice = make_test_dice(2)     # dice 始终返回 2
           >>> max_scoring_num_rolls(dice, times_called=1000)
           70e71b420a966665c548a3bb2cb30d7d
           # locked
@@ -79,7 +79,7 @@ test = {
         },
         {
           'code': r"""
-          >>> dice = make_test_dice(1)     # dice always rolls 1
+          >>> dice = make_test_dice(1)     # dice 始终返回 1
           >>> max_scoring_num_rolls(dice, times_called=1000)
           43d176e102c8d95338faf8791aa509b3
           # locked
@@ -90,7 +90,7 @@ test = {
         },
         {
           'code': r"""
-          >>> dice = make_test_dice(1, 2)  # dice alternates 1 and 2
+          >>> dice = make_test_dice(1, 2)  # dice 交替返回 1 和 2
           >>> max_scoring_num_rolls(dice, times_called=1000)
           43d176e102c8d95338faf8791aa509b3
           # locked
@@ -101,7 +101,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # 100 2s and then 100 1s (don't worry about how this works)
+          >>> # 100 个 2，然后是 100 个 1（不必担心这里如何实现）
           >>> dice = make_test_dice(*([2] * 100 + [1] * 100))
           >>> max_scoring_num_rolls(dice, times_called=1)
           10
@@ -112,7 +112,7 @@ test = {
         },
         {
           'code': r"""
-          >>> dice = make_test_dice(1, 2, 3, 4, 5)  # dice sweeps from 1 through 5
+          >>> dice = make_test_dice(1, 2, 3, 4, 5)  # dice 循环返回 1 到 5
           >>> max_scoring_num_rolls(dice, times_called=1000)
           3
           """,
@@ -122,8 +122,8 @@ test = {
         },
         {
           'code': r"""
-          >>> dice = make_test_dice(6, 5, 4, 3, 2, 1)  # dice sweeps from 1 through 6
-          >>> max_scoring_num_rolls(dice, times_called=1) # ensure times_called is being used
+          >>> dice = make_test_dice(6, 5, 4, 3, 2, 1)  # dice 循环返回 1 到 6
+          >>> max_scoring_num_rolls(dice, times_called=1) # 确保使用了 times_called
           4
           """,
           'hidden': False,

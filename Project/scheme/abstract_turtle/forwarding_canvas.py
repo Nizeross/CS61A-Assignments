@@ -10,7 +10,7 @@ def _forward(method):
 
 class ForwardingCanvas(Canvas):
     """
-    Canvas that dispatches all calls to a contained canvas
+    将所有调用转发给内部画布的画布类
     """
     def __init__(self, canvas):
         super().__init__(canvas.width, canvas.height)

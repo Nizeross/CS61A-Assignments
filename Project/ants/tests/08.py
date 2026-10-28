@@ -23,9 +23,9 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # Abstraction tests
+          >>> # 抽象测试
           >>> original = ContainerAnt.__init__
-          >>> ContainerAnt.__init__ = lambda self, health: print("init") #If this errors, you are not calling the parent constructor correctly.
+          >>> ContainerAnt.__init__ = lambda self, health: print("init") #如果报错，说明没有正确调用父类构造函数。
           >>> bodyguard = BodyguardAnt()
           init
           >>> ContainerAnt.__init__ = original
@@ -50,7 +50,7 @@ test = {
         {
           'code': r"""
           >>> bodyguard = BodyguardAnt()
-          >>> bodyguard.action(gamestate) # Action without contained ant should not error
+          >>> bodyguard.action(gamestate) # 没有被容纳的蚂蚁时，执行行动不应报错
           """,
           'hidden': False,
           'locked': False,
@@ -58,11 +58,11 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing bodyguard performs thrower's action
+          >>> # 测试保镖是否执行投掷蚁的行动
           >>> bodyguard = BodyguardAnt()
           >>> thrower = ThrowerAnt()
           >>> bee = Bee(2)
-          >>> # Place bodyguard before thrower
+          >>> # 先放置保镖，再放置投掷蚁
           >>> gamestate.places["tunnel_0_0"].add_insect(bodyguard)
           >>> gamestate.places["tunnel_0_0"].add_insect(thrower)
           >>> gamestate.places["tunnel_0_3"].add_insect(bee)
@@ -76,11 +76,11 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing bodyguard performs thrower's action
+          >>> # 测试保镖是否执行投掷蚁的行动
           >>> bodyguard = BodyguardAnt()
           >>> thrower = ThrowerAnt()
           >>> bee = Bee(2)
-          >>> # Place thrower before bodyguard
+          >>> # 先放置投掷蚁，再放置保镖
           >>> gamestate.places["tunnel_0_0"].add_insect(thrower)
           >>> gamestate.places["tunnel_0_0"].add_insect(bodyguard)
           >>> gamestate.places["tunnel_0_3"].add_insect(bee)
@@ -94,11 +94,11 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing removing a bodyguard doesn't remove contained ant
+          >>> # 测试移除保镖时不会移除被容纳的蚂蚁
           >>> place = gamestate.places['tunnel_0_0']
           >>> bodyguard = BodyguardAnt()
           >>> test_ant = Ant(1)
-          >>> # add bodyguard first
+          >>> # 先添加保镖
           >>> place.add_insect(bodyguard)
           >>> place.add_insect(test_ant)
           >>> gamestate.remove_ant('tunnel_0_0')
@@ -113,11 +113,11 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing removing a bodyguard doesn't remove contained ant
+          >>> # 测试移除保镖时不会移除被容纳的蚂蚁
           >>> place = gamestate.places['tunnel_0_0']
           >>> bodyguard = BodyguardAnt()
           >>> test_ant = Ant(1)
-          >>> # add ant first
+          >>> # 先添加蚂蚁
           >>> place.add_insect(test_ant)
           >>> place.add_insect(bodyguard)
           >>> gamestate.remove_ant('tunnel_0_0')
@@ -132,7 +132,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing bodyguarded ant keeps instance attributes
+          >>> # 测试受到保镖保护的蚂蚁仍保留实例属性
           >>> test_ant = Ant()
           >>> def new_action(gamestate):
           ...     test_ant.health += 9000
@@ -151,7 +151,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing single BodyguardAnt cannot hold two other ants
+          >>> # 测试一个 BodyguardAnt 不能容纳另外两只蚂蚁
           >>> bodyguard = BodyguardAnt()
           >>> first_ant = ThrowerAnt()
           >>> place = gamestate.places['tunnel_0_0']
@@ -169,7 +169,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing BodyguardAnt cannot hold another BodyguardAnt
+          >>> # 测试 BodyguardAnt 不能容纳另一个 BodyguardAnt
           >>> bodyguard1 = BodyguardAnt()
           >>> bodyguard2 = BodyguardAnt()
           >>> place = gamestate.places['tunnel_0_0']
@@ -185,7 +185,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing BodyguardAnt takes all the damage
+          >>> # 测试 BodyguardAnt 承受全部伤害
           >>> thrower = ThrowerAnt()
           >>> bodyguard = BodyguardAnt()
           >>> bee = Bee(1)
@@ -217,7 +217,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # test proper call to death callback
+          >>> # 测试是否正确调用死亡回调函数
           >>> original_zero_health_callback = Insect.zero_health_callback
           >>> Insect.zero_health_callback = lambda x: print("insect died")
           >>> place = gamestate.places["tunnel_0_0"]
@@ -230,7 +230,7 @@ test = {
           >>> bee.action(gamestate)
           >>> bee.action(gamestate)
           insect died
-          >>> bee.action(gamestate) # if you fail this test you probably didn't correctly call Ant.reduce_health or Insect.reduce_health
+          >>> bee.action(gamestate) # 如果此测试失败，可能是没有正确调用 Ant.reduce_health 或 Insect.reduce_health
           insect died
           >>> Insect.zero_health_callback = original_zero_health_callback
           """,

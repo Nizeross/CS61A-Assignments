@@ -12,7 +12,7 @@ from .model import Color, Position
 
 class PillowCanvas(Canvas):
     """
-    Draw the given results on a pillow canvas.
+    将给定结果绘制到 Pillow 画布上。
     """
     def __init__(self, width, height):
         super().__init__(width, height)
@@ -55,8 +55,8 @@ class PillowCanvas(Canvas):
 
     def axis_aligned_rectangle(self, bottom_left, width, height, color):
         blx, bly = self.tr_pos(bottom_left)
-        # bounding box in pixel space, make this exactly w*h
-        # subtract one to have blx, blx+1, ..., blx+w-1, etc.
+        # 像素空间中的边界框，使其尺寸恰好为 w*h
+        # 减去一以得到 blx、blx+1、……、blx+w-1 等坐标
         tlx, tly = blx + (width - 1), bly - (height - 1)
         bounding_box = [blx, bly, tlx, tly]
         print(bounding_box)
@@ -85,11 +85,11 @@ class PillowCanvas(Canvas):
         return Image.fromarray(data)
 
     def refreshed_turtle(self, turtle):
-        # no need to do stuff
+        # 无需进行额外操作
         pass
 
     def set_speed(self, speed):
-        # the pillow canvas has no animation
+        # Pillow 画布不支持动画
         pass
 
     def exit_on_click(self):

@@ -11,7 +11,7 @@ test = {
           >>> print_progress({'id': 1, 'progress': 0.6})
           7dec972cfcf800f55611786b2e34a0f5
           # locked
-          >>> report_progress(typed, source, 1, print_progress) # print_progress is called on the report
+          >>> report_progress(typed, source, 1, print_progress) # 对报告调用 print_progress
           7dec972cfcf800f55611786b2e34a0f5
           8a7ca0fb9304b22439e05fbd46a5c3a5
           # locked
@@ -31,7 +31,7 @@ test = {
         {
           'code': r"""
           >>> print_progress = lambda d: print('ID:', d['id'], 'Progress:', d['progress'])
-          >>> # The above function displays progress in the format ID: __ Progress: __
+          >>> # 上面的函数按 ID: __ Progress: __ 的格式显示进度
           >>> print_progress({'id': 1, 'progress': 0.6})
           ID: 1 Progress: 0.6
           >>> typed = ['how', 'are', 'you']

@@ -6,8 +6,8 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # Enter StopIteration if StopIteration exception occurs, Error for other errors
-          >>> # Enter Iterator if the output is an iterator object.
+          >>> # 如果抛出 StopIteration 异常，输入 StopIteration；其他错误输入 Error
+          >>> # 如果输出是迭代器对象，输入 Iterator。
           >>> s = [1, 2, 3, 4]
           >>> t = iter(s)
           >>> next(s)

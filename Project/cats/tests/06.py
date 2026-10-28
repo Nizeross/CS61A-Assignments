@@ -42,15 +42,15 @@ test = {
         {
           'code': r"""
           >>> big_limit = 10
-          >>> furry_fixes("nice", "rice", big_limit)    # Substitute: n -> r
+          >>> furry_fixes("nice", "rice", big_limit)    # 替换：n -> r
           1
-          >>> furry_fixes("range", "rungs", big_limit)  # Substitute: a -> u, e -> s
+          >>> furry_fixes("range", "rungs", big_limit)  # 替换：a -> u、e -> s
           2
-          >>> furry_fixes("pill", "pillage", big_limit) # Don't substitute anything, length difference of 3.
+          >>> furry_fixes("pill", "pillage", big_limit) # 无需替换，长度相差 3。
           3
-          >>> furry_fixes("roses", "arose", big_limit)  # Substitute: r -> a, o -> r, s -> o, e -> s, s -> e
+          >>> furry_fixes("roses", "arose", big_limit)  # 替换：r -> a、o -> r、s -> o、e -> s、s -> e
           5
-          >>> furry_fixes("rose", "hello", big_limit)   # Substitute: r->h, o->e, s->l, e->l, length difference of 1.
+          >>> furry_fixes("rose", "hello", big_limit)   # 替换：r -> h、o -> e、s -> l、e -> l；长度相差 1。
           5
           """,
           'hidden': False,
@@ -104,7 +104,7 @@ test = {
           'bird'
           >>> autocorrect("gest", small_words_list, furry_fixes, 10)
           'nest'
-          >>> # ban iteration, list comprehensions
+          >>> # 禁止迭代和列表推导式
           >>> test.check('cats.py', 'furry_fixes', ['While', 'For', 'ListComp'])
           True
           """,
@@ -114,7 +114,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Check that the recursion stops when the limit is reached
+          >>> # 检查达到 limit 时递归是否停止
           >>> import trace, io
           >>> from contextlib import redirect_stdout
           >>> with io.StringIO() as buf, redirect_stdout(buf):

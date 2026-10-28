@@ -8,7 +8,7 @@ test = {
           'code': r"""
           >>> ps = ['short', 'really long', 'tiny']
           >>> s = lambda p: len(p) <= 5
-          >>> pick(ps, s, 0) # remember to put quotes ('') around strings!
+          >>> pick(ps, s, 0) # 记得给字符串加引号（''）！
           576aa252be1440e6b1bc6094de4ee0f0
           # locked
           >>> pick(ps, s, 1)

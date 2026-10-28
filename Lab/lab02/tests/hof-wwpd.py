@@ -6,7 +6,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # If Python displays <function...>, type Function, if it errors type Error, if it displays nothing type Nothing
+          >>> # 如果 Python 显示 <function...>，输入 Function；如果报错，输入 Error；如果没有显示内容，输入 Nothing
           >>> def cake():
           ...    print('beets')
           ...    def pie():
@@ -29,8 +29,8 @@ test = {
           >>> more_chocolate
           7fccab88a7c3c0cbffe0142e723d1984
           # locked
-          >>> # Reminder: cake, more_cake, and chocolate were defined/assigned in the code above! 
-          >>> # It might be helpful to refer to their definitions on the assignment website so you don't have to scroll as much!
+          >>> # 提醒：cake、more_cake 和 chocolate 已在上面的代码中定义或赋值！
+          >>> # 可以对照作业网站上的定义，减少来回滚动查找！
           >>> def snake(x, y):
           ...    if cake == more_cake:
           ...        return chocolate

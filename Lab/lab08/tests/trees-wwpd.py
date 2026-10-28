@@ -6,7 +6,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> t = Tree(1, Tree(2)) # Enter Function if you believe the answer is <function ...>, Error if it errors, and Nothing if nothing is displayed.
+          >>> t = Tree(1, Tree(2)) # 若答案为 <function ...>，输入 Function；若报错，输入 Error；若没有显示内容，输入 Nothing。
           8a2fd4e4c3c6dcce2dc631af62ee217a
           # locked
           >>> t = Tree(1, [Tree(2)])

@@ -6,7 +6,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> wpm("12345", 3) # Note: wpm returns a float (with a decimal point)
+          >>> wpm("12345", 3) # 注意：wpm 返回浮点数（带小数点）
           fa8774919e9ae84bf6716c4504d52855
           # locked
           >>> wpm("a b c", 20)

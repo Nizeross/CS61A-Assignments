@@ -83,27 +83,27 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # Testing nearest_bee
-          >>> near_bee = Bee(2) # A Bee with 2 health
-          >>> far_bee = Bee(3)  # A Bee with 3 health
-          >>> hive_bee = Bee(4) # A Bee with 4 health
+          >>> # 测试 nearest_bee
+          >>> near_bee = Bee(2) # 一只生命值为 2 的蜜蜂
+          >>> far_bee = Bee(3)  # 一只生命值为 3 的蜜蜂
+          >>> hive_bee = Bee(4) # 一只生命值为 4 的蜜蜂
           >>> hive_place = gamestate.beehive
-          >>> hive_place.is_hive # Check if this place is the Hive
+          >>> hive_place.is_hive # 检查此地点是否为 Hive
           c7a88a0ffd3aef026b98eef6e7557da3
           # locked
           >>> hive_place.add_insect(hive_bee)
-          >>> thrower.nearest_bee() is hive_bee # Bees in the Hive can never be attacked
+          >>> thrower.nearest_bee() is hive_bee # 蜂巢中的蜜蜂永远不能被攻击
           03456a09f22295a39ca84d133a26f63d
           # locked
           >>> near_place = gamestate.places['tunnel_0_3']
           >>> far_place = gamestate.places['tunnel_0_6']
-          >>> near_place.is_hive # Check if this place is the Hive
+          >>> near_place.is_hive # 检查此地点是否为 Hive
           03456a09f22295a39ca84d133a26f63d
           # locked
           >>> near_place.add_insect(near_bee)
           >>> far_place.add_insect(far_bee)
           >>> nearest_bee = thrower.nearest_bee()
-          >>> thrower.place is ant_place    # Don't change self.place!
+          >>> thrower.place is ant_place    # 不要修改 self.place！
           c7a88a0ffd3aef026b98eef6e7557da3
           # locked
           >>> nearest_bee is far_bee
@@ -115,14 +115,14 @@ test = {
           >>> nearest_bee.health
           20d533d3e06345c8bd7072212867f2d1
           # locked
-          >>> thrower.action(gamestate)    # Attack! ThrowerAnts do 1 damage
+          >>> thrower.action(gamestate)    # 攻击！ThrowerAnt 造成 1 点伤害
           >>> near_bee.health
           d89cf7c79d5a479b0f636734143ed5e6
           # locked
           >>> far_bee.health
           81a7d27d1a4a958871bb97b545b871db
           # locked
-          >>> thrower.place is ant_place    # Don't change self.place!
+          >>> thrower.place is ant_place    # 不要修改 self.place！
           c7a88a0ffd3aef026b98eef6e7557da3
           # locked
           """,
@@ -132,14 +132,14 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing Nearest bee not in the beehive
+          >>> # 测试最近的蜜蜂不在蜂巢中
           >>> beehive = gamestate.beehive
           >>> bee = Bee(2)
-          >>> beehive.add_insect(bee)      # Adding a bee to the beehive
+          >>> beehive.add_insect(bee)      # 向蜂巢添加一只蜜蜂
           >>> thrower.nearest_bee() is bee
           False
-          >>> thrower.action(gamestate)    # Attempt to attack
-          >>> bee.health                 # Bee health should not change
+          >>> thrower.action(gamestate)    # 尝试攻击
+          >>> bee.health                 # 蜜蜂的生命值不应改变
           2
           """,
           'hidden': False,
@@ -148,13 +148,13 @@ test = {
         },
         {
           'code': r"""
-          >>> # Test that ThrowerAnt attacks bees on its own square
+          >>> # 测试 ThrowerAnt 攻击同一地块上的蜜蜂
           >>> near_bee = Bee(2)
           >>> ant_place.add_insect(near_bee)
           >>> thrower.nearest_bee() is near_bee
           True
-          >>> thrower.action(gamestate)   # Attack!
-          >>> near_bee.health           # should do 1 damage
+          >>> thrower.action(gamestate)   # 攻击！
+          >>> near_bee.health           # 应造成 1 点伤害
           1
           """,
           'hidden': False,
@@ -163,13 +163,13 @@ test = {
         },
         {
           'code': r"""
-          >>> # Test that ThrowerAnt attacks bees at end of tunnel
+          >>> # 测试 ThrowerAnt 攻击隧道末端的蜜蜂
           >>> near_bee = Bee(2)
           >>> gamestate.places["tunnel_0_8"].add_insect(near_bee)
           >>> thrower.nearest_bee() is near_bee
           True
-          >>> thrower.action(gamestate)   # Attack!
-          >>> near_bee.health           # should do 1 damage
+          >>> thrower.action(gamestate)   # 攻击！
+          >>> near_bee.health           # 应造成 1 点伤害
           1
           """,
           'hidden': False,
@@ -178,13 +178,13 @@ test = {
         },
         {
           'code': r"""
-          >>> # Test that ThrowerAnt attacks bees 4 places away
+          >>> # 测试 ThrowerAnt 攻击距离为 4 个地点的蜜蜂
           >>> near_bee = Bee(2)
           >>> gamestate.places["tunnel_0_4"].add_insect(near_bee)
           >>> thrower.nearest_bee() is near_bee
           True
-          >>> thrower.action(gamestate)   # Attack!
-          >>> near_bee.health           # should do 1 damage
+          >>> thrower.action(gamestate)   # 攻击！
+          >>> near_bee.health           # 应造成 1 点伤害
           1
           """,
           'hidden': False,
@@ -193,17 +193,17 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing ThrowerAnt chooses a random target
+          >>> # 测试 ThrowerAnt 随机选择目标
           >>> bee1 = Bee(1001)
           >>> bee2 = Bee(1001)
           >>> gamestate.places["tunnel_0_3"].add_insect(bee1)
           >>> gamestate.places["tunnel_0_3"].add_insect(bee2)
-          >>> # Throw 1000 times. The first bee should take ~1000*1/2 = ~500 damage,
-          >>> # and have ~501 remaining.
+          >>> # 投掷 1000 次。第一只蜜蜂应受到约 1000*1/2 = 500 点伤害，
+          >>> # 剩余生命值约为 501。
           >>> for _ in range(1000):
           ...     thrower.action(gamestate)
-          >>> # Test if damage to bee1 is within 6 standard deviations (~95 damage)
-          >>> # If bees are chosen uniformly, this is true 99.9999998% of the time.
+          >>> # 测试 bee1 受到的伤害是否处于 6 个标准差（约 95 点伤害）的范围内
+          >>> # 若均匀随机选择蜜蜂，这一条件成立的概率为 99.9999998%。
           >>> def dmg_within_tolerance():
           ...     return abs(bee1.health-501) < 95
           >>> dmg_within_tolerance()

@@ -66,14 +66,14 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # Testing WallAnt parameters
+          >>> # 测试 WallAnt 的参数
           >>> wall = WallAnt()
           >>> wall.name
           'Wall'
           >>> wall.health
           4
-          >>> # `health` should not be a class attribute
-          >>> not hasattr(WallAnt, 'health') # hasattr checks if the WallAnt class has a class attribute called 'health'
+          >>> # health 不应是类属性
+          >>> not hasattr(WallAnt, 'health') # hasattr 检查 WallAnt 类是否具有名为 'health' 的类属性
           True
           >>> WallAnt.food_cost
           4
@@ -84,9 +84,9 @@ test = {
         },
         {
           'code': r"""
-          >>> # Abstraction tests
+          >>> # 抽象测试
           >>> original = Ant.__init__
-          >>> Ant.__init__ = lambda self, health: print("init") #If this errors, you are not calling the parent constructor correctly.
+          >>> Ant.__init__ = lambda self, health: print("init") #如果报错，说明没有正确调用父类构造函数。
           >>> wall = WallAnt()
           init
           >>> Ant.__init__ = original
@@ -98,7 +98,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing WallAnt holds strong
+          >>> # 测试 WallAnt 的防御能力
           >>> beehive, layout = Hive(AssaultPlan()), dry_layout
           >>> gamestate = GameState(beehive, ant_types(), layout, (1, 9))
           >>> place = gamestate.places['tunnel_0_4']
@@ -108,7 +108,7 @@ test = {
           >>> place.add_insect(bee)
           >>> for i in range(3):
           ...     bee.action(gamestate)
-          ...     wall.action(gamestate)   # WallAnt does nothing
+          ...     wall.action(gamestate)   # WallAnt 不执行任何操作
           >>> wall.health
           1
           >>> bee.health

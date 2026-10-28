@@ -1,5 +1,5 @@
 class Account:
-    """An account has a balance and a holder.
+    """账户包含余额 balance 和持有人 holder。
 
     >>> a = Account('John')
     >>> a.deposit(10)
@@ -10,7 +10,7 @@ class Account:
     0.02
     >>> a.time_to_retire(10.25)  # 10 -> 10.2 -> 10.404
     2
-    >>> a.balance                # Calling time_to_retire method should not change the balance
+    >>> a.balance                # 调用 time_to_retire 方法不应改变余额
     10
     >>> a.time_to_retire(11)     # 10 -> 10.2 -> ... -> 11.040808032
     5
@@ -37,33 +37,33 @@ class Account:
         return self.balance
 
     def time_to_retire(self, amount):
-        """Return the number of years until balance would grow to amount."""
+        """返回余额增长到 amount 所需的年数。"""
         assert self.balance > 0 and amount > 0 and self.interest > 0
         "*** YOUR CODE HERE ***"
 
 
 class FreeChecking(Account):
-    """A bank account that charges for withdrawals, but the first two are free!
+    """取款收费的银行账户，但前两次取款免费！
 
     >>> ch = FreeChecking('Jack')
     >>> ch.balance = 20
-    >>> ch.withdraw(100)  # First one's free. Still counts as a free withdrawal even though it was unsuccessful
+    >>> ch.withdraw(100)  # 第一次免费。虽然取款失败，仍占用一次免费取款机会
     'Insufficient funds'
-    >>> ch.withdraw(3)    # Second withdrawal is also free
+    >>> ch.withdraw(3)    # 第二次取款也免费
     17
     >>> ch.balance
     17
-    >>> ch.withdraw(3)    # Now there is a fee because free_withdrawals is only 2
+    >>> ch.withdraw(3)    # 现在需要收费，因为 free_withdrawals 只有 2 次
     13
     >>> ch.withdraw(3)
     9
     >>> ch2 = FreeChecking('John')
     >>> ch2.balance = 10
-    >>> ch2.withdraw(3) # No fee
+    >>> ch2.withdraw(3) # 不收手续费
     7
-    >>> ch.withdraw(3)  # ch still charges a fee
+    >>> ch.withdraw(3)  # ch 仍然收取手续费
     5
-    >>> ch.withdraw(5)  # Not enough to cover fee + withdraw
+    >>> ch.withdraw(5)  # 余额不足以支付手续费和取款金额
     'Insufficient funds'
     """
     withdraw_fee = 1
@@ -73,23 +73,23 @@ class FreeChecking(Account):
 
 
 def without(s, i):
-    """Return a new linked list like s but without the element at index i.
+    """返回一个与 s 相似的新链表，但去掉索引 i 处的元素。
 
     >>> s = Link(3, Link(5, Link(7, Link(9))))
     >>> without(s, 0)
     Link(5, Link(7, Link(9)))
     >>> without(s, 2)
     Link(3, Link(5, Link(9)))
-    >>> without(s, 4)           # There is no index 4, so all of s is retained.
+    >>> without(s, 4)           # 索引 4 不存在，因此保留 s 的全部元素。
     Link(3, Link(5, Link(7, Link(9))))
-    >>> without(s, 4) is not s  # Make sure a copy is created
+    >>> without(s, 4) is not s  # 确保创建了副本
     True
     """
     "*** YOUR CODE HERE ***"
 
 
 def duplicate_link(s, val):
-    """Mutates s so that each element equal to val is followed by another val.
+    """原地修改 s，使每个等于 val 的元素后面都再跟一个 val。
 
     >>> x = Link(5, Link(4, Link(5)))
     >>> duplicate_link(x, 5)
@@ -100,7 +100,7 @@ def duplicate_link(s, val):
     >>> y
     Link(2, Link(4, Link(6, Link(8))))
     >>> z = Link(1, Link(2, (Link(2, Link(3)))))
-    >>> duplicate_link(z, 2) # ensures that back to back links with val are both duplicated
+    >>> duplicate_link(z, 2) # 确保相邻的两个值为 val 的节点都被复制
     >>> z
     Link(1, Link(2, Link(2, Link(2, Link(2, Link(3))))))
     """
@@ -108,7 +108,7 @@ def duplicate_link(s, val):
 
 
 class Link:
-    """A linked list.
+    """一个链表。
 
     >>> s = Link(1)
     >>> s.first
@@ -119,12 +119,12 @@ class Link:
     >>> s.first = 5
     >>> s.rest.first = 6
     >>> s.rest.rest = Link.empty
-    >>> s                                    # Displays the contents of repr(s)
+    >>> s                                    # 显示 repr(s) 的内容
     Link(5, Link(6))
     >>> s.rest = Link(7, Link(Link(8, Link(9))))
     >>> s
     Link(5, Link(7, Link(Link(8, Link(9)))))
-    >>> print(s)                             # Prints str(s)
+    >>> print(s)                             # 打印 str(s)
     <5 7 <8 9>>
     """
     empty = ()

@@ -31,13 +31,13 @@ test = {
         },
         {
           'code': r"""
-          scm> (= 1 3)                    ; Scheme uses '=' instead of '==' for comparison
+          scm> (= 1 3)                    ; Scheme 使用 '=' 比较，而不是 '=='
           2e53237de2e8eedffd8b1b7f96c2a14a
           # locked
           scm> (< 1 3)
           1a7ba87ca42a7e60de7365380a43df24
           # locked
-          scm> (or 1 #t)                  ; or special form short circuits
+          scm> (or 1 #t)                  ; or 特殊形式具有短路行为
           7cd20da6435c318b417f99ab831ac85e
           # locked
           scm> (and #t #f (/ 1 0))

@@ -13,7 +13,7 @@ test = {
           # locked
           >>> p0 = [2, 2, 3]
           >>> p1 = [6, 1, 3]
-          >>> fastest_words({'words': ['What', 'great', 'luck'], 'times': [p0, p1]})  # with a tie, choose the first player
+          >>> fastest_words({'words': ['What', 'great', 'luck'], 'times': [p0, p1]})  # 平局时选择第一位玩家
           21948e3a2e3aabdfabb12961f4ed55b2
           # locked
           >>> p2 = [4, 3, 1]
@@ -31,7 +31,7 @@ test = {
           >>> p1 = [4, 1, 6]
           >>> fastest_words({'words': ['Just', 'have', 'fun'], 'times': [p0, p1]})
           [['have', 'fun'], ['Just']]
-          >>> p0  # input lists should not be mutated
+          >>> p0  # 不得修改输入列表
           [5, 1, 3]
           >>> p1
           [4, 1, 6]

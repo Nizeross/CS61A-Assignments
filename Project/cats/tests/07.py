@@ -43,7 +43,7 @@ test = {
           >>> minimum_mewtations("rlogcul", "logical", big_limit) # rlogcul -> logcul -> logicul -> logical
           e527e6a0cb8c2f61565ec262c971fdb2
           # locked
-          >>> minimum_mewtations("", "", big_limit) # nothing to nothing needs no edits
+          >>> minimum_mewtations("", "", big_limit) # 空字符串变为空字符串无需编辑
           b6945d390f61a81b0e5bc1f08f2bbf8c
           # locked
           """,
@@ -117,13 +117,13 @@ test = {
         },
         {
           'code': r"""
-          >>> # ***Check that the recursion stops when the limit is reached***
+          >>> # *** 检查达到 limit 时递归是否停止 ***
           >>> import trace, io
           >>> from contextlib import redirect_stdout
           >>> with io.StringIO() as buf, redirect_stdout(buf):
           ...     trace.Trace(trace=True).runfunc(minimum_mewtations, "someawe", "awesome", 3)
           ...     output = buf.getvalue()
-          >>> len([line for line in output.split('\n') if 'funcname' in line]) <= 400 # Make sure your base case(s) is as tight as possible
+          >>> len([line for line in output.split('\n') if 'funcname' in line]) <= 400 # 确保基本情况的判断尽可能精确
           True
           """,
           'hidden': False,

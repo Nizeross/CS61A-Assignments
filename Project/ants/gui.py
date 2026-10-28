@@ -1,5 +1,5 @@
 import sys
-sys.path.append('libs') # Include files in the "libs" folder
+sys.path.append('libs') # 包含 libs 文件夹中的文件
 
 
 from flask import Flask, render_template, request, jsonify
@@ -10,29 +10,29 @@ import logging, socket
 import webbrowser
 
 
-app = Flask(__name__, static_folder='static') # Create flask app
-socketio = SocketIO(app) # Use websocket
-game, game_state = None, None # Global variable to represent a game and a gamestate
+app = Flask(__name__, static_folder='static') # 创建 Flask 应用
+socketio = SocketIO(app) # 使用 WebSocket
+game, game_state = None, None # 表示游戏和游戏状态的全局变量
 
 
-# Disable verbose for Flask messages
+# 关闭 Flask 消息的详细输出
 def disable_verbose():
     log = logging.getLogger('werkzeug')
-    log.setLevel(logging.ERROR) # Disable verbose for Flask messages
+    log.setLevel(logging.ERROR) # 关闭 Flask 消息的详细输出
 
 
-# Create new game
+# 创建新游戏
 def create_new_game():
-    """Create new game by reseting game_state and game"""
+    """重置 game_state 和 game，创建新游戏"""
     global game_state, game
     game_state = create_game_state()
     game = game_state.simulate()
 
 
-# Automatically called by socketio when client connects to server
+# 客户端连接到服务器时，由 socketio 自动调用
 @socketio.on('connect')
 def handle_connect():
-    socketio.emit('loadLobby', {}) # Send loadLobby signal to frontend
+    socketio.emit('loadLobby', {}) # 向前端发送 loadLobby 信号
     """
     Note: index() is also called when the user loads the webpage, so technically this function can be merged into index()
     But this is here because index() must return to render the html, but we want to load the lobby only after rendering the html,
@@ -40,10 +40,10 @@ def handle_connect():
     """
 
 
-# Automatically called by flask when loading webpage
+# 加载网页时，由 Flask 自动调用
 @app.route('/')
 def index():
-    # Loads/renders index.html
+    # 加载并渲染 index.html
     print('\n ===== New Game Started ===== \n')
     create_new_game()
     return render_template('index.html')
@@ -52,7 +52,7 @@ def index():
 @app.route('/initialize_game', methods=['POST'])
 def initialize_game():
     "Called by the front end when it's time to start a game."
-    next(game) # Advance the game
+    next(game) # 推进游戏
 
     game_data = {
         'dimensions_x': game_state.dimensions[0],
@@ -62,17 +62,17 @@ def initialize_game():
 
     wet_places = [place for place in game_state.places.values() if type(place) is Water]
 
-    # Parse the names of places to figure out where they are.
+    # 解析地点名称，确定其位置。
     game_data['wet_places'] = [[int(place.name.split('_')[1]), int(place.name.split('_')[2])] for place in wet_places]
 
-    return jsonify(game_data) # Send game_data back to frontend
+    return jsonify(game_data) # 将 game_data 发回前端
 
 
 @app.route('/deploy_ants', methods=['POST'])
 def deploy_ants():
     "Called by the front end when it's time to deploy an ant."
     data = request.get_json()
-    pos = data.get('pos').split('-') # in the form of 'row-col'
+    pos = data.get('pos').split('-') # 采用 'row-col' 格式
     tunnel = f'tunnel_{pos[0]}_{pos[1]}'
     ant_name = data.get('ant')
     message = {
@@ -83,11 +83,11 @@ def deploy_ants():
     ant = None
     try:
         ant = game_state.deploy_ant(tunnel, ant_name)
-    except KeyError: # tile is wet
+    except KeyError: # 地块为水域
         tunnel = f'water_{pos[0]}_{pos[1]}'
         ant = game_state.deploy_ant(tunnel, ant_name)
     finally:
-        if ant: # If successfuly deployed ant
+        if ant: # 如果成功部署蚂蚁
             message['deployed'] = True
             message['insect_id'] = ant.id
 
@@ -95,7 +95,7 @@ def deploy_ants():
 
 
 def insects_take_actions():
-    """Ask insects to take actions by advancing the game. Signal frontend through socket if game ended."""
+    """推进游戏，使昆虫执行行动。如果游戏结束，通过套接字通知前端。"""
     result = next(game)
     if result is True:
         socketio.emit('endGame', {'antsWon': True})
@@ -130,8 +130,8 @@ def move_bee(bee, place):
     data = {
         'bee_id': bee.id,
 
-        # Not a good way to get the position. Changes should be made to Place class in ants.py
-        'destination': place.name.split('_')[1:], # [x, y] where x is row, y is col
+        # 这种获取位置的方法不够理想，应修改 ants.py 中的 Place 类
+        'destination': place.name.split('_')[1:], # [x, y]，其中 x 是行，y 是列
         'current_pos': bee.place.name.split('_')[1:],
     }
     socketio.emit('moveBee', data)
@@ -143,15 +143,14 @@ def move_bee_from_hive(bee, place):
         'bee_id': bee.id,
         'bee_name': bee.name,
 
-        # Not a good way to get the position. Changes should be made to Place class in ants.py
-        'destination': place.name.split('_')[1:] # [x, y] where x is row, y is col
+        # 这种获取位置的方法不够理想，应修改 ants.py 中的 Place 类
+        'destination': place.name.split('_')[1:] # [x, y]，其中 x 是行，y 是列
     }
     socketio.emit('moveBeeFromHive', data)
 
 
 def insect_move_decorator(func):
-    """A decorator that takes in the original move_to method of a bee.
-    Calls corresponding GUI functions to move bee before calling the original method.
+    """接受蜜蜂原始 move_to 方法的装饰器。在调用原方法之前，先调用相应的图形界面函数来移动蜜蜂。
     """
     def inner(self, place):
         if type(self.place) == Hive:
@@ -163,7 +162,7 @@ def insect_move_decorator(func):
 
 
 def throw_at_decorator(func):
-    """A decorator for Thrower's throw_at method."""
+    """Thrower 的 throw_at 方法的装饰器。"""
     def inner(self, target):
         if target is not None:
             data = {
@@ -176,7 +175,7 @@ def throw_at_decorator(func):
 
 
 def reduce_health_decorator(func):
-    """A decorator for Insect's reduce_health method."""
+    """Insect 的 reduce_health 方法的装饰器。"""
     def inner(self, amount):
         data = {'insect_id': self.id}
         socketio.emit('reduceHealth', data)
@@ -185,7 +184,7 @@ def reduce_health_decorator(func):
 
 
 def zero_health_callback_gui(self):
-    """A callback for when an insect reaches zero health."""
+    """昆虫生命值降至零时调用的回调函数。"""
     data = {'insect_id': self.id}
     socketio.emit('onInsectDeath', data)
 
@@ -207,7 +206,7 @@ def display_messages(port):
 
 def is_port_open(port):
     """
-    Checks if a port is open on the localhost.
+    检查本地主机上的某个端口是否可用。
     """
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         try:
@@ -222,7 +221,7 @@ if __name__ == '__main__':
     disable_verbose()
     decorate_events()
     create_new_game()
-    for port in [31415, 8000, 5555, 5000]: # Determining an open port
+    for port in [31415, 8000, 5555, 5000]: # 确定一个可用端口
         if is_port_open(port):
             open_port = port
             break

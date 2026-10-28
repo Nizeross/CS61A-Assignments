@@ -6,10 +6,10 @@ test = {
       'cases': [
         {
           'code': r"""
-          scm> (lambda (x y) (+ x y)) ;; An lambda procedure is displayed exactly as it is written
+          scm> (lambda (x y) (+ x y)) ;; lambda 过程的显示形式与其书写形式完全一致
           1456de84c3edf333b6f7aee0c0624b20
           # locked
-          scm> (lambda (x)) ; type SchemeError if you think this causes an error
+          scm> (lambda (x)) ; 如果你认为会报错，输入 SchemeError
           ec908af60f03727428c7ee3f22ec3cd8
           # locked
           """,
@@ -48,13 +48,13 @@ test = {
           >>> env = create_global_frame()
           >>> lambda_line = read_line("(lambda (a b c) (+ a b c))")
           >>> lambda_proc = do_lambda_form(lambda_line.rest, env)
-          >>> lambda_proc.formals # use single quotes ' around strings in your answer
+          >>> lambda_proc.formals # 答案中的字符串请用单引号 ' 包围
           d106bb7be6b014a9d16d74410be4a8a5
           # locked
           # choice: Pair('a', Pair('b', Pair('c', nil)))
           # choice: Pair('+', Pair('a', Pair('b', Pair('c', nil))))
           # choice: Pair(Pair('a', Pair('b', Pair('c', nil))))
-          >>> lambda_proc.body # the body is a *Scheme list* of expressions! Make sure your answer is a properly nested Pair.
+          >>> lambda_proc.body # 过程体是表达式组成的 Scheme 列表！确保答案是正确嵌套的 Pair。
           0ef147cfe5caf670e985d95d923f4b06
           # locked
           # choice: Pair(Pair('+', Pair('a', Pair('b', Pair('c', nil)))), nil)

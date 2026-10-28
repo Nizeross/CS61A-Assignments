@@ -1,4 +1,4 @@
-# Default dice for the Hog game. These can be overriden by students.
+# Hog 游戏的默认骰子图案。学生可以重写这些函数。
 
 dice = [
     "",

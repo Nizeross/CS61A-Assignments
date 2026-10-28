@@ -21,7 +21,7 @@ class Canvas(ABC):
     @abstractmethod
     def draw_rectangular_line(self, start, end, color, width):
         """
-        Draw a 1 width line from START to END with the given color COLOR
+        使用 COLOR 从 START 到 END 绘制宽度为 1 的线段
         """
         pass
 
@@ -35,61 +35,57 @@ class Canvas(ABC):
     @abstractmethod
     def draw_circle(self, center, radius, color, width, is_filled, start, end):
         """
-        Draw a circle of width 1 with the given center CENTER, radius RADIUS, and color COLOR.
-        Only draw the portion with angle between START and END, moving counterclockwise from START to END.
-        RADIUS must be non-negative.
+        绘制宽度为 1 的圆，圆心为 CENTER，半径为 RADIUS，颜色为 COLOR。仅绘制从 START 到 END 的角度范围，沿逆时针方向绘制。RADIUS 必须非负。
 
-        Fill the circle if IS_FILLED is true.
+        如果 IS_FILLED 为真，则填充圆。
         """
         pass
 
     @abstractmethod
     def fill_path(self, path, color):
         """
-        Fill the given polygon formed by the movements in PATH using fill color COLOR.
+        使用填充色 COLOR 填充由 PATH 中的移动构成的多边形。
         """
         pass
 
     @abstractmethod
     def axis_aligned_rectangle(self, bottom_left, width, height, color):
         """
-        Fill the given rectangle with bottom left corner BOTTOM_LEFT, and dimensions (WIDTH, HEIGHT),
-            and fill color COLOR
+        使用 COLOR 填充矩形，其左下角为 BOTTOM_LEFT，尺寸为 (WIDTH, HEIGHT)
         """
         pass
 
     @abstractmethod
     def set_bgcolor(self, color):
         """
-        Fill the entire background with the given COLOR
+        使用给定 COLOR 填充整个背景
         """
         pass
 
     @abstractmethod
     def clear(self):
         """
-        Clear everything in the foreground
+        清除前景中的所有内容
         """
         pass
 
     @abstractmethod
     def refreshed_turtle(self, drawn_turtle):
         """
-        Update the turtle to the given DrawnTurtle object, or remove the turtle if None is passed
+        将海龟更新为给定的 DrawnTurtle 对象；如果传入 None，则移除海龟
         """
         pass
 
     @abstractmethod
     def set_speed(self, speed):
         """
-        Set the animation speed, should be consistent with the built-in turtle module if implemented at all.
+        设置动画速度；若实现此功能，其行为应与内置 turtle 模块一致。
         """
         pass
 
     @abstractmethod
     def exit_on_click(self):
         """
-        Blocks until a click, upon which the GUI is closed.
-        For non-gui apps, this does nothing, but GUI based apps should change the behavior.
+        阻塞等待点击，点击后关闭图形界面。对于非图形界面应用，此操作无效果；图形界面应用应重写此行为。
         """
         pass

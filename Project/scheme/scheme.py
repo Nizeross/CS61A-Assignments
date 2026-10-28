@@ -1,4 +1,4 @@
-"""A Scheme interpreter and its read-eval-print loop."""
+"""Scheme 解释器及其读取—求值—打印循环。"""
 
 import sys
 import os
@@ -15,12 +15,12 @@ from ucb import main, trace
 
 
 ################
-# Input/Output #
+# 输入与输出 #
 ################
 
 def read_eval_print_loop(next_line, env, interactive=False, quiet=False,
                          startup=False, load_files=(), report_errors=False):
-    """Read and evaluate input until an end of file or keyboard interrupt."""
+    """读取输入并求值，直到遇到文件结束或键盘中断。"""
     if startup:
         for filename in load_files:
             scheme_load(filename, True, env)
@@ -51,19 +51,17 @@ def read_eval_print_loop(next_line, env, interactive=False, quiet=False,
             print('KeyboardInterrupt')
             if not interactive:
                 return
-        except EOFError:  # <Control>-D, etc.
+        except EOFError:  # <Control>-D 等
             print()
             return
 
 def add_builtins(frame, funcs_and_names):
-    """Enter bindings in FUNCS_AND_NAMES into FRAME, an environment frame,
-    as built-in procedures. Each item in FUNCS_AND_NAMES has the form
-    (NAME, PYTHON-FUNCTION, INTERNAL-NAME)."""
+    """将 FUNCS_AND_NAMES 中的绑定作为内置过程添加到环境帧 FRAME。每个条目的形式为 (NAME, PYTHON-FUNCTION, INTERNAL-NAME)。"""
     for name, py_func, proc_name, need_env in funcs_and_names:
         frame.define(name, BuiltinProcedure(py_func, name=proc_name, need_env=need_env))
 
 def create_global_frame():
-    """Initialize and return a single-frame environment with built-in names."""
+    """初始化并返回一个包含内置名称的单帧环境。"""
     env = Frame(None)
     env.define('eval',
                BuiltinProcedure(scheme_eval, True, 'eval'))

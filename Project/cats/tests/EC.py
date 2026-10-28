@@ -97,7 +97,7 @@ test = {
           >>> minimum_mewtations.call_count = 0
           >>> minimum_mewtations("rlogcul", "logical", big_limit)    # rlogcul -> logcul -> logicul -> logical
           3
-          >>> minimum_mewtations.call_count <= 350    # see if you removed redundant recursive calls
+          >>> minimum_mewtations.call_count <= 350    # 检查是否去掉了冗余的递归调用
           True
           >>> minimum_mewtations.call_count = 0
           >>> minimum_mewtations("ckiteus", "kittens", big_limit)
@@ -111,7 +111,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # check that you're only using the minimum_mewtations func
+          >>> # 检查是否只使用了 minimum_mewtations 函数
           >>> import trace, io
           >>> from contextlib import redirect_stdout
           >>> with io.StringIO() as buf, redirect_stdout(buf):
@@ -119,7 +119,7 @@ test = {
           ...     output = buf.getvalue()
           >>> lines = [line for line in output.split('\n') if 'funcname' in line]
           >>> func_names = set([l.split(",")[1].split(":")[1].strip() for l in lines])
-          >>> func_names == {'counted', 'minimum_mewtations', 'memoized'}   # make sure you are not using any helper functions
+          >>> func_names == {'counted', 'minimum_mewtations', 'memoized'}   # 确保没有使用任何辅助函数
           True
           """,
           'hidden': False,
@@ -131,7 +131,7 @@ test = {
           >>> minimum_mewtations.call_count = 0
           >>> autocorrect("woll", common_words, minimum_mewtations, 4)
           'well'
-          >>> minimum_mewtations.call_count <= 72000    # minimum_mewtations should be memoized
+          >>> minimum_mewtations.call_count <= 72000    # minimum_mewtations 应采用记忆化缓存
           True
           >>> minimum_mewtations.call_count = 0
           >>> autocorrect("woll", common_words, furry_fixes, 4)
@@ -139,7 +139,7 @@ test = {
           >>> minimum_mewtations.call_count
           0
           >>> minimum_mewtations.call_count = 0
-          >>> autocorrect("woll", common_words, minimum_mewtations, 4)  # identical to the first call
+          >>> autocorrect("woll", common_words, minimum_mewtations, 4)  # 与第一次调用相同
           'well'
           >>> minimum_mewtations.call_count
           0

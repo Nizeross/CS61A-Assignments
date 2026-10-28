@@ -1,17 +1,17 @@
-;;; Test cases for Scheme.
+;;; Scheme 的测试用例。
 ;;;
-;;; In order to run only a prefix of these examples, add the line
+;;; 如果只想运行开头的一部分示例，请添加一行
 ;;;
 ;;; (exit)
 ;;;
-;;; after the last test you wish to run.
+;;; 放在你希望运行的最后一个测试之后。
 
 ;;; ********************************
-;;; *** Add your own tests here! (Optional) ***
+;;; *** 在这里添加你自己的测试！（可选）***
 ;;; ********************************
 
-;;; These are examples from several sections of "The Structure
-;;; and Interpretation of Computer Programs" by Abelson and Sussman.
+;;; 以下示例选自 Abelson 和 Sussman 合著的
+;;; 《计算机程序的构造和解释》的若干章节。
 
 ;;; License: Creative Commons share alike with attribution
 
@@ -82,7 +82,7 @@ circumference
 (square 21)
 ; expect 441
 
-(define square (lambda (x) (* x x))) ; See Section 1.3.2
+(define square (lambda (x) (* x x))) ; 参见第 1.3.2 节
 (square 21)
 ; expect 441
 
@@ -425,7 +425,7 @@ one-through-four
 (my-equal? '(1 2 three) '(1 2 (three)))
 ; expect #f
 
-;;; Peter Norvig tests (http://norvig.com/lispy2.html)
+;;; Peter Norvig 的测试（http://norvig.com/lispy2.html）
 
 (define double (lambda (x) (* 2 x)))
 (double 5)
@@ -472,7 +472,7 @@ one-through-four
 (riff-shuffle (riff-shuffle (riff-shuffle (list 1 2 3 4 5 6 7 8))))
 ; expect (1 2 3 4 5 6 7 8)
 
-;;; Additional tests
+;;; 补充测试
 
 (apply square '(2))
 ; expect 4
@@ -540,10 +540,10 @@ one-through-four
 ; expect 7
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Scheme Implementations ;;;
+;;; Scheme 实现 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; len outputs the length of list s
+;; len 输出列表 s 的长度
 (define (len s)
   (if (eq? s '())
     0
@@ -553,7 +553,7 @@ one-through-four
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;; Tests from Doctests ;;;;
+;;;;; 来自文档测试的测试用例 ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (begin 1)
@@ -606,12 +606,12 @@ x
 ; expect 5
 
 ;;;;;;;;;;;;;;;;;;;;
-;;; Optional ;;;
+;;; 可选内容 ;;;
 ;;;;;;;;;;;;;;;;;;;;
 
 (exit)
 
-; Tail call optimization tests
+; 尾调用优化测试
 
 (define (sum n total)
   (if (zero? n) total
@@ -638,7 +638,7 @@ x
 
 (exit)
 
-; macro tests
+; 宏测试
 
 (define (map f lst)
     (if (null? lst)
@@ -675,7 +675,7 @@ x
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Optional Tests from Doctests ;;;
+;;; 来自文档测试的可选测试用例 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define-macro (f x) (car x))

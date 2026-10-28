@@ -36,15 +36,15 @@ test = {
         },
         {
           'code': r"""
-          >>> length_ratio = lambda w1, w2, limit: len(w2) / len(w1) # An asymmetric diff function
-          >>> autocorrect("aaa", ["a"], length_ratio, 2) # typed_word ("aaa") is passed in as the first argument to a diff function
+          >>> length_ratio = lambda w1, w2, limit: len(w2) / len(w1) # 非对称的差异函数
+          >>> autocorrect("aaa", ["a"], length_ratio, 2) # typed_word（"aaa"）作为第一个参数传给差异函数
           'a'
           >>> autocorrect("cats", ["panthers", "lions"], length_ratio, 2)
           'lions'
-          >>> ten_diff = lambda w1, w2, limit: 10 # Always returns 10
+          >>> ten_diff = lambda w1, w2, limit: 10 # 始终返回 10
           >>> autocorrect("hwllo", ["butter", "hello", "potato"], ten_diff, 20)
           'butter'
-          >>> first_diff = lambda w1, w2, limit: (1 if w1[0] != w2[0] else 0) # Checks for matching first char
+          >>> first_diff = lambda w1, w2, limit: (1 if w1[0] != w2[0] else 0) # 检查首字符是否相同
           >>> autocorrect("tosting", ["testing", "asking", "fasting"], first_diff, 10)
           'testing'
           """,
@@ -54,7 +54,7 @@ test = {
         },
         {
           'code': r"""
-          >>> matching_diff = lambda w1, w2, limit: sum([w1[i] != w2[i] for i in range(min(len(w1), len(w2)))]) # Num matching chars
+          >>> matching_diff = lambda w1, w2, limit: sum([w1[i] != w2[i] for i in range(min(len(w1), len(w2)))]) # 匹配的字符数
           >>> autocorrect("tosting", ["testing", "asking", "fasting"], matching_diff, 10)
           'testing'
           >>> autocorrect("tsting", ["testing", "rowing"], matching_diff, 10)

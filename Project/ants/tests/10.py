@@ -57,7 +57,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # Testing water with Ants
+          >>> # 测试水域中的蚂蚁
           >>> test_water = Water('Water Test1')
           >>> ant = HarvesterAnt()
           >>> test_water.add_insect(ant)
@@ -78,9 +78,9 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing water with soggy (non-waterproof) bees
+          >>> # 测试水域中不防水的蜜蜂
           >>> test_bee = Bee(1000000)
-          >>> test_bee.is_waterproof = False    # Make Bee non-waterproof
+          >>> test_bee.is_waterproof = False    # 将 Bee 设为不防水
           >>> test_water = Water('Water Test2')
           >>> test_water.add_insect(test_bee)
           >>> test_bee.health
@@ -96,7 +96,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing water with waterproof bees
+          >>> # 测试水域中的防水蜜蜂
           >>> test_bee = Bee(1)
           >>> test_water = Water('Water Test3')
           >>> test_water.add_insect(test_bee)
@@ -113,7 +113,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # test proper call to zero-health callback
+          >>> # 测试是否正确调用生命值归零时的回调函数
           >>> original_zero_health_callback = Insect.zero_health_callback
           >>> Insect.zero_health_callback = lambda x: print("insect died")
           >>> place = Water('Water Test4')
@@ -147,7 +147,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # Testing water inheritance
+          >>> # 测试 Water 的继承行为
           >>> old_add_insect = Place.add_insect
           >>> def new_add_insect(self, insect):
           ...     print("called add_insect")
@@ -155,7 +155,7 @@ test = {
           >>> Place.add_insect = new_add_insect
           >>> test_bee = Bee(1)
           >>> test_water = Water('Water Test4')
-          >>> test_water.add_insect(test_bee) # if this fails you probably didn't call `add_insect`
+          >>> test_water.add_insect(test_bee) # 如果失败，你可能没有调用 add_insect
           called add_insect
           >>> Place.add_insect = old_add_insect
           """,

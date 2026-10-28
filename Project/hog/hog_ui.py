@@ -1,16 +1,16 @@
 #####################################
-# Optional: Adding a User Interface #
+# 可选：添加用户界面 #
 #####################################
 
 from hog import *
 
 ########################
-# Printing game events #
+# 打印游戏事件 #
 ########################
 
 
 def play_and_print(strategy0, strategy1):
-    """Simulate a game and print out what happened during the simulation."""
+    """模拟一局游戏，并打印模拟过程中发生的事件。"""
     final0, final1 = play(printing_strategy(0, strategy0),
                           printing_strategy(1, strategy1),
                           sus_update_and_print, 0, 0,
@@ -19,9 +19,9 @@ def play_and_print(strategy0, strategy1):
 
 
 def printing_strategy(who, strategy):
-    """Return a strategy that also prints the player's score and choice.
+    """返回一个同时打印玩家分数和选择的策略。
 
-    (This could print "rolls 1 dice..." which is ungrammatical, but that's ok.)
+    （这里可能打印出语法不规范的 "rolls 1 dice..."，但没有关系。）
 
     >>> strategy0 = printing_strategy(0, always_roll_5)
     >>> strategy0(10, 20)
@@ -48,7 +48,7 @@ def printing_strategy(who, strategy):
 
 
 def printing_dice(dice):
-    """Return a dice function that also prints the outcome and a space."""
+    """返回一个骰子函数，它还会打印结果和一个空格。"""
     def dice_and_print():
         "A dice function that also prints."
         outcome = dice()
@@ -58,8 +58,7 @@ def printing_dice(dice):
 
 
 def sus_update_and_print(num_rolls, player_score, opponent_score, dice):
-    """Return the updated score, print out the score update, and print when
-    Sus Fuss is triggered.
+    """返回更新后的分数，打印分数变化，并在触发 Sus Fuss 时打印提示。
 
     >>> d = printing_dice(make_test_dice(4, 5, 3))
     >>> sus_update_and_print(3, 9, 99, d)
@@ -67,7 +66,7 @@ def sus_update_and_print(num_rolls, player_score, opponent_score, dice):
     23
     """
     print('  [', end=" ")
-    turn_score = take_turn(num_rolls, player_score, opponent_score, dice)  # Prints dice outcomes
+    turn_score = take_turn(num_rolls, player_score, opponent_score, dice)  # 打印骰子结果
     print('] =>', turn_score, end='; ')
     print(player_score, '+', turn_score, '=', player_score + turn_score, end='')
     score = turn_score + player_score
@@ -76,17 +75,17 @@ def sus_update_and_print(num_rolls, player_score, opponent_score, dice):
         score = sus_score
         print(' triggering **Sus Fuss**, increasing to', score)
     else:
-        print()  # This print completes the line without adding any additional text
+        print()  # 此 print 结束当前行，不添加额外文字
     return score
 
 
 ########################
-# Accepting User Input #
+# 接收用户输入 #
 ########################
 
 
 def get_int(prompt, lower, upper):
-    """Return an integer i such that i >= lower and i <= upper."""
+    """返回满足 lower <= i <= upper 的整数 i。"""
     choice = input(prompt)
     while not choice.isnumeric() or int(choice) < lower or int(choice) > upper:
         print('Please enter an integer from', lower, 'to', upper)
@@ -95,7 +94,7 @@ def get_int(prompt, lower, upper):
 
 
 def interactive_strategy(who):
-    """Return a strategy for which the user provides the number of rolls."""
+    """返回一个由用户输入掷骰次数的策略。"""
     def strategy(score, opponent_score):
         print('Player', who, ', you have', score, 'and your opponent has', opponent_score)
         choice = get_int('How many dice will you roll? ', 0, 10)
@@ -104,12 +103,12 @@ def interactive_strategy(who):
 
 
 ####################
-# Playing the game #
+# 进行游戏 #
 ####################
 
 
 def play_with(num_players):
-    """Play a game with NUM_PLAYERS interactive (human) players."""
+    """进行一局有 NUM_PLAYERS 位真人交互玩家的游戏。"""
     if num_players == 0:
         play_and_print(always_roll_5, always_roll_5)
     elif num_players == 1:
@@ -122,7 +121,7 @@ def play_with(num_players):
 
 @main
 def run(*args):
-    """Select number of players and play a game."""
+    """选择玩家人数并开始游戏。"""
     import argparse
     parser = argparse.ArgumentParser(description="Play Hog")
     parser.add_argument('--num_players', '-n', type=int, default=0,

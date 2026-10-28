@@ -1,6 +1,5 @@
 def cumulative_mul(t):
-    """Mutates t so that each node's label becomes the product of its own
-    label and all labels in the corresponding subtree rooted at t.
+    """原地修改 t，使每个节点的标签变为它自身标签与以该节点为根的子树中所有其他节点标签的乘积。
 
     >>> t = Tree(1, [Tree(3, [Tree(5)]), Tree(7)])
     >>> cumulative_mul(t)
@@ -15,8 +14,7 @@ def cumulative_mul(t):
 
 
 def prune_small(t, n):
-    """Prune the tree mutatively, keeping only the n branches
-    of each node with the smallest labels.
+    """原地修剪树，对每个节点仅保留标签最小的 n 个分支。
 
     >>> t1 = Tree(6)
     >>> prune_small(t1, 2)
@@ -39,10 +37,9 @@ def prune_small(t, n):
 
 
 def delete(t, x):
-    """Remove all nodes labeled x below the root within Tree t. When a non-leaf
-    node is deleted, the deleted node's children become children of its parent.
+    """删除 Tree t 中根节点以下所有标签为 x 的节点。删除非叶节点时，将其子节点连接到该节点的父节点。
 
-    The root node will never be removed.
+    根节点永远不会被删除。
 
     >>> t = Tree(3, [Tree(2, [Tree(2), Tree(2)]), Tree(2), Tree(2, [Tree(2, [Tree(2), Tree(2)])])])
     >>> delete(t, 2)
@@ -68,7 +65,7 @@ def delete(t, x):
 
 
 def max_path_sum(t):
-    """Return the maximum path sum of the tree.
+    """返回树的最大路径和。
 
     >>> t = Tree(1, [Tree(5, [Tree(1), Tree(3)]), Tree(10)])
     >>> max_path_sum(t)
@@ -78,7 +75,7 @@ def max_path_sum(t):
 
 
 class Tree:
-    """A tree has a label and a list of branches.
+    """树包含一个标签和一个分支列表。
 
     >>> t = Tree(3, [Tree(2, [Tree(5)]), Tree(4)])
     >>> t.label

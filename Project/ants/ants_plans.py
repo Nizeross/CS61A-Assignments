@@ -12,8 +12,8 @@ def make_easy_assault_plan(ants_impl=None):
     ants_impl = ants_impl or ants_impl
     plan = AssaultPlan()
     for time in range(3, 16, 2):
-        plan.add_wave(ants_impl.Bee, 3, time, 1) # Adding 1 bee of health 3 at timestamp TIME
-    plan.add_wave(ants_impl.Wasp, 3, 4, 1) # Assing 1 wasp of health 3 at timestamp 4
+        plan.add_wave(ants_impl.Bee, 3, time, 1) # 在时刻 TIME 添加 1 只生命值为 3 的蜜蜂
+    plan.add_wave(ants_impl.Wasp, 3, 4, 1) # 在时刻 4 添加 1 只生命值为 3 的黄蜂
     plan.add_wave(ants_impl.Wasp, 3, 8, 1)
     plan.add_wave(ants_impl.Wasp, 3, 12, 1)
     plan.add_wave(ants_impl.Boss, 15, 16, 1)
@@ -24,40 +24,40 @@ def make_normal_assault_plan(ants_impl=None):
     ants_impl = ants_impl or ants
     plan = AssaultPlan()
 
-    for time in range(3, 16, 2): # Adding 2 bees (1 bee for time = 3, 5) of health 3 at timestamp 3, 5, 7, 9, 11, 13, 15
+    for time in range(3, 16, 2): # 在时刻 3、5、7、9、11、13、15 添加 2 只生命值为 3 的蜜蜂（原注：time = 3、5 时为 1 只）
         if time == 3 or time == 5:
-            # Change number of bees to 1
+            # 将蜜蜂数量改为 1
             plan.add_wave(ants_impl.Bee, 3, time, 1)
         else:
             plan.add_wave(ants_impl.Bee, 3, time, 2)
 
-    for time in range(6, 13, 3): # Adding 1 Wasp of health 2 at time 6, 9, 12
+    for time in range(6, 13, 3): # 在时刻 6、9、12 添加 1 只生命值为 2 的 Wasp
         plan.add_wave(ants_impl.Wasp, 2, time, 1)
 
-    for time in range(7, 11, 3): # Adding 1 Ninja of health 1 at time 7, 10
+    for time in range(7, 11, 3): # 在时刻 7、10 添加 1 只生命值为 1 的 Ninja
         plan.add_wave(ants_impl.Wasp, 1, time, 1)
 
-    for time in range(12, 15, 2): # Adding 1 Wasp (health 3) and 1 Ninja (health 2) at time 12, 14
+    for time in range(12, 15, 2): # 在时刻 12、14 添加 1 只 Wasp（生命值 3）和 1 只 Ninja（生命值 2）
         plan.add_wave(ants_impl.Wasp, 3, time, 1)
         plan.add_wave(ants_impl.Wasp, 2, time, 1)
 
-    for time in range(13, 19, 2): # Adding 2 Wasp (health 3) + 2 Ninja (health 3) at time 13, 15, 17
+    for time in range(13, 19, 2): # 在时刻 13、15、17 添加 2 只 Wasp（生命值 3）和 2 只 Ninja（生命值 3）
         plan.add_wave(ants_impl.Wasp, 3, time, 2)
         plan.add_wave(ants_impl.Wasp, 3, time, 2)
 
-    for time in range(16, 23, 2): # Adding 2 bees of health 5 at timestamp 16, 18, 20, 22
+    for time in range(16, 23, 2): # 在时刻 16、18、20、22 添加 2 只生命值为 5 的蜜蜂
         plan.add_wave(ants_impl.Bee, 5, time, 2)
 
-    for time in range(24, 31, 2): # Adding 2 bees of health 6 at timestamp 24, 26, 28, 30
+    for time in range(24, 31, 2): # 在时刻 24、26、28、30 添加 2 只生命值为 6 的蜜蜂
         plan.add_wave(ants_impl.Bee, 6, time, 2)
 
-    for time in range(20, 30, 3): # Adding 2 Ninja of health 3 at time 20, 23, 26, 29
+    for time in range(20, 30, 3): # 在时刻 20、23、26、29 添加 2 只生命值为 3 的 Ninja
         plan.add_wave(ants_impl.Wasp, 3, time, 2)
 
-    for time in range(21, 26, 2): # Adding 1 Wasp of health 5 at time 21, 23, 25
+    for time in range(21, 26, 2): # 在时刻 21、23、25 添加 1 只生命值为 5 的 Wasp
         plan.add_wave(ants_impl.Wasp, 5, time, 1)
 
-    for time in range(28, 31): # Adding 2 Wasp of health 6 at time 28, 29, 30
+    for time in range(28, 31): # 在时刻 28、29、30 添加 2 只生命值为 6 的 Wasp
         plan.add_wave(ants_impl.Wasp, 6, time, 2)
 
     plan.add_wave(ants_impl.Boss, 50, 30, 1)
@@ -69,43 +69,43 @@ def make_hard_assault_plan(ants_impl=None):
     ants_impl = ants_impl or ants
     plan = AssaultPlan()
 
-    for time in range(3, 9, 2): # Adding 2 bees (1 bee for time = 3) of health 3 at timestamp 3, 5, 7
+    for time in range(3, 9, 2): # 在时刻 3、5、7 添加 2 只生命值为 3 的蜜蜂（time = 3 时为 1 只）
         if time == 3:
-            # Change number of bees to 1
+            # 将蜜蜂数量改为 1
             plan.add_wave(ants_impl.Bee, 3, time, 1)
         else:
             plan.add_wave(ants_impl.Bee, 3, time, 2)
 
-    for time in range(9, 16, 2): # Adding 3 bees of health 3 at timestamp 9, 11, 13, 15
+    for time in range(9, 16, 2): # 在时刻 9、11、13、15 添加 3 只生命值为 3 的蜜蜂
         plan.add_wave(ants_impl.Bee, 3, time, 3)
 
-    for time in range(5, 9, 3): # Adding 1 Wasp of health 2 at time 5, 8
+    for time in range(5, 9, 3): # 在时刻 5、8 添加 1 只生命值为 2 的 Wasp
         plan.add_wave(ants_impl.Wasp, 2, time, 1)
 
-    for time in range(7, 12, 2): # Adding 3 Ninja of health 1 at time 7, 9
+    for time in range(7, 12, 2): # 在时刻 7、9 添加 3 只生命值为 1 的 Ninja
         plan.add_wave(ants_impl.Wasp, 1, time, 3)
 
-    for time in range(10, 15, 2): # Adding 2 Wasp (health 3) and 1 Ninja (health 3) at time 10, 12, 14
+    for time in range(10, 15, 2): # 在时刻 10、12、14 添加 2 只 Wasp（生命值 3）和 1 只 Ninja（生命值 3）
         plan.add_wave(ants_impl.Wasp, 3, time, 2)
         plan.add_wave(ants_impl.Wasp, 3, time, 1)
 
-    for time in range(13, 19, 2): # Adding 3 Wasp (health 3) + 3 Ninja (health 3) at time 13, 15, 17
+    for time in range(13, 19, 2): # 在时刻 13、15、17 添加 3 只 Wasp（生命值 3）和 3 只 Ninja（生命值 3）
         plan.add_wave(ants_impl.Wasp, 3, time, 3)
         plan.add_wave(ants_impl.Wasp, 3, time, 3)
 
-    for time in range(16, 23, 2): # Adding 3 bees of health 5 at timestamp 16, 18, 20, 22
+    for time in range(16, 23, 2): # 在时刻 16、18、20、22 添加 3 只生命值为 5 的蜜蜂
         plan.add_wave(ants_impl.Bee, 5, time, 3)
 
-    for time in range(24, 31, 2): # Adding 3 bees of health 6 at timestamp 24, 26, 28, 30
+    for time in range(24, 31, 2): # 在时刻 24、26、28、30 添加 3 只生命值为 6 的蜜蜂
         plan.add_wave(ants_impl.Bee, 6, time, 3)
 
-    for time in range(20, 30, 2): # Adding 2 Ninja of health 3 at time 20, 22, 24, 26, 28
+    for time in range(20, 30, 2): # 在时刻 20、22、24、26、28 添加 2 只生命值为 3 的 Ninja
         plan.add_wave(ants_impl.Wasp, 3, time, 2)
 
-    for time in range(21, 26, 2): # Adding 2 Wasp of health 6 at time 21, 23, 25
+    for time in range(21, 26, 2): # 在时刻 21、23、25 添加 2 只生命值为 6 的 Wasp
         plan.add_wave(ants_impl.Wasp, 6, time, 2)
 
-    for time in range(28, 31): # Adding 4 Wasp of health 8 at time 28, 29, 30
+    for time in range(28, 31): # 在时刻 28、29、30 添加 4 只生命值为 8 的 Wasp
         plan.add_wave(ants_impl.Wasp, 8, time, 4)
 
     plan.add_wave(ants_impl.Boss, 65, 30, 1)
@@ -117,41 +117,41 @@ def make_extra_hard_assault_plan(ants_impl=None):
     ants_impl = ants_impl or ants
     plan = AssaultPlan()
 
-    for time in range(3, 9, 2): # Adding 2 bees of health 3 at timestamp 3, 5, 7
+    for time in range(3, 9, 2): # 在时刻 3、5、7 添加 2 只生命值为 3 的蜜蜂
         plan.add_wave(ants_impl.Bee, 3, time, 2)
 
-    for time in range(9, 16, 2): # Adding 3 bees of health 3 at timestamp 9, 11, 13, 15
+    for time in range(9, 16, 2): # 在时刻 9、11、13、15 添加 3 只生命值为 3 的蜜蜂
         plan.add_wave(ants_impl.Bee, 3, time, 3)
 
-    for time in range(5, 12, 2): # Adding 1 Wasp of health 2 at time 5, 7, 9, 11
+    for time in range(5, 12, 2): # 在时刻 5、7、9、11 添加 1 只生命值为 2 的 Wasp
         plan.add_wave(ants_impl.Wasp, 2, time, 1)
 
-    for time in range(7, 12, 2): # Adding 3 Ninja of health 2 at time 7, 9, 11
+    for time in range(7, 12, 2): # 在时刻 7、9、11 添加 3 只生命值为 2 的 Ninja
         plan.add_wave(ants_impl.Wasp, 2, time, 3)
 
-    for time in range(10, 15, 2): # Adding 2 Wasp (health 3) and 2 Ninja (health 3) at time 10, 12, 14
+    for time in range(10, 15, 2): # 在时刻 10、12、14 添加 2 只 Ninja（生命值 3）和 2 只 Wasp（生命值 3）
         plan.add_wave(ants_impl.Wasp, 3, time, 2)
         plan.add_wave(ants_impl.Wasp, 3, time, 2)
 
-    for time in range(13, 19, 2): # Adding 3 Wasp (health 4) + 3 Ninja (health 3) at time 13, 15, 17
+    for time in range(13, 19, 2): # 在时刻 13、15、17 添加 3 只 Wasp（生命值 4）和 3 只 Ninja（生命值 3）
         plan.add_wave(ants_impl.Wasp, 4, time, 3)
         plan.add_wave(ants_impl.Wasp, 3, time, 3)
 
     plan.add_wave(ants_impl.Boss, 10, 15, 1)
 
-    for time in range(16, 25, 2): # Adding 3 bees of health 6 at timestamp 16, 18, 20, 22, 24
+    for time in range(16, 25, 2): # 在时刻 16、18、20、22、24 添加 3 只生命值为 6 的蜜蜂
         plan.add_wave(ants_impl.Bee, 6, time, 3)
 
-    for time in range(26, 31, 2): # Adding 4 bees of health 6 at timestamp 26, 28, 30
+    for time in range(26, 31, 2): # 在时刻 26、28、30 添加 4 只生命值为 6 的蜜蜂
         plan.add_wave(ants_impl.Bee, 6, time, 4)
 
-    for time in range(20, 30, 2): # Adding 2 Ninja of health 3 at time 20, 22, 24, 26, 28
+    for time in range(20, 30, 2): # 在时刻 20、22、24、26、28 添加 2 只生命值为 3 的 Ninja
         plan.add_wave(ants_impl.Wasp, 3, time, 2)
 
-    for time in range(21, 26, 2): # Adding 2 Wasp of health 8 at time 21, 23, 25
+    for time in range(21, 26, 2): # 在时刻 21、23、25 添加 2 只生命值为 8 的 Wasp
         plan.add_wave(ants_impl.Wasp, 8, time, 2)
 
-    for time in range(28, 31): # Adding 4 Wasp of health 10 at time 28, 29, 30
+    for time in range(28, 31): # 在时刻 28、29、30 添加 4 只生命值为 10 的 Wasp
         plan.add_wave(ants_impl.Wasp, 10, time, 4)
 
     plan.add_wave(ants_impl.Boss, 75, 30, 1)
@@ -160,7 +160,7 @@ def make_extra_hard_assault_plan(ants_impl=None):
 
 
 def create_game_state():
-    """Reads command-line arguments and returns a game state with these options."""
+    """读取命令行参数，返回使用这些选项的游戏状态。"""
 
     parser = argparse.ArgumentParser(description="Play Ants vs. SomeBees")
 

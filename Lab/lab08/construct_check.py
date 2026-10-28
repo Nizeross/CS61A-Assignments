@@ -1,6 +1,6 @@
 from ast import parse, NodeVisitor, Name
 
-# For error messages (student-facing) only
+# 仅用于面向学生的错误消息
 _NAMES = {
     'Add': '+',
     'And': 'and',
@@ -78,28 +78,14 @@ _NAMES = {
 }
 
 def check(source_file, checked_funcs, disallow, source=None):
-    """Checks that AST nodes whose type names are present in DISALLOW
-    (an object supporting 'in') are not present in the function(s) named
-    CHECKED_FUNCS in SOURCE.  By default, SOURCE is the contents of the
-    file SOURCE_FILE.  CHECKED_FUNCS is either a string (indicating a single
-    name) or an object of some other type that supports 'in'. CHECKED_FUNCS
-    may contain __main__ to indicate an entire  module. Prints reports of
-    each prohibited node and returns True iff none are found.
-    See ast.__dir__() for AST type names.  The special node name 'Recursion'
-    checks for overtly recursive calls (i.e., calls of the form NAME(...) where
-    NAME is an enclosing def."""
+    """检查 SOURCE 中由 CHECKED_FUNCS 指定的函数，确保不含类型名位于 DISALLOW 中的 AST 节点（DISALLOW 支持 in 运算）。SOURCE 默认为 SOURCE_FILE 文件的内容。CHECKED_FUNCS 可以是表示单个函数名的字符串，也可以是其他支持 in 运算的对象；包含 __main__ 时表示检查整个模块。打印每个违规节点的报告，仅在未发现违规节点时返回 True。AST 类型名见 ast.__dir__()。特殊名称 'Recursion' 用于检查显式递归调用，即 NAME(...) 形式中 NAME 是外层 def 定义的名称。"""
     return ExclusionChecker(disallow).check(source_file, checked_funcs, source)
 
 class ExclusionChecker(NodeVisitor):
-    """An AST visitor that checks that certain constructs are excluded from
-    parts of a program.  ExclusionChecker(EXC) checks that AST node types
-    whose names are in the sequence or set EXC are not present.  Its check
-    method visits nodes in a given function of a source file checking that the
-    indicated node types are not used."""
+    """用于检查程序指定部分是否使用了禁用语法结构的 AST 访问器。ExclusionChecker(EXC) 检查类型名位于序列或集合 EXC 中的 AST 节点是否存在。其 check 方法遍历源文件中的指定函数，检查是否使用了这些节点类型。"""
 
     def __init__(self, disallow=()):
-        """DISALLOW is the initial default list of disallowed
-        node-type names."""
+        """DISALLOW 是初始默认的禁用节点类型名称列表。"""
         self._disallow = set(disallow)
         self._checking = False
         self._errs = 0
@@ -142,24 +128,11 @@ class ExclusionChecker(NodeVisitor):
         self._errs += 1
 
     def errors(self):
-        """Returns the number of number of prohibited constructs found in
-        the last call to check."""
+        """返回最近一次调用 check 时发现的禁用语法结构数量。"""
         return self._errs
 
     def check(self, source_file, checked_funcs, disallow=None, source=None):
-        """Checks that AST nodes whose type names are present in DISALLOW
-        (an object supporting the contains test) are not present in
-        the function(s) named CHECKED_FUNCS in SOURCE.  By default, SOURCE
-        is the contents of the file SOURCE_FILE.  DISALLOW defaults to the
-        argument given to the constructor (and resets that value if it is
-        present).  CHECKED_FUNCS is either a string (indicating a single
-        name) or an object of some other type that supports 'in'.
-        CHECKED_FUNCS may contain __main__ to indicate an entire module.
-        Prints reports of each prohibited node and returns True iff none
-        are found.
-        See ast.__dir__() for AST type names.  The special node name
-        'Recursion' checks for overtly recursive calls (i.e., calls of the
-        form NAME(...) where NAME is an enclosing def."""
+        """检查 SOURCE 中由 CHECKED_FUNCS 指定的函数，确保不含类型名位于 DISALLOW 中的 AST 节点（DISALLOW 支持成员包含测试）。SOURCE 默认为 SOURCE_FILE 文件的内容。DISALLOW 默认为构造函数收到的参数；若本次提供该参数，也会更新默认值。CHECKED_FUNCS 可以是表示单个函数名的字符串，也可以是其他支持 in 运算的对象；包含 __main__ 时表示检查整个模块。打印每个违规节点的报告，仅在未发现违规节点时返回 True。AST 类型名见 ast.__dir__()。特殊名称 'Recursion' 用于检查显式递归调用，即 NAME(...) 形式中 NAME 是外层 def 定义的名称。"""
 
         self._checking = False
         self._source_file = source_file

@@ -152,7 +152,7 @@ body{
     pointer-events: none;
     z-index: 20;
     opacity: 0.95;
-    top: 50%; /* not sure if this is helpful, gets overidden in js anyways */
+    top: 50%; /* 不确定此设置是否有用；JavaScript 中仍会覆盖它 */
 }
 
 

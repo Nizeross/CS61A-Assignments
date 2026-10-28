@@ -46,7 +46,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # Testing ScubaThrower parameters
+          >>> # 测试 ScubaThrower 的参数
           >>> scuba = ScubaThrower()
           >>> ScubaThrower.food_cost
           50ae32be3e31df6c59633df7fdfb3a72
@@ -77,7 +77,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # Testing if ScubaThrower is waterproof
+          >>> # 测试 ScubaThrower 是否防水
           >>> water = gamestate.places["water_0_2"]
           >>> ant = ScubaThrower()
           >>> water.add_insect(ant)
@@ -94,7 +94,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing that ThrowerAnt is not waterproof
+          >>> # 测试 ThrowerAnt 不防水
           >>> water = gamestate.places["water_0_2"]
           >>> ant = ThrowerAnt()
           >>> ant.is_waterproof
@@ -114,7 +114,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing ScubaThrower on land
+          >>> # 测试 ScubaThrower 在陆地上的行为
           >>> place1 = gamestate.places["tunnel_0_0"]
           >>> place2 = gamestate.places["tunnel_0_4"]
           >>> ant = ScubaThrower()
@@ -131,7 +131,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing ScubaThrower in the water
+          >>> # 测试 ScubaThrower 在水中的行为
           >>> place1 = gamestate.places["water_0_2"]
           >>> place2 = gamestate.places["tunnel_0_4"]
           >>> ant = ScubaThrower()
@@ -162,7 +162,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # Testing ScubaThrower Inheritance from ThrowerAnt
+          >>> # 测试 ScubaThrower 继承 ThrowerAnt
           >>> def new_action(self, gamestate):
           ...     raise NotImplementedError()
           >>> def new_throw_at(self, target):

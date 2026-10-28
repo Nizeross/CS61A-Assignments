@@ -1,4 +1,4 @@
-# Magic the Lambda-ing!
+# Lambda 魔法卡牌游戏！
 
 import random
 
@@ -7,8 +7,7 @@ class Card:
 
     def __init__(self, name, attack, defense):
         """
-        Create a Card object with a name, attack,
-        and defense.
+        创建一个具有名称、攻击力和防御力的 Card 对象。
         >>> staff_member = Card('staff', 400, 300)
         >>> staff_member.name
         'staff'
@@ -26,8 +25,7 @@ class Card:
 
     def power(self, opponent_card):
         """
-        Calculate power as:
-        (player card's attack) - (opponent card's defense)
+        威力的计算方式：（己方卡牌的攻击力）减去（对方卡牌的防御力）
         >>> staff_member = Card('staff', 400, 300)
         >>> other_staff = Card('other', 300, 500)
         >>> staff_member.power(other_staff)
@@ -45,29 +43,25 @@ class Card:
 
     def effect(self, opponent_card, player, opponent):
         """
-        Cards have no default effect.
+        卡牌默认没有特殊效果。
         """
         return
 
     def __repr__(self):
         """
-        Returns a string which is a readable version of
-        a card, in the form:
-        <cardname>: <cardtype>, [<attack>, <defense>]
+        返回卡牌的可读字符串，格式为：<cardname>: <cardtype>, [<attack>, <defense>]
         """
         return '{}: {}, [{}, {}]'.format(self.name, self.cardtype, self.attack, self.defense)
 
     def copy(self):
         """
-        Returns a copy of this card.
+        返回此卡牌的副本。
         """
         return Card(self.name, self.attack, self.defense)
 
 class Player:
     def __init__(self, deck, name):
-        """Initialize a Player object.
-        A Player starts the game by drawing 5 cards from their deck. Each turn,
-        a Player draws another card from the deck and chooses one to play.
+        """初始化 Player 对象。玩家在游戏开始时从牌堆抽取 5 张牌。每轮再抽一张牌，并选择一张打出。
         >>> test_card = Card('test', 100, 100)
         >>> test_deck = Deck([test_card.copy() for _ in range(6)])
         >>> test_player = Player(test_deck, 'tester')
@@ -81,7 +75,7 @@ class Player:
         "*** YOUR CODE HERE ***"
 
     def draw(self):
-        """Draw a card from the player's deck and add it to their hand.
+        """从玩家的牌堆抽一张牌，加入手牌。
         >>> test_card = Card('test', 100, 100)
         >>> test_deck = Deck([test_card.copy() for _ in range(6)])
         >>> test_player = Player(test_deck, 'tester')
@@ -95,7 +89,7 @@ class Player:
         "*** YOUR CODE HERE ***"
 
     def play(self, index):
-        """Remove and return a card from the player's hand at the given INDEX.
+        """移除并返回玩家手牌中给定 INDEX 处的卡牌。
         >>> from cards import *
         >>> test_player = Player(standard_deck, 'tester')
         >>> ta1, ta2 = TACard("ta_1", 300, 400), TACard("ta_2", 500, 600)
@@ -113,7 +107,7 @@ class Player:
 
     def display_hand(self):
         """
-        Display the player's current hand to the user.
+        向用户显示玩家当前的手牌。
         """
         print('Your hand:')
         for card_index, displayed_card in zip(range(len(self.hand)),[str(card) for card in self.hand]):
@@ -122,12 +116,12 @@ class Player:
 
     def play_random(self):
         """
-        Play a random card from hand.
+        随机打出一张手牌。
         """
         return self.play(random.randrange(len(self.hand)))
 
 ######################
-# Optional Questions #
+# 选做题 #
 ######################
 
 class AICard(Card):
@@ -135,10 +129,7 @@ class AICard(Card):
 
     def effect(self, opponent_card, player, opponent):
         """
-        Add the top two cards of your deck to your hand via drawing.
-        Once you have finished writing your code for this problem,
-        set implemented to True so that the text is printed when
-        playing an AICard.
+        通过抽牌将牌堆顶部的两张牌加入手牌。完成本题代码后，将 implemented 设置为 True，以便打出 AICard 时打印说明文字。
 
         >>> from cards import *
         >>> player1, player2 = Player(standard_deck.copy(), 'p1'), Player(standard_deck.copy(), 'p2')
@@ -155,13 +146,13 @@ class AICard(Card):
         """
         "*** YOUR CODE HERE ***"
         implemented = False
-        # You should add your implementation above this.
+        # 你应在此行上方添加自己的实现。
         if implemented:
             print(f"{self.name} allows me to draw two cards!")
 
     def copy(self):
         """
-        Create a copy of this card.
+        创建此卡牌的副本。
         """
         return AICard(self.name, self.attack, self.defense)
 
@@ -170,12 +161,7 @@ class TutorCard(Card):
 
     def effect(self, opponent_card, player, opponent):
         """
-        Add a copy of the first card in your hand
-        to your hand, at the cost of losing the current
-        round. If there are no cards in hand, this card does
-        not add any cards, but still loses the round.  To
-        implement the second part of this effect, a Tutor
-        card's power should be less than all non-Tutor cards.
+        以输掉本轮为代价，将手牌中第一张牌的副本加入手牌。如果没有手牌，则不添加卡牌，但仍输掉本轮。为实现后一个效果，Tutor 卡的威力应小于所有非 Tutor 卡。
 
         >>> from cards import *
         >>> player1, player2 = Player(standard_deck.copy(), 'p1'), Player(standard_deck.copy(), 'p2')
@@ -186,18 +172,18 @@ class TutorCard(Card):
         Tutor Card allows me to add a copy of a card to my hand!
         >>> print(player1.hand)
         [card1: Staff, [0, 100], card2: Staff, [100, 0], card1: Staff, [0, 100]]
-        >>> player1.hand[0] is player1.hand[2] # must add a copy!
+        >>> player1.hand[0] is player1.hand[2] # 必须添加副本！
         False
         >>> player1.hand = []
         >>> test_card.effect(opponent_card, player1, player2)
-        >>> print(player1.hand) # must not add a card if not available
+        >>> print(player1.hand) # 没有可用卡牌时，不得添加卡牌
         []
         >>> test_card.power(opponent_card) < opponent_card.power(test_card)
         True
         """
         "*** YOUR CODE HERE ***"
         added = False
-        # You should add your implementation above this.
+        # 你应在此行上方添加自己的实现。
         if added:
             print(f"{self.name} allows me to add a copy of a card to my hand!")
 
@@ -206,7 +192,7 @@ class TutorCard(Card):
 
     def copy(self):
         """
-        Create a copy of this card.
+        创建此卡牌的副本。
         """
         return TutorCard(self.name, self.attack, self.defense)
 
@@ -215,20 +201,18 @@ class TACard(Card):
 
     def effect(self, opponent_card, player, opponent, arg=None):
         """
-        Discard the card with the highest `power` in your hand,
-        and add the discarded card's attack and defense
-        to this card's own respective stats.
+        丢弃手牌中 power 最高的卡牌，并将被丢弃卡牌的攻击力和防御力分别加到此卡牌的对应属性上。
 
         >>> from cards import *
         >>> player1, player2 = Player(standard_deck.copy(), 'p1'), Player(standard_deck.copy(), 'p2')
         >>> opponent_card = Card("other", 500, 500)
         >>> test_card = TACard("TA Card", 500, 500)
         >>> player1.hand = []
-        >>> test_card.effect(opponent_card, player1, player2) # if no cards in hand, no effect.
+        >>> test_card.effect(opponent_card, player1, player2) # 如果没有手牌，则不产生效果。
         >>> print(test_card.attack, test_card.defense)
         500 500
         >>> player1.hand = [Card("card1", 0, 100), TutorCard("tutor", 10000, 10000), Card("card3", 100, 0)]
-        >>> test_card.effect(opponent_card, player1, player2) # must use card's power method.
+        >>> test_card.effect(opponent_card, player1, player2) # 必须使用卡牌的 power 方法。
         TA Card discards card3 from my hand to increase its own power!
         >>> print(player1.hand)
         [card1: Staff, [0, 100], tutor: Tutor, [10000, 10000]]
@@ -237,14 +221,14 @@ class TACard(Card):
         """
         "*** YOUR CODE HERE ***"
         best_card = None
-        # You should add your implementation above this.
+        # 你应在此行上方添加自己的实现。
         if best_card:
             print(f"{self.name} discards {best_card.name} from my hand to increase its own power!")
 
 
     def copy(self):
         """
-        Create a copy of this card.
+        创建此卡牌的副本。
         """
         return TACard(self.name, self.attack, self.defense)
 
@@ -253,10 +237,7 @@ class InstructorCard(Card):
 
     def effect(self, opponent_card, player, opponent, arg=None):
         """
-        Survives multiple rounds, as long as it has a non-negative
-        attack or defense at the end of a round. At the beginning of the round,
-        its attack and defense are permanently reduced by 1000 each.
-        If this card would survive, it is added back to the hand.
+        只要本轮结束时攻击力或防御力非负，该卡牌就能继续存活。在每轮开始时，它的攻击力和防御力各永久减少 1000。若存活，则重新加入手牌。
 
         >>> from cards import *
         >>> player1, player2 = Player(standard_deck.copy(), 'p1'), Player(standard_deck.copy(), 'p2')
@@ -265,7 +246,7 @@ class InstructorCard(Card):
         >>> player1.hand = [Card("card1", 0, 100)]
         >>> test_card.effect(opponent_card, player1, player2)
         Instructor Card returns to my hand!
-        >>> print(player1.hand) # survives with non-negative attack
+        >>> print(player1.hand) # 攻击力非负时存活
         [card1: Staff, [0, 100], Instructor Card: Instructor, [0, 0]]
         >>> player1.hand = [Card("card1", 0, 100)]
         >>> test_card.effect(opponent_card, player1, player2)
@@ -276,7 +257,7 @@ class InstructorCard(Card):
         """
         "*** YOUR CODE HERE ***"
         re_add = False
-        # You should add your implementation above this.
+        # 你应在此行上方添加自己的实现。
         if re_add:
             print(f"{self.name} returns to my hand!")
 
@@ -285,22 +266,19 @@ class InstructorCard(Card):
 
 
 ########################################
-# Do not edit anything below this line #
+# 请勿修改此行以下的任何内容 #
 ########################################
 
 class Deck:
     def __init__(self, cards):
         """
-        With a list of cards as input, create a deck.
-        This deck should keep track of the cards it contains, and
-        we should be able to draw from the deck, taking a random
-        card out of it.
+        根据输入的卡牌列表创建牌堆。牌堆需要记录其中的卡牌，并支持随机抽出和移除一张牌。
         """
         self.cards = cards
 
     def draw(self):
         """
-        Pick a random card from the deck and remove it from the deck.
+        从牌堆中随机选取并移除一张牌。
         """
         assert self.cards, 'The deck is empty!'
         rand_index = random.randrange(len(self.cards))
@@ -311,7 +289,7 @@ class Deck:
 
     def copy(self):
         """
-        Create a copy of this deck.
+        创建此牌堆的副本。
         """
         return Deck([card.copy() for card in self.cards])
 
@@ -320,7 +298,7 @@ class Game:
 
     def __init__(self, player1, player2):
         """
-        Initialize a game of Magic: the Lambda-ing.
+        初始化一局 Lambda 魔法卡牌游戏。
         """
         self.player1, self.player2 = player1, player2
         self.p1_score = 0
@@ -328,33 +306,31 @@ class Game:
 
     def play_round(self, p1_card, p2_card):
         """
-        After each player picks a card, play them against
-        each other.
+        两位玩家各选一张牌后，让这两张牌进行对战。
         """
         p1_card.effect(p2_card, self.player1, self.player2)
         p2_card.effect(p1_card, self.player2, self.player1)
         p1_power = p1_card.power(p2_card)
         p2_power = p2_card.power(p1_card)
         if p1_power > p2_power:
-            # Player 1 wins the round.
+            # 玩家 1 赢得本轮。
             self.p1_score += 1
             result = 'won'
         elif p2_power > p1_power:
-            # Player 2 wins the round.
+            # 玩家 2 赢得本轮。
             self.p2_score += 1
             result = 'lost'
         else:
-            # This round is a draw.
+            # 本轮平局。
             result = 'tied'
-        # Display results to user.
+        # 向用户显示结果。
         print('You {} this round!'.format(result))
         print('{}\'s card: {}; Power: {}'.format(self.player1.name, p1_card, p1_power))
         print('Opponent\'s card: {}; Power: {}'.format(p2_card, p2_power))
 
     def game_won(self):
         """
-        Check if the game is won and, if so,
-        which player won.
+        检查游戏是否结束；若已结束，确定获胜玩家。
         """
         if self.p1_score < self.win_score and self.p2_score < self.win_score:
             return 0
@@ -362,7 +338,7 @@ class Game:
 
     def display_scores(self):
         """
-        Display players' scores to the user.
+        向用户显示玩家的分数。
         """
         print('{}\'s score: {}'.format(self.player1.name, self.p1_score))
         print('Opponent\'s score: {}'.format(self.p2_score))

@@ -18,7 +18,7 @@ test = {
           # choice: 5
           # choice: (4 5)
           # choice: SchemeError
-          >>> eval_all(nil, env) # return None (meaning undefined)
+          >>> eval_all(nil, env) # 返回 None（表示 undefined）
           """,
           'hidden': False,
           'locked': True,
@@ -29,7 +29,7 @@ test = {
           >>> s = Pair(1, Pair(2, Pair(3, nil)))
           >>> eval_all(s, env)
           3
-          >>> s     # The list should not be mutated!
+          >>> s     # 不得修改此列表！
           Pair(1, Pair(2, Pair(3, nil)))
           """,
           'hidden': False,

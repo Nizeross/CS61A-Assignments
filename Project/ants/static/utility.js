@@ -1,5 +1,5 @@
 function formatAntButtons(antTypes) {
-    // Create buttons for each type of ant
+    // 为每种蚂蚁创建按钮
 
     let antSection = document.querySelector('.ants-section');
     for (i = 0; i < antTypes.length; i++) {
@@ -8,34 +8,34 @@ function formatAntButtons(antTypes) {
         antButton.setAttribute('id', antTypes[i]);
         antButton.style.backgroundImage = `url('../static/assets/ants/${antTypes[i]}.gif')`;
         antSection.appendChild(antButton);
-        selectedAntsTable[antTypes[i]] = false; // Add key value pairs to table (key = ant name, val = whether it's selected)
+        selectedAntsTable[antTypes[i]] = false; // 向表中添加键值对（键为蚂蚁名称，值表示是否被选中）
     }
-    addListenerToAnts(); // Add event listener to ant button
+    addListenerToAnts(); // 为蚂蚁按钮添加事件监听器
 }
 
 
 function formatGameGrid(rows, cols, wetPlaces) {
     let gameSectionStyle = document.querySelector(".game-section").style;
-    let maxWidth = 12; // Maximun tunnel length = 12
+    let maxWidth = 12; // 隧道最大长度为 12
 
     if (0 < cols <= maxWidth) {
-        // Determine space occupied by grids vs hive according to num of cols
+        // 根据列数确定网格与蜂巢各自占据的空间
         gameSectionStyle.gridTemplateColumns = `${cols / maxWidth}fr ${(maxWidth - cols) / maxWidth}fr`;
     } else {
         console.log("===== ERROR: number of columns not supported =====");
     }
 
-    addRowsToGrid(rows); // Add rows to grid
+    addRowsToGrid(rows); // 向网格添加行
     for (i = 0; i < rows; i++) {
-        createButtonsForRow(cols, i, wetPlaces); // Add buttons to row
+        createButtonsForRow(cols, i, wetPlaces); // 向行中添加按钮
     }
     formatHive();
-    addListenerToTile(); // Add event listener to tile
+    addListenerToTile(); // 为地块添加事件监听器
 }
 
 
 function addRowsToGrid(rows) {
-    /* Add rows to game grid */
+    /* 向游戏网格添加行 */
 
     let s = '';
     let tunnelGrid = document.querySelector(".tunnel-grid");
@@ -48,17 +48,17 @@ function addRowsToGrid(rows) {
         }
         let row = document.createElement('div');
         row.setAttribute('class', `tunnel-row-${i}`);
-        row.style.display = 'flex'; // Make every row a flex box
+        row.style.display = 'flex'; // 使每一行使用 Flex 布局
         row.style.justifyContent = 'space-between';
         tunnelGrid.appendChild(row);
     }
 
-    tunnelGrid.style.gridTemplateRows = s; // Set tunnelGrid as CSS grid with correct number of fr
+    tunnelGrid.style.gridTemplateRows = s; // 将 tunnelGrid 设置为 CSS 网格，并设置正确数量的 fr 轨道
 }
 
 
 function createButtonsForRow(buttonCount, row, wetPlaces) {
-    // Add buttons (tiles) for given row
+    // 为给定行添加按钮（地块）
 
     for (let i = 0; i < buttonCount; i ++) {
         let button = document.createElement('button');
@@ -67,9 +67,9 @@ function createButtonsForRow(buttonCount, row, wetPlaces) {
         let image = document.createElement('img');
         image.setAttribute('src', `../static/assets/tiles/${i % 3}.png`);
 
-        for (let j = 0; j < wetPlaces.length; j++) { // Check every wet place to see if is current place
+        for (let j = 0; j < wetPlaces.length; j++) { // 检查每个水域地点是否为当前地点
             if (wetPlaces[j][0] === row && wetPlaces[j][1] === i) {
-                image.setAttribute('src', `../static/assets/tiles/wet.png`); // Set src as wet place
+                image.setAttribute('src', `../static/assets/tiles/wet.png`); // 将 src 设置为水域地块图像
                 break;
             }
         }
@@ -82,7 +82,7 @@ function createButtonsForRow(buttonCount, row, wetPlaces) {
 
 
 function formatHive() {
-    // Set up and add image to bee hive
+    // 设置蜂巢并添加图像
     hive = document.querySelector(".beehive");
     hive.style.position = 'relative';
     hive.style.overflow = 'hideen';
@@ -97,13 +97,11 @@ function formatHive() {
 
 
 function makeAntSelector(antName) {
-    /* Returns an antSelector func, which will be called when button pressed */
+    /* 返回按下按钮时调用的 antSelector 函数 */
 
     function antSelector() {
         for (let ant in selectedAntsTable) {
-            /* Loop thru every ant type.
-            If type is selected, reflect in table and change border color.
-            Reset all other types in table and color */
+            /* 遍历所有蚂蚁类型。若某类型被选中，则在表中记录并更改边框颜色；重置其他所有类型的表项和颜色 */
             let antButton = document.getElementById(ant);
             if (ant === antName) {
                 selectedAntsTable[ant] = true;
@@ -123,7 +121,7 @@ function makeAntSelector(antName) {
 
 
 function addListenerToAnts() {
-    /* Add event listener to every ant button */
+    /* 为每个蚂蚁按钮添加事件监听器 */
 
     let buttons = document.getElementsByClassName('ant-btn');
     for (i = 0; i < buttons.length; i++) {
@@ -133,7 +131,7 @@ function addListenerToAnts() {
 
 
 function getSelectedAnt() {
-    // Return selected ant from table, or undefined if no ants selected
+    // 从表中返回选中的蚂蚁；若未选中任何蚂蚁，则返回 undefined
     for (let ant in selectedAntsTable){
         if (selectedAntsTable[ant]){
             return ant;
@@ -143,23 +141,23 @@ function getSelectedAnt() {
 
 
 function makeOnClickTile(buttonID) {
-    /* Returns a func, which is called when tile button is clicked */
+    /* 返回点击地块按钮时调用的函数 */
 
     function onClickTile() {
 
-        // Check if an ant is selected
+        // 检查是否选中了蚂蚁
         selectedAnt = getSelectedAnt();
         if (selectedAnt == undefined){
             return;
         }
 
-        // Prepare data to sent to server (which button and what ant)
+        // 准备发送给服务器的数据（哪个按钮以及哪种蚂蚁）
         const data = {
             pos: buttonID,
             ant: selectedAnt
         };
 
-        fetch('/deploy_ants', { // Send an AJAX request to Flask server by signaling deploy_ants
+        fetch('/deploy_ants', { // 通过 deploy_ants 向 Flask 服务器发送 AJAX 请求
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -167,9 +165,9 @@ function makeOnClickTile(buttonID) {
             body: JSON.stringify(data),
         })
         .then(response => response.json())
-        .then(data => { // Handle incoming data from server
+        .then(data => { // 处理服务器传来的数据
             deployed = data.deployed;
-            if (deployed){ // Successfuly deployed
+            if (deployed){ // 部署成功
                 placeAnt(selectedAnt, buttonID, data.insect_id);
             }
         })
@@ -184,7 +182,7 @@ function makeOnClickTile(buttonID) {
 
 
 function addListenerToTile() {
-    // Add event listener to every tile button
+    // 为每个地块按钮添加事件监听器
     let buttons = document.getElementsByClassName('tile-btn');
     for (i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener('click', makeOnClickTile(buttons[i].id));
@@ -193,7 +191,7 @@ function addListenerToTile() {
 
 
 function placeAnt(antName, place, ant_id) {
-    // Place an ant on GUI
+    // 在图形界面中放置蚂蚁
     let image = document.createElement('img');
     let button = document.getElementById(place);
 
@@ -202,7 +200,7 @@ function placeAnt(antName, place, ant_id) {
     image.setAttribute('id', ant_id);
     button.appendChild(image);
 
-    // Center the ant at the botton
+    // 将蚂蚁置于按钮中央
     image.style.top = `50%`;
     image.style.left = `50%`;
     image.style.transform = 'translate(-50%, -50%)';
@@ -210,7 +208,7 @@ function placeAnt(antName, place, ant_id) {
 
 
 function adjustAntButtons(availableAnts) {
-    // Increase brightness of available ants (enough food to de deployed), and decrease unavailable ants
+    // 提高可用蚂蚁（食物足够部署）的亮度，降低不可用蚂蚁的亮度
     let antButtons = document.getElementsByClassName('ant-btn');
     for (i = 0; i < antButtons.length; i++) {
         let button = antButtons[i];
@@ -224,16 +222,16 @@ function adjustAntButtons(availableAnts) {
 
 
 function showEndGameAlert(result) {
-    // Display alert message. Called when game ends.
+    // 显示提示消息。游戏结束时调用。
     let body = document.body;
     let alert = document.createElement('alert');
-    alert.style.opacity = '0'; // Set initial opacity to 0
+    alert.style.opacity = '0'; // 将初始不透明度设置为 0
     body.appendChild(alert);
     alert.setAttribute('class', 'alert');
     let text = document.createElement('p');
     alert.appendChild(text);
 
-    if (result) { // Ants won
+    if (result) { // 蚂蚁获胜
         text.innerText = 'You Won!';
         alert.style.backgroundColor = 'rgba(30, 200, 50, 1)';
     } else {
@@ -242,14 +240,14 @@ function showEndGameAlert(result) {
     }
 
     alert.style.transition = 'opacity 2s ease-in-out';
-    setTimeout(() => { // Need time out for animation
-        alert.style.opacity = '0.9'; // Change alert opacity to 90% over 2 seconds
+    setTimeout(() => { // 动画需要延迟调用
+        alert.style.opacity = '0.9'; // 在 2 秒内将提示框的不透明度变为 90%
     }, 50);
 }
 
 
 function playMusic() {
-    // Play music
+    // 播放音乐
     let audio = document.getElementById('backgroundmusic');
     audio.play();
 }

@@ -1,7 +1,6 @@
 def hailstone(n):
     """
-    Yields the elements of the hailstone sequence starting at n.
-    At the end of the sequence, yield 1 infinitely.
+    依次生成从 n 开始的冰雹序列元素。到达序列末尾后，无限生成 1。
 
     >>> hail_gen = hailstone(10)
     >>> [next(hail_gen) for _ in range(10)]
@@ -14,8 +13,7 @@ def hailstone(n):
 
 def merge(a, b):
     """
-    Return a generator that has all of the elements of generators a and b,
-    in increasing order, without duplicates.
+    返回一个生成器，按递增顺序生成生成器 a 和 b 的全部元素，且不重复。
 
     >>> def sequence(start, step):
     ...     while True:
@@ -39,15 +37,14 @@ def merge(a, b):
 
 def stair_ways(n):
     """
-    Yield all the ways to climb a set of n stairs taking
-    1 or 2 steps at a time.
+    生成爬上 n 级台阶的所有方案，每次爬 1 级或 2 级。
 
     >>> list(stair_ways(0))
     [[]]
     >>> s_w = stair_ways(4)
     >>> sorted([next(s_w) for _ in range(5)])
     [[1, 1, 1, 1], [1, 1, 2], [1, 2, 1], [2, 1, 1], [2, 2]]
-    >>> list(s_w) # Ensure you're not yielding extra
+    >>> list(s_w) # 确保没有生成多余的值
     []
     """
     "*** YOUR CODE HERE ***"
@@ -55,8 +52,7 @@ def stair_ways(n):
 
 def yield_paths(t, value):
     """
-    Yields all possible paths from the root of t to a node with the label
-    value as a list.
+    生成 t 中从根节点到标签为 value 的节点的所有路径，每条路径用列表表示。
 
     >>> t1 = tree(1, [tree(2, [tree(3), tree(4, [tree(6)]), tree(5)]), tree(5)])
     >>> print_tree(t1)
@@ -96,24 +92,24 @@ def yield_paths(t, value):
 
 
 
-# Tree Data Abstraction
+# 树的数据抽象
 
 def tree(label, branches=[]):
-    """Construct a tree with the given label value and a list of branches."""
+    """用给定的标签值和分支列表构造一棵树。"""
     for branch in branches:
         assert is_tree(branch), 'branches must be trees'
     return [label] + list(branches)
 
 def label(tree):
-    """Return the label value of a tree."""
+    """返回树的标签值。"""
     return tree[0]
 
 def branches(tree):
-    """Return the list of branches of the given tree."""
+    """返回给定树的分支列表。"""
     return tree[1:]
 
 def is_tree(tree):
-    """Returns True if the given tree is a tree, and False otherwise."""
+    """如果给定对象是有效的树，返回 True，否则返回 False。"""
     if type(tree) != list or len(tree) < 1:
         return False
     for branch in branches(tree):
@@ -122,14 +118,12 @@ def is_tree(tree):
     return True
 
 def is_leaf(tree):
-    """Returns True if the given tree's list of branches is empty, and False
-    otherwise.
+    """如果给定树的分支列表为空，返回 True，否则返回 False。
     """
     return not branches(tree)
 
 def print_tree(t, indent=0):
-    """Print a representation of this tree in which each node is
-    indented by two spaces times its depth from the root.
+    """打印树的表示形式；每个节点的缩进空格数为它距根节点的深度乘以二。
 
     >>> print_tree(tree(1))
     1
@@ -151,7 +145,7 @@ def print_tree(t, indent=0):
         print_tree(b, indent + 1)
 
 def copy_tree(t):
-    """Returns a copy of t. Only for testing purposes.
+    """返回 t 的副本。仅用于测试。
 
     >>> t = tree(5)
     >>> copy = copy_tree(t)

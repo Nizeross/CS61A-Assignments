@@ -182,7 +182,7 @@ test = {
           >>> simple_update(2, 5, 7, make_test_dice(2, 4))
           ebb85ed86e75db9ccb48b9592f867cc1
           # locked
-          >>> sus_update(2, 5, 7, make_test_dice(2, 4)) # is 11 a sus number?
+          >>> sus_update(2, 5, 7, make_test_dice(2, 4)) # 11 是 sus 数吗？
           ebb85ed86e75db9ccb48b9592f867cc1
           # locked
           """,
@@ -192,10 +192,10 @@ test = {
         },
         {
           'code': r"""
-          >>> simple_update(0, 15, 37) # what happens when you roll 0 dice?
+          >>> simple_update(0, 15, 37) # 掷 0 次骰子会怎样？
           6790f7070fa643e868f99363486b6275
           # locked
-          >>> sus_update(0, 15, 37) # is 21 a sus number?
+          >>> sus_update(0, 15, 37) # 21 是 sus 数吗？
           d4e635123d3bf027954fb7a6e4ca8cdb
           # locked
           """,
@@ -208,7 +208,7 @@ test = {
           >>> simple_update(2, 2, 3, make_test_dice(4))
           70e71b420a966665c548a3bb2cb30d7d
           # locked
-          >>> sus_update(2, 2, 3, make_test_dice(4)) # is 10 a sus number?
+          >>> sus_update(2, 2, 3, make_test_dice(4)) # 10 是 sus 数吗？
           ebb85ed86e75db9ccb48b9592f867cc1
           # locked
           """,
@@ -268,7 +268,7 @@ test = {
           ...     for name, val in globals().items():
           ...         if isinstance(val, types.ModuleType):
           ...             yield val.__name__
-          >>> list(imports()) # do NOT import any new modules!
+          >>> list(imports()) # 不要导入任何新模块！
           ['tests.construct_check', 'types']
           """,
           'hidden': False,

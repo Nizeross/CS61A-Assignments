@@ -10,13 +10,13 @@ test = {
           >>> test_dice()
           edcbd82ba98a8122be244fa325c62071
           # locked
-          >>> test_dice() # Second call
+          >>> test_dice() # 第二次调用
           43d176e102c8d95338faf8791aa509b3
           # locked
-          >>> test_dice() # Third call
+          >>> test_dice() # 第三次调用
           46caef5ffd6d72c8757279cbcf01b12f
           # locked
-          >>> test_dice() # Fourth call
+          >>> test_dice() # 第四次调用
           edcbd82ba98a8122be244fa325c62071
           # locked
           """,

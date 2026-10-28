@@ -2,7 +2,7 @@ LAB_SOURCE_FILE = __file__
 
 
 def print_if(s, f):
-    """Print each element of s for which f returns a true value.
+    """打印 s 中每个使 f 返回真值的元素。
 
     >>> print_if([3, 4, 5, 6], lambda x: x > 4)
     5
@@ -10,7 +10,7 @@ def print_if(s, f):
     >>> result = print_if([3, 4, 5, 6], lambda x: x % 2 == 0)
     4
     6
-    >>> print(result)  # print_if should return None
+    >>> print(result)  # print_if 应返回 None
     None
     """
     for x in s:
@@ -18,33 +18,33 @@ def print_if(s, f):
 
 
 def close(s, k):
-    """Return how many elements of s that are within k of their index.
+    """返回 s 中与自身索引的差的绝对值不超过 k 的元素个数。
 
     >>> t = [6, 2, 4, 3, 5]
-    >>> close(t, 0)  # Only 3 is equal to its index
+    >>> close(t, 0)  # 只有 3 等于其索引
     1
-    >>> close(t, 1)  # 2, 3, and 5 are within 1 of their index
+    >>> close(t, 1)  # 2、3 和 5 与各自索引的差的绝对值不超过 1
     3
-    >>> close(t, 2)  # 2, 3, 4, and 5 are all within 2 of their index
+    >>> close(t, 2)  # 2、3、4 和 5 与各自索引的差的绝对值都不超过 2
     4
     >>> close(list(range(10)), 0)
     10
     """
     count = 0
-    for i in range(len(s)):  # Use a range to loop over indices
+    for i in range(len(s)):  # 使用 range 遍历索引
         "*** YOUR CODE HERE ***"
     return count
 
 
 def close_list(s, k):
-    """Return a list of the elements of s that are within k of their index.
+    """返回一个列表，包含 s 中与自身索引的差的绝对值不超过 k 的元素。
 
     >>> t = [6, 2, 4, 3, 5]
-    >>> close_list(t, 0)  # Only 3 is equal to its index
+    >>> close_list(t, 0)  # 只有 3 等于其索引
     [3]
-    >>> close_list(t, 1)  # 2, 3, and 5 are within 1 of their index
+    >>> close_list(t, 1)  # 2、3 和 5 与各自索引的差的绝对值不超过 1
     [2, 3, 5]
-    >>> close_list(t, 2)  # 2, 3, 4, and 5 are all within 2 of their index
+    >>> close_list(t, 2)  # 2、3、4 和 5 与各自索引的差的绝对值都不超过 2
     [2, 4, 3, 5]
     """
     return [___ for i in range(len(s)) if ___]
@@ -53,8 +53,7 @@ def close_list(s, k):
 from math import sqrt
 
 def squares(s):
-    """Returns a new list containing square roots of the elements of the
-    original list that are perfect squares.
+    """返回一个新列表，包含原列表中所有完全平方数的平方根。
 
     >>> seq = [8, 49, 8, 9, 2, 1, 100, 102]
     >>> squares(seq)
@@ -67,8 +66,7 @@ def squares(s):
 
 
 def double_eights(n):
-    """Returns whether or not n has two digits in row that
-    are the number 8.
+    """返回 n 中是否存在两个相邻的数字 8。
 
     >>> double_eights(1288)
     True
@@ -82,7 +80,7 @@ def double_eights(n):
     True
     >>> double_eights(78)
     False
-    >>> # ban iteration
+    >>> # 禁止迭代
     >>> from construct_check import check
     >>> check(LAB_SOURCE_FILE, 'double_eights', ['While', 'For'])
     True
@@ -91,16 +89,14 @@ def double_eights(n):
 
 
 def make_onion(f, g):
-    """Return a function can_reach(x, y, limit) that returns
-    whether some call expression containing only f, g, and x with
-    up to limit calls will give the result y.
+    """返回函数 can_reach(x, y, limit)，判断能否仅用 f、g 和 x 构造一个调用表达式，在调用次数不超过 limit 的情况下得到 y。
 
     >>> up = lambda x: x + 1
     >>> double = lambda y: y * 2
     >>> can_reach = make_onion(up, double)
     >>> can_reach(5, 25, 4)      # 25 = up(double(double(up(5))))
     True
-    >>> can_reach(5, 25, 3)      # Not possible
+    >>> can_reach(5, 25, 3)      # 无法实现
     False
     >>> can_reach(1, 1, 0)      # 1 = 1
     True
@@ -111,7 +107,7 @@ def make_onion(f, g):
     True
     >>> can_reach_string("un", "unending", 3)     # "unending" = add_ing(add_end("un"))
     True
-    >>> can_reach_string("peach", "folding", 4)   # Not possible
+    >>> can_reach_string("peach", "folding", 4)   # 无法实现
     False
     """
     def can_reach(x, y, limit):

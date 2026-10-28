@@ -60,7 +60,7 @@ def build_global_frame():
     for k, v in defdict.items():
         frame.assign(Symbol(k), v())
 
-    # moved to the parser
+    # 已移至解析器
     # frame.assign(Symbol("nil"), Nil)
     # frame.assign(Symbol("#t"), SingletonTrue)
     # frame.assign(Symbol("#f"), SingletonFalse)

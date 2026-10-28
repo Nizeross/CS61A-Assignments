@@ -103,7 +103,7 @@ test = {
         },
         {
           'code': r"""
-          >>> boar_brawl(82, 115) # don't assume scores are below 100
+          >>> boar_brawl(82, 115) # 不要假定分数小于 100
           3
           """,
           'hidden': False,
@@ -112,7 +112,7 @@ test = {
         },
         {
           'code': r"""
-          >>> boar_brawl(99, 121) # don't assume scores are below 100
+          >>> boar_brawl(99, 121) # 不要假定分数小于 100
           21
           """,
           'hidden': False,
@@ -122,7 +122,7 @@ test = {
         {
           'code': r"""
           >>> a = boar_brawl(42, 61)
-          >>> a # check that the value is being returned, not printed
+          >>> a # 检查是否返回了该值，而不是打印它
           12
           """,
           'hidden': False,
@@ -133,7 +133,7 @@ test = {
           'code': r"""
           >>> boar_brawl(727, 939)
           12
-          >>> # ban str and indexing (lists)
+          >>> # 禁止 str 和索引操作（列表）
           >>> test.check('hog.py', 'boar_brawl', ['Slice', 'List', 'ListComp', 'Index', 'Subscript', 'For'])
           True
           """,

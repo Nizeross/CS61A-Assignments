@@ -7,7 +7,7 @@ except ImportError:
     pass
 
 ###########
-# Parsing #
+# 解析 #
 ###########
 
 def card_parse(line, handsize):
@@ -30,7 +30,7 @@ def name_parse(line):
     return line
 
 ########
-# REPL #
+# 读取—求值—打印循环（REPL）#
 ########
 
 def read_eval_print_loop():
@@ -39,7 +39,7 @@ def read_eval_print_loop():
 			line = input('What is your name?> ')
 			name = name_parse(line)
 			break
-		except (KeyboardInterrupt, EOFError, SystemExit): # If you ctrl-c or ctrl-d
+		except (KeyboardInterrupt, EOFError, SystemExit): # 如果按下 Ctrl+C 或 Ctrl+D
 			print('\nSee you next game!')
 			return
 		except SyntaxError as e:
@@ -69,10 +69,10 @@ def read_eval_print_loop():
 			card_index = card_parse(line, len(p1.hand))
 			duel.play_round(p1.play(card_index), p2.play_random())
 			duel.display_scores()
-		except (KeyboardInterrupt, EOFError, SystemExit): # If you ctrl-c or ctrl-d
+		except (KeyboardInterrupt, EOFError, SystemExit): # 如果按下 Ctrl+C 或 Ctrl+D
 			print('\nGood game. Bye!')
 			return
-		except AssertionError: # Deck out
+		except AssertionError: # 牌堆耗尽
 			if p1.deck.is_empty() and p2.deck.is_empty():
 				print(TIE_MESSAGE)
 				return
@@ -87,7 +87,7 @@ def read_eval_print_loop():
 			draw = False
 
 #################
-# Configuration #
+# 配置 #
 #################
 
 WELCOME_MESSAGE = """

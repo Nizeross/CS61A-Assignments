@@ -6,7 +6,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          scm> (ascending? '(1 2 3 4 5))  ; #t or #f
+          scm> (ascending? '(1 2 3 4 5))  ; #t 或 #f
           545654f52801dba9cbbe0347d265df09
           # locked
           """,
@@ -16,7 +16,7 @@ test = {
         },
         {
           'code': r"""
-          scm> (ascending? '(1 5 2 4 3))  ; #t or #f
+          scm> (ascending? '(1 5 2 4 3))  ; #t 或 #f
           8cd49ce066289d3b150d7b6108dda61e
           # locked
           """,
@@ -26,7 +26,7 @@ test = {
         },
         {
           'code': r"""
-          scm> (ascending? '(2 2))  ; #t or #f
+          scm> (ascending? '(2 2))  ; #t 或 #f
           545654f52801dba9cbbe0347d265df09
           # locked
           """,
@@ -36,7 +36,7 @@ test = {
         },
         {
           'code': r"""
-          scm> (ascending? '(1 2 2 4 3))  ; #t or #f
+          scm> (ascending? '(1 2 2 4 3))  ; #t 或 #f
           8cd49ce066289d3b150d7b6108dda61e
           # locked
           """,
@@ -46,7 +46,7 @@ test = {
         },
         {
           'code': r"""
-          scm> (ascending? '())  ; #t or #f
+          scm> (ascending? '())  ; #t 或 #f
           545654f52801dba9cbbe0347d265df09
           # locked
           """,

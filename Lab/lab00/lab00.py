@@ -1,6 +1,5 @@
 def twenty_twenty_four():
-    """Come up with the most creative expression that evaluates to 2024
-    using only numbers and the +, *, and - operators.
+    """只使用数字以及 +、*、- 运算符，构造一个尽可能有创意且求值结果为 2024 的表达式。
 
     >>> twenty_twenty_four()
     2024

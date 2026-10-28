@@ -4,16 +4,16 @@ import string
 from math import sqrt
 
 ############################
-# String utility functions #
+# 字符串辅助函数 #
 ############################
 
 def lines_from_file(path):
-    """Return a list of strings, one for each line in a file."""
+    """返回字符串列表，每个字符串对应文件中的一行。"""
     with open(path, 'r') as f:
         return [line.strip() for line in f.readlines()]
 
 def remove_punctuation(s):
-    """Return a string with the same contents as s, but with punctuation removed.
+    """返回与 s 内容相同但去掉标点符号的字符串。
 
     >>> remove_punctuation("It's a lovely day, don't you think?")
     'Its a lovely day dont you think'
@@ -24,7 +24,7 @@ def remove_punctuation(s):
     return s.strip().translate(punctuation_remover)
 
 def lower(s):
-    """Return a lowercased version of s.
+    """返回 s 的小写版本。
 
     >>> lower("HELLO")
     'hello'
@@ -36,8 +36,7 @@ def lower(s):
     return s.lower()
 
 def split(s):
-    """Return a list of words contained in s, which are sequences of characters
-    separated by whitespace (spaces, tabs, etc.).
+    """返回 s 中的单词列表；单词是由空白字符（空格、制表符等）分隔的字符序列。
 
     >>> split("It's a lovely day, don't you think?")
     ["It's", 'a', 'lovely', 'day,', "don't", 'you', 'think?']
@@ -45,7 +44,7 @@ def split(s):
     return s.split()
 
 #############################
-# Keyboard layout functions #
+# 键盘布局函数 #
 #############################
 
 KEY_LAYOUT = [["1","2","3","4","5","6","7","8","9","0","-","="],
@@ -55,10 +54,9 @@ KEY_LAYOUT = [["1","2","3","4","5","6","7","8","9","0","-","="],
               [" "]]
 
 def distance(p1, p2):
-    """Return the Euclidean distance between two points
+    """返回两点之间的欧几里得距离
 
-    The Euclidean distance between two points, (x1, y1) and (x2, y2)
-    is the square root of (x1 - x2) ** 2 + (y1 - y2) ** 2
+    两点 (x1, y1) 与 (x2, y2) 之间的欧几里得距离，是 (x1 - x2) ** 2 + (y1 - y2) ** 2 的平方根
 
     >>> distance((0, 1), (1, 1))
     1.0
@@ -70,14 +68,11 @@ def distance(p1, p2):
     return sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
 
 def get_key_distances():
-    """Return a new dictionary mapping key pairs to distances.
+    """返回一个将按键对映射到距离的新字典。
 
-    Each key of the dictionary is a tuple of two
-    letters as strings, and each value is the euclidean distance
-    between the two letters on a standard QWERTY keyboard, normalized
+    字典的每个键是由两个字母字符串组成的元组；每个值是这两个字母在标准 QWERTY 键盘上的归一化欧几里得距离
 
-    The scaling is constant, so a pair of keys that are twice
-    as far have a distance value that is twice as great
+    缩放比例固定，因此实际距离为两倍的按键对，其距离值也为两倍
 
     >>> distances = get_key_distances()
     >>> distances["a", "a"]
@@ -104,8 +99,7 @@ def get_key_distances():
     return {key : value * 8 / max_value for key, value in key_distance.items()}
 
 def count(f):
-    """Keeps track of the number of times a function f is called using the
-    variable call_count
+    """使用变量 call_count 记录函数 f 的调用次数
 
     >>> def factorial(n):
     ...     if n <= 1:
@@ -124,11 +118,11 @@ def count(f):
     return counted
 
 ###########################
-# Miscellaneous functions #
+# 其他辅助函数 #
 ###########################
 
 def deep_convert_to_tuple(sequence):
-    """Deeply converts tuples to lists.
+    """递归地将各层元组转换为列表。
     >>> deep_convert_to_tuple(5)
     5
     >>> deep_convert_to_tuple([2, 'hi'])

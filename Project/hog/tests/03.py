@@ -26,7 +26,7 @@ test = {
         },
         {
           'code': r"""
-          >>> take_turn(0, 12, 41) # what happens when you roll 0 dice?
+          >>> take_turn(0, 12, 41) # 掷 0 次骰子会怎样？
           327b19ffebddf93982e1ad2a4a6486f4
           # locked
           """,
@@ -118,7 +118,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> hog.take_turn(5, 0, 0) # Make sure you call roll_dice!
+          >>> hog.take_turn(5, 0, 0) # 务必调用 roll_dice！
           Called roll dice!
           9002
           """,

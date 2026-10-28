@@ -1,6 +1,6 @@
 from ast import parse, NodeVisitor, Name
 
-# For error messages (student-facing) only
+# 仅用于面向学生的错误消息
 _NAMES = {
     'Add': '+',
     'And': 'and',

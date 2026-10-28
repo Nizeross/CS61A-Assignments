@@ -6,7 +6,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> accuracy("12345", "12345") # This should return 100.0 (not the integer 100!)
+          >>> accuracy("12345", "12345") # 此处应返回 100.0（而非整数 100！）
           3a2c23041705bff52731f6d71741b6a2
           # locked
           >>> accuracy("a b c", "a b c")
@@ -18,7 +18,7 @@ test = {
           >>> accuracy("a b", "c d e")
           427fe1a667819805b038e0f2bfdfb7af
           # locked
-          >>> accuracy("Cat", "cat") # the function is case-sensitive
+          >>> accuracy("Cat", "cat") # 此函数区分大小写
           427fe1a667819805b038e0f2bfdfb7af
           # locked
           >>> accuracy("a b c d", "a d")
@@ -27,7 +27,7 @@ test = {
           >>> accuracy("abc", " ")
           427fe1a667819805b038e0f2bfdfb7af
           # locked
-          >>> accuracy("a b \tc" , "a b c") # Tabs don't count as words
+          >>> accuracy("a b \tc" , "a b c") # 制表符不算单词
           3a2c23041705bff52731f6d71741b6a2
           # locked
           >>> accuracy("abc", "")
@@ -39,10 +39,10 @@ test = {
           >>> accuracy("a b c d", "b c d")
           427fe1a667819805b038e0f2bfdfb7af
           # locked
-          >>> accuracy("cats.", "cats") # punctuation counts
+          >>> accuracy("cats.", "cats") # 标点符号也参与比较
           427fe1a667819805b038e0f2bfdfb7af
           # locked
-          >>> accuracy("", "") # Returns 100.0
+          >>> accuracy("", "") # 返回 100.0
           3a2c23041705bff52731f6d71741b6a2
           # locked
           """,

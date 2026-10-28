@@ -8,8 +8,8 @@ test = {
           'code': r"""
           >>> env = create_global_frame()
           >>> twos = Pair(2, Pair(2, nil))
-          >>> plus = BuiltinProcedure(scheme_add) # + procedure
-          >>> scheme_apply(plus, twos, env) # Type SchemeError if you think this errors
+          >>> plus = BuiltinProcedure(scheme_add) # + 过程
+          >>> scheme_apply(plus, twos, env) # 如果你认为会报错，输入 SchemeError
           46beb7deeeb5e9af1c8d785b12558317
           # locked
           """,
@@ -20,8 +20,8 @@ test = {
         {
           'code': r"""
           >>> env = create_global_frame()
-          >>> plus = BuiltinProcedure(scheme_add) # + procedure
-          >>> scheme_apply(plus, nil, env) # Remember what (+) evaluates to in scheme
+          >>> plus = BuiltinProcedure(scheme_add) # + 过程
+          >>> scheme_apply(plus, nil, env) # 记住 Scheme 中 (+) 的求值结果
           a384c59daad07475a000a57b0b47b74f
           # locked
           """,
@@ -33,8 +33,8 @@ test = {
           'code': r"""
           >>> env = create_global_frame()
           >>> twos = Pair(2, Pair(2, nil))
-          >>> oddp = BuiltinProcedure(scheme_oddp) # odd? procedure
-          >>> scheme_apply(oddp, twos, env) # Type SchemeError if you think this errors
+          >>> oddp = BuiltinProcedure(scheme_oddp) # odd? 过程
+          >>> scheme_apply(oddp, twos, env) # 如果你认为会报错，输入 SchemeError
           ec908af60f03727428c7ee3f22ec3cd8
           # locked
           """,
@@ -46,8 +46,8 @@ test = {
           'code': r"""
           >>> env = create_global_frame()
           >>> two = Pair(2, nil)
-          >>> eval = BuiltinProcedure(scheme_eval, True) # eval procedure
-          >>> scheme_apply(eval, two, env) # be sure to check need_env
+          >>> eval = BuiltinProcedure(scheme_eval, True) # eval 过程
+          >>> scheme_apply(eval, two, env) # 务必检查 need_env
           2
           """,
           'hidden': False,
@@ -59,8 +59,8 @@ test = {
           >>> env = create_global_frame()
           >>> operands = Pair(2, Pair(3, nil))
           >>> add = lambda x, y: x + y
-          >>> sum = BuiltinProcedure(add, False) # eval procedure
-          >>> scheme_apply(sum, operands, env) # be sure to check need_env
+          >>> sum = BuiltinProcedure(add, False) # eval 过程
+          >>> scheme_apply(sum, operands, env) # 务必检查 need_env
           5
           """,
           'hidden': False,
@@ -72,8 +72,8 @@ test = {
           >>> env = create_global_frame()
           >>> operands = Pair(4, Pair(5, Pair(6, nil)))
           >>> mul = lambda x, y, z: x * y * z
-          >>> prod = BuiltinProcedure(mul, False) # eval procedure
-          >>> scheme_apply(prod, operands, env) # be sure to check need_env
+          >>> prod = BuiltinProcedure(mul, False) # eval 过程
+          >>> scheme_apply(prod, operands, env) # 务必检查 need_env
           120
           """,
           'hidden': False,
@@ -85,8 +85,8 @@ test = {
           >>> env = create_global_frame()
           >>> operands = Pair(2, Pair(3, Pair(4, Pair(5, nil))))
           >>> add = lambda a, b, c, d : a + b + c + d
-          >>> sum = BuiltinProcedure(add, False) # eval procedure
-          >>> scheme_apply(sum, operands, env) # be sure to check need_env
+          >>> sum = BuiltinProcedure(add, False) # eval 过程
+          >>> scheme_apply(sum, operands, env) # 务必检查 need_env
           14
           """,
           'hidden': False,
@@ -97,8 +97,8 @@ test = {
           'code': r"""
           >>> env = create_global_frame()
           >>> two_one = Pair(2, Pair(1, nil))
-          >>> minus = BuiltinProcedure(scheme_sub) # - procedure
-          >>> scheme_apply(minus, two_one, env) # Make sure to add the arguments in the correct order!
+          >>> minus = BuiltinProcedure(scheme_sub) # - 过程
+          >>> scheme_apply(minus, two_one, env) # 务必按正确顺序添加参数！
           1
           """,
           'hidden': False,
@@ -109,8 +109,8 @@ test = {
           'code': r"""
           >>> env = create_global_frame()
           >>> length = env.lookup("length")
-          >>> args = Pair(nil, nil) # passing in one argument, nil
-          >>> scheme_apply(length, args, env) # args.first can be nil, if nil is an argument for the function!
+          >>> args = Pair(nil, nil) # 传入一个参数 nil
+          >>> scheme_apply(length, args, env) # 如果 nil 是函数的一个参数，args.first 可以为 nil！
           0
           """,
           'hidden': False,
@@ -128,8 +128,8 @@ test = {
           ...         x += 1
           ...         return x
           ...     return scheme_counter
-          >>> counter = BuiltinProcedure(make_scheme_counter()) # counter
-          >>> scheme_apply(counter, args, env) # only call procedure.py_func once!
+          >>> counter = BuiltinProcedure(make_scheme_counter()) # 计数器
+          >>> scheme_apply(counter, args, env) # 只调用 procedure.py_func 一次！
           1
           """,
           'hidden': False,
@@ -140,8 +140,8 @@ test = {
           'code': r"""
           >>> env = create_global_frame()
           >>> args = nil
-          >>> q = BuiltinProcedure(scheme_exit) # same as (exit)
-          >>> scheme_apply(q, args, env) # Make sure youre only excepting TypeErrors!
+          >>> q = BuiltinProcedure(scheme_exit) # 与 (exit) 相同
+          >>> scheme_apply(q, args, env) # 确保只捕获 TypeError！
           EOFError
           """,
           'hidden': False,
@@ -154,7 +154,7 @@ test = {
           >>> py_func = lambda g: g is env
           >>> args = nil
           >>> q = BuiltinProcedure(py_func, True)
-          >>> scheme_apply(q, args, env) # Should return True if you've correctly implemented need_env procedures
+          >>> scheme_apply(q, args, env) # 如果正确实现了需要 need_env 的过程，应返回 True
           True
           """,
           'hidden': False,
@@ -166,7 +166,7 @@ test = {
           >>> env = create_global_frame()
           >>> args = nil
           >>> q = BuiltinProcedure(scheme_exit)
-          >>> scheme_apply(q, args, env) # If you triggered this case, you should make sure that your code *only* catches TypeErrors, and not any others!
+          >>> scheme_apply(q, args, env) # 如果触发此用例，请确保代码只捕获 TypeError，不捕获其他异常！
           EOFError
           """,
           'hidden': False,

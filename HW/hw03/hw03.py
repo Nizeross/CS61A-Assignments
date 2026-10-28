@@ -2,7 +2,7 @@ HW_SOURCE_FILE = __file__
 
 
 def num_eights(n):
-    """Returns the number of times 8 appears as a digit of n.
+    """返回 n 的十进制表示中数字 8 出现的次数。
 
     >>> num_eights(3)
     0
@@ -19,16 +19,22 @@ def num_eights(n):
     >>> num_eights(8782089)
     3
     >>> from construct_check import check
-    >>> # ban all assignment statements
+    >>> # 禁止所有赋值语句
     >>> check(HW_SOURCE_FILE, 'num_eights',
     ...       ['Assign', 'AnnAssign', 'AugAssign', 'NamedExpr', 'For', 'While'])
     True
     """
     "*** YOUR CODE HERE ***"
+    if n == 0:
+        return 0
+    elif n % 10 == 8:
+        return 1 + num_eights(n // 10)
+    else:
+        return num_eights(n // 10)
 
 
 def digit_distance(n):
-    """Determines the digit distance of n.
+    """计算 n 的数字距离（相邻位数字差的绝对值之和）。
 
     >>> digit_distance(3)
     0
@@ -41,17 +47,22 @@ def digit_distance(n):
     >>> digit_distance(3464660003)  # 1 + 2 + 2 + 2 + ... + 3
     16
     >>> from construct_check import check
-    >>> # ban all loops
+    >>> # 禁止所有循环
     >>> check(HW_SOURCE_FILE, 'digit_distance',
     ...       ['For', 'While'])
     True
     """
     "*** YOUR CODE HERE ***"
+    if n < 10:
+        return 0
+    else:
+        a = n % 10
+        b = n // 10 % 10
+        return digit_distance(n // 10) + abs(a - b)
 
 
 def interleaved_sum(n, odd_func, even_func):
-    """Compute the sum odd_func(1) + even_func(2) + odd_func(3) + ..., up
-    to n.
+    """计算 odd_func(1) + even_func(2) + odd_func(3) + ...，直到 n。
 
     >>> identity = lambda x: x
     >>> square = lambda x: x * x
@@ -65,16 +76,23 @@ def interleaved_sum(n, odd_func, even_func):
     >>> interleaved_sum(4, square, triple)   # 1*1 + 2*3 + 3*3 + 4*3
     28
     >>> from construct_check import check
-    >>> check(HW_SOURCE_FILE, 'interleaved_sum', ['While', 'For', 'Mod']) # ban loops and %
+    >>> check(HW_SOURCE_FILE, 'interleaved_sum', ['While', 'For', 'Mod']) # 禁止循环和 % 运算符
     True
-    >>> check(HW_SOURCE_FILE, 'interleaved_sum', ['BitAnd', 'BitOr', 'BitXor']) # ban bitwise operators, don't worry about these if you don't know what they are
+    >>> check(HW_SOURCE_FILE, 'interleaved_sum', ['BitAnd', 'BitOr', 'BitXor']) # 禁止位运算符；如果你还不知道它们是什么，不用担心
     True
     """
     "*** YOUR CODE HERE ***"
+    def helper(i, n, f, g):
+        if i > n:
+            return 0
+        else:
+            return f(i) + helper(i+1, n, g, f)
+    return helper(1, n, odd_func, even_func)
+
 
 
 def next_smaller_dollar(bill):
-    """Returns the next smaller bill in order."""
+    """返回面额序列中下一个更小的纸币面额。"""
     if bill == 100:
         return 50
     if bill == 50:
@@ -87,30 +105,31 @@ def next_smaller_dollar(bill):
         return 1
 
 def count_dollars(total):
-    """Return the number of ways to make change.
+    """返回换零钱的方案数。
 
-    >>> count_dollars(15)  # 15 $1 bills, 10 $1 & 1 $5 bills, ... 1 $5 & 1 $10 bills
+    >>> count_dollars(15)  # 15 张 1 美元，10 张 1 美元加 1 张 5 美元，……，1 张 5 美元加 1 张 10 美元
     6
-    >>> count_dollars(10)  # 10 $1 bills, 5 $1 & 1 $5 bills, 2 $5 bills, 10 $1 bills
+    >>> count_dollars(10)  # 10 张 1 美元，5 张 1 美元加 1 张 5 美元，2 张 5 美元，10 张 1 美元
     4
-    >>> count_dollars(20)  # 20 $1 bills, 15 $1 & $5 bills, ... 1 $20 bill
+    >>> count_dollars(20)  # 20 张 1 美元，15 张 1 美元加 1 张 5 美元，……，1 张 20 美元
     10
-    >>> count_dollars(45)  # How many ways to make change for 45 dollars?
+    >>> count_dollars(45)  # 45 美元有多少种换零钱的方案？
     44
-    >>> count_dollars(100) # How many ways to make change for 100 dollars?
+    >>> count_dollars(100) # 100 美元有多少种换零钱的方案？
     344
-    >>> count_dollars(200) # How many ways to make change for 200 dollars?
+    >>> count_dollars(200) # 200 美元有多少种换零钱的方案？
     3274
     >>> from construct_check import check
-    >>> # ban iteration
+    >>> # 禁止迭代
     >>> check(HW_SOURCE_FILE, 'count_dollars', ['While', 'For'])
     True
     """
     "*** YOUR CODE HERE ***"
 
 
+
 def next_larger_dollar(bill):
-    """Returns the next larger bill in order."""
+    """返回面额序列中下一个更大的纸币面额。"""
     if bill == 1:
         return 5
     elif bill == 5:
@@ -123,22 +142,22 @@ def next_larger_dollar(bill):
         return 100
 
 def count_dollars_upward(total):
-    """Return the number of ways to make change using bills.
+    """返回使用纸币换零钱的方案数。
 
-    >>> count_dollars_upward(15)  # 15 $1 bills, 10 $1 & 1 $5 bills, ... 1 $5 & 1 $10 bills
+    >>> count_dollars_upward(15)  # 15 张 1 美元，10 张 1 美元加 1 张 5 美元，……，1 张 5 美元加 1 张 10 美元
     6
-    >>> count_dollars_upward(10)  # 10 $1 bills, 5 $1 & 1 $5 bills, 2 $5 bills, 10 $1 bills
+    >>> count_dollars_upward(10)  # 10 张 1 美元，5 张 1 美元加 1 张 5 美元，2 张 5 美元，10 张 1 美元
     4
-    >>> count_dollars_upward(20)  # 20 $1 bills, 15 $1 & $5 bills, ... 1 $20 bill
+    >>> count_dollars_upward(20)  # 20 张 1 美元，15 张 1 美元加 1 张 5 美元，……，1 张 20 美元
     10
-    >>> count_dollars_upward(45)  # How many ways to make change for 45 dollars?
+    >>> count_dollars_upward(45)  # 45 美元有多少种换零钱的方案？
     44
-    >>> count_dollars_upward(100) # How many ways to make change for 100 dollars?
+    >>> count_dollars_upward(100) # 100 美元有多少种换零钱的方案？
     344
-    >>> count_dollars_upward(200) # How many ways to make change for 200 dollars?
+    >>> count_dollars_upward(200) # 200 美元有多少种换零钱的方案？
     3274
     >>> from construct_check import check
-    >>> # ban iteration
+    >>> # 禁止迭代
     >>> check(HW_SOURCE_FILE, 'count_dollars_upward', ['While', 'For'])
     True
     """
@@ -146,20 +165,17 @@ def count_dollars_upward(total):
 
 
 def print_move(origin, destination):
-    """Print instructions to move a disk."""
+    """打印移动一个圆盘的指令。"""
     print("Move the top disk from rod", origin, "to rod", destination)
 
 def move_stack(n, start, end):
-    """Print the moves required to move n disks on the start pole to the end
-    pole without violating the rules of Towers of Hanoi.
+    """打印将 n 个圆盘从 start 柱移到 end 柱所需的步骤，且不能违反汉诺塔规则。
 
-    n -- number of disks
-    start -- a pole position, either 1, 2, or 3
-    end -- a pole position, either 1, 2, or 3
+    n：圆盘数量。
+    start：起始柱的位置，为 1、2 或 3。
+    end：目标柱的位置，为 1、2 或 3。
 
-    There are exactly three poles, and start and end must be different. Assume
-    that the start pole has at least n disks of increasing size, and the end
-    pole is either empty or has a top disk larger than the top n start disks.
+    总共只有三根柱子，且 start 和 end 必须不同。假定起始柱至少有 n 个从上到下依次增大的圆盘；目标柱为空，或其顶部圆盘比起始柱顶部的 n 个圆盘都大。
 
     >>> move_stack(1, 1, 3)
     Move the top disk from rod 1 to rod 3
@@ -183,12 +199,12 @@ def move_stack(n, start, end):
 from operator import sub, mul
 
 def make_anonymous_factorial():
-    """Return the value of an expression that computes factorial.
+    """返回一个用于计算阶乘的表达式的值。
 
     >>> make_anonymous_factorial()(5)
     120
     >>> from construct_check import check
-    >>> # ban any assignments or recursion
+    >>> # 禁止任何赋值或递归
     >>> check(HW_SOURCE_FILE, 'make_anonymous_factorial',
     ...     ['Assign', 'AnnAssign', 'AugAssign', 'NamedExpr', 'FunctionDef', 'Recursion'])
     True

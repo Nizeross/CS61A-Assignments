@@ -1,52 +1,50 @@
-const socket = io.connect(); // connect to websocket
-var selectedAntsTable = {}; // store name for every type of ant as key, and boolean whether that ant is selected as value
-const moveBeeAnimationDuration = 1.2; // seconds
-const throwLeafAnimationDuration = 0.75; // seconds
-const insectDieAnimationDuration = 0.6; // seconds
-const insectsHurtAnimationDuration = 0.2; // seconds
-const insectsActionInterval = 4; // Insects take actions every 5 seconds
+const socket = io.connect(); // 连接到 WebSocket
+var selectedAntsTable = {}; // 以各蚂蚁类型的名称为键，以表示该类型是否被选中的布尔值为值
+const moveBeeAnimationDuration = 1.2; // 秒
+const throwLeafAnimationDuration = 0.75; // 秒
+const insectDieAnimationDuration = 0.6; // 秒
+const insectsHurtAnimationDuration = 0.2; // 秒
+const insectsActionInterval = 4; // 昆虫按 insectsActionInterval 指定的秒数间隔行动
 
 
 function inLobby(data) {
-    /* Triggered by backend once player connects to server
-    Player is in lobby. Game waiting to be started. */
+    /* 玩家连接服务器后由后端触发。玩家处于大厅，等待开始游戏。 */
 
     let main = document.querySelector(".main-window");
-    main.style.opacity = '0'; // Hide main window so lobby background image is visible
+    main.style.opacity = '0'; // 隐藏主窗口，以显示大厅背景图
     let startButton = document.querySelector('.start-button');
-    startButton.addEventListener('click', startGame); // Add event listener to Start button
+    startButton.addEventListener('click', startGame); // 为开始按钮添加事件监听器
 }
 
 
 function startGame() {
-    /* Trigered when player clicks Start button
-    Fecth initial data from server. Set up game grid. */
+    /* 玩家点击开始按钮时触发。从服务器获取初始数据，并设置游戏网格。 */
 
     console.log("===== Game Started! =====");
 
-    fetch('/initialize_game', { // Send initialize_game signal to backend
+    fetch('/initialize_game', { // 向后端发送 initialize_game 信号
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({}), // Sending empty data
+        body: JSON.stringify({}), // 发送空数据
     })
     .then(response => response.json())
-    .then(data => { // Handling incoming data from server
+    .then(data => { // 处理服务器传来的数据
 
         let main = document.querySelector(".main-window");
-        main.style.opacity = '1'; // Make main window visible
+        main.style.opacity = '1'; // 显示主窗口
 
         let body = document.getElementsByTagName("BODY")[0];
-        body.style.backgroundImage = 'none'; // Remove lobby background image
+        body.style.backgroundImage = 'none'; // 移除大厅背景图
         let startButton = document.querySelector('.start-button');
-        startButton.remove(); // Remove start button
+        startButton.remove(); // 移除开始按钮
 
-        formatAntButtons(data.ant_types); // Set up ant buttons according to available ant types
-        formatGameGrid(data.dimensions_x, data.dimensions_y, data.wet_places); // Set up game grid
+        formatAntButtons(data.ant_types); // 根据可用的蚂蚁类型设置蚂蚁按钮
+        formatGameGrid(data.dimensions_x, data.dimensions_y, data.wet_places); // 设置游戏网格
         playMusic();
 
-        // Set calling these functions every 4 seconds and 50 milliseconds.
+        // 设置两个函数的调用间隔，分别为 4 秒和 50 毫秒。
         setInterval(insectsTakeActions, insectsActionInterval * 1000);
         setInterval(updateStats, 50);
     })
@@ -57,21 +55,21 @@ function startGame() {
 
 
 function moveBee(data) {
-    /* Triggered by backend. Moves a bee */
+    /* 由后端触发。移动一只蜜蜂 */
 
     let animationDelay = 50;
 
-    setTimeout(() => { // Must use timeout to enable animations
+    setTimeout(() => { // 必须使用延迟调用才能启用动画
         let destination = document.getElementById(`${data.destination[0]}-${data.destination[1]}`);
         let currentTile = document.getElementById(`${data.current_pos[0]}-${data.current_pos[1]}`);
-        let distance = destination.getBoundingClientRect().right - currentTile.getBoundingClientRect().right; // Calculate distance
+        let distance = destination.getBoundingClientRect().right - currentTile.getBoundingClientRect().right; // 计算距离
         let beeImg = document.getElementById(`${data.bee_id}`);
 
-        beeImg.style.transition = `transform ${moveBeeAnimationDuration}s ease-in-out`; // Translate bee in 1.5 seconds
+        beeImg.style.transition = `transform ${moveBeeAnimationDuration}s ease-in-out`; // 在 moveBeeAnimationDuration 指定的时长内平移蜜蜂
         beeImg.style.transform = `translateX(${distance}px)`;
-        beeImg.style.top = `${(destination.offsetHeight - beeImg.offsetHeight) / 2}px`; // Sets the sprite to be in the middle of the tunnel
+        beeImg.style.top = `${(destination.offsetHeight - beeImg.offsetHeight) / 2}px`; // 使精灵图位于隧道中间
 
-        // Remove from current tile and add to destination
+        // 从当前地块移除，并添加到目标地点
         setTimeout(() => {
             beeImg.remove();
             destination.appendChild(beeImg);
@@ -84,9 +82,9 @@ function moveBee(data) {
 
 
 function moveBeeFromHive(data) {
-    // Triggered by backend. Move a bee from hive.
+    // 由后端触发。将蜜蜂移出蜂巢。
 
-    let animationDelay = 75; // milliseconds
+    let animationDelay = 75; // 毫秒
 
     setTimeout(() => {
         let beeImg = document.createElement('img');
@@ -95,7 +93,7 @@ function moveBeeFromHive(data) {
         beeImg.setAttribute('class', 'insect-on-tile-img');
         beeImg.setAttribute('id', data.bee_id);
         beeImg.setAttribute('src', `../static/assets/bees/${data.bee_name}.gif`)
-        beeImg.style.zIndex = '5'; // Set bee image on top of tile image
+        beeImg.style.zIndex = '5'; // 将蜜蜂图像置于地块图像上方
 
         let offset = destination.getBoundingClientRect().right - beeImg.getBoundingClientRect().right;
         beeImg.style.transition = `transform ${moveBeeAnimationDuration}s ease-in-out`;
@@ -107,7 +105,7 @@ function moveBeeFromHive(data) {
         }, animationDelay);
 
 
-        setTimeout(() => { // Append to new parent, reset translate
+        setTimeout(() => { // 添加到新的父元素，并重置平移
             beeImg.style.transition = '';
             beeImg.style.transform = `translateX(0px)`;
             beeImg.style.left = `0px`;
@@ -118,45 +116,45 @@ function moveBeeFromHive(data) {
 
 
 function removeInsect(data) {
-    // Triggered by backend. Remove insect from GUI. However, this is a little buggy with the feature of insects turning red upon receiving damage
+    // 由后端触发。从图形界面移除昆虫。但与昆虫受伤变红的效果配合时，这里仍有一些问题
 
     setTimeout(() => {
         let insect = document.getElementById(data.insect_id);
-        let animationDelay = 50; // milliseconds
+        let animationDelay = 50; // 毫秒
         insect.style.transition = `opacity ${insectDieAnimationDuration}s ease-out`;
         insect.style.opacity = '0';
         setTimeout(() => {
-            insect.remove(); // Remove html element
+            insect.remove(); // 移除 HTML 元素
         }, insectDieAnimationDuration * 1000 + animationDelay)
     }, throwLeafAnimationDuration * 1000 + insectsHurtAnimationDuration * 1000)
 }
 
 
 function endGame(data) {
-    // Triggered by backend. End game.
+    // 由后端触发。结束游戏。
 
     showEndGameAlert(data.antsWon)
     let mainWindow = document.querySelector('.main-window');
     mainWindow.style.transition = 'filter 2s ease-in-out';
-    mainWindow.style.filter = 'brightness(35%)'; // Decrease brightness of game
+    mainWindow.style.filter = 'brightness(35%)'; // 降低游戏画面的亮度
 }
 
 
 function insectsTakeActions() {
-    /* Called on interval. Ask insects to take actions */
+    /* 定时调用。让昆虫执行行动 */
 
-    const timeDelay = 100; // milliseconds
+    const timeDelay = 100; // 毫秒
 
-    fetch('/ants_take_actions') // Triger insects_take_actions signal in backend for ants to take actions
+    fetch('/ants_take_actions') // 向后端请求蚂蚁行动
     .then(response => response.json())
-    .then(data => { // Handle data from backend
+    .then(data => { // 处理后端数据
     })
     .catch(error => {
         console.error('Error:', error);
     });
 
-    setTimeout(() => { // Leave time between ants taking action and bees taking action for the animation to play (leaf reach bee and bee turning red)
-        fetch('/bees_take_actions') // Triger insects_take_actions signal in backend for bees to take actions
+    setTimeout(() => { // 在蚂蚁和蜜蜂行动之间留出时间播放动画（树叶击中蜜蜂以及蜜蜂变红）
+        fetch('/bees_take_actions') // 向后端请求蜜蜂行动
         .then(response => response.json())
         .then(data => {
         })
@@ -168,20 +166,20 @@ function insectsTakeActions() {
 
 
 function updateStats() {
-    /* Called on interval. Ask server for food count and turn count */
+    /* 定时调用。向服务器查询食物量和回合数 */
 
-    fetch('/update_stats') // Triger update_stats signal in server
+    fetch('/update_stats') // 触发服务器中的 update_stats 信号
     .then(response => response.json())
-    .then(data => { // Handle data from server
+    .then(data => { // 处理服务器数据
 
-        setTimeout(() => { // Use time out to avoid crashes
+        setTimeout(() => { // 使用延迟调用以避免崩溃
             let food = data.food;
             let turn = data.turn;
             food_display = document.querySelector('.display-food-div');
             food_display.innerText = `Food: ${food}`;
             food_display = document.querySelector('.display-turn-div');
             food_display.innerText = `Turn: ${turn}`;
-            adjustAntButtons(data.available_ants); // Update GUI on what ants are available
+            adjustAntButtons(data.available_ants); // 在图形界面中更新可用蚂蚁的信息
         }, 50);
     })
 
@@ -192,9 +190,9 @@ function updateStats() {
 
 
 function reduceHealth(data) {
-    /* Triggered by backend. Animates insects turning red upon receiving damage */
+    /* 由后端触发。播放昆虫受伤后变红的动画 */
 
-    const animationDelay = 100; // milliseconds
+    const animationDelay = 100; // 毫秒
 
     setTimeout(() => {
         let insectImg = document.getElementById(data.insect_id);
@@ -211,14 +209,14 @@ function reduceHealth(data) {
 
 
 function throwAt(data) {
-    // Triggered by back end. Animates an ant throwing a leaf at a bee
+    // 由后端触发。播放蚂蚁向蜜蜂投掷树叶的动画
 
     let target = document.getElementById(`${data.target_pos[0]}-${data.target_pos[1]}`);
     let thrower = document.getElementById(`${data.thrower_pos[0]}-${data.thrower_pos[1]}`);
     let distance = target.getBoundingClientRect().left - thrower.getBoundingClientRect().right;
     let offset = thrower.getBoundingClientRect().left - thrower.getBoundingClientRect().right;
     let leafImg = document.createElement('img');
-    let animationDelay = 25 // milliseonds
+    let animationDelay = 25 // 毫秒
 
     thrower.appendChild(leafImg);
     leafImg.setAttribute('src', '../static/assets/testLeaf.png');
@@ -239,7 +237,7 @@ function throwAt(data) {
 }
 
 
-// Handle incoming signals from server. These functions are triggered by backend.
+// 处理来自服务器的信号。这些函数由后端触发。
 socket.on('loadLobby', inLobby);
 socket.on('moveBee', moveBee);
 socket.on('moveBeeFromHive', moveBeeFromHive);

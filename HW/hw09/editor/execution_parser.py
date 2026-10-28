@@ -36,7 +36,7 @@ def tokenize(buffer: TokenBuffer):
     >>> tokenize(buff)
     [1]
     """
-    out = []  # array of top-level elements to be executed sequentially
+    out = []  # 需要依次执行的顶层元素数组
     while not buffer.done:
         out.append(get_expression(buffer))
         if out[-1] is None:

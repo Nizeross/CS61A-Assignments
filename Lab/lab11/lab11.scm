@@ -8,7 +8,7 @@
 (define-macro (repeat n expr)
   `(repeated-call ,n ___))
 
-; Call zero-argument procedure f n times and return the final result.
+; 调用无参数过程 f 共 n 次，返回最后一次的结果。
 (define (repeated-call n f)
   (if (= n 1)
       ___

@@ -55,7 +55,7 @@ def tokenize(string, do_comments, ignore_brackets) -> List[Token]:
     first_in_line = True
 
     def _get_token():
-        """Always starts at a non-space character"""
+        """始终从非空白字符处开始"""
         nonlocal i
         if i == len(string):
             return
@@ -91,7 +91,7 @@ def tokenize(string, do_comments, ignore_brackets) -> List[Token]:
             tokens.append(Comment(curr, first_in_line))
 
     def _get_string():
-        """Starts just after an opening quotation mark"""
+        """从起始引号之后的位置开始"""
         nonlocal i
         curr = ""
         while i != len(string) and string[i] != "\"":

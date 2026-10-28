@@ -33,7 +33,7 @@ state = {}
 
 
 class Handler(server.BaseHTTPRequestHandler):
-    cancellation_event = threading.Event()  # Shared across all instances, because the threading mixin creates a new instance every time...
+    cancellation_event = threading.Event()  # 在所有实例之间共享，因为线程混入类每次都会创建新实例
 
     def do_POST(self):
         content_length = int(self.headers['Content-Length'])
@@ -55,7 +55,7 @@ class Handler(server.BaseHTTPRequestHandler):
             self.cancellation_event.set()
 
         if path == "/process2":
-            self.cancellation_event.clear()  # Make sure we don't have lingering cancellation requests from before
+            self.cancellation_event.clear()  # 确保没有残留的取消请求
             code = data["code[]"]
             curr_i = int(data["curr_i"][0])
             curr_f = int(data["curr_f"][0])
@@ -84,7 +84,7 @@ class Handler(server.BaseHTTPRequestHandler):
             self.wfile.write(bytes(json.dumps({"result": "success", "formatted": prettify(code, javastyle)}), "utf-8"))
 
         elif path == "/test":
-            self.cancellation_event.clear()  # Make sure we don't have lingering cancellation requests from before
+            self.cancellation_event.clear()  # 确保没有残留的取消请求
             output = cancelable_subprocess_call(self.cancellation_event, (sys.argv[0], os.path.splitext(ok_interface.__file__)[0] + ".py"), -1, sys.executable, subprocess.PIPE, subprocess.PIPE, None)
             self.wfile.write(output.split(ok_interface.BEGIN_OUTPUT)[1])
 
@@ -135,7 +135,7 @@ class Handler(server.BaseHTTPRequestHandler):
             self.wfile.write(bytes(json.dumps(search(query)), "utf-8"))
 
         elif path == "/kill":
-            # This is (only) fine because we're in a different thread than the actual server
+            # 这样处理可行，仅仅因为当前线程与实际服务器线程不同
             self.server.shutdown()
             self.server.socket.close()
 
@@ -154,7 +154,7 @@ class Handler(server.BaseHTTPRequestHandler):
         if path == "editor/static/":
             path = "editor/static/index.html"
         try:
-            with open(path, "rb") as f:  # lol better make sure that port is closed
+            with open(path, "rb") as f:  # 务必确保该端口已经关闭
                 self.wfile.write(f.read()
                                  .replace(b"<START_DATA>",
                                           bytes(repr(json.dumps({"files": main_files})),
@@ -180,7 +180,7 @@ def cancelable_subprocess_call(cancellation_event, *args, **kwargs):
     buffered = io.BytesIO()
     with subprocess.Popen(*args, **kwargs) as proc:
         proc.stdin.close()
-        def pipeline(source, *sinks):  # We need this extra thread because there's no cross-platform way to poll a process's stdout
+        def pipeline(source, *sinks):  # 需要额外的线程，因为没有跨平台的方法可以轮询进程的标准输出
             while True:
                 s = source.readline()
                 if not s: break
@@ -196,7 +196,7 @@ def cancelable_subprocess_call(cancellation_event, *args, **kwargs):
                   proc.terminate()
                   break
         finally:
-            proc.terminate()  # Make sure subprocess is terminated no matter what (although it shouldn't be alive at this point)
+            proc.terminate()  # 无论如何都要确保子进程终止（虽然此时它本应已经结束）
             reader_thread.join()
     return buffered.getvalue()
 
@@ -237,16 +237,15 @@ def instant(code, global_frame_id):
     return json.dumps({"success": True, "content": log.logger.export()["out"]})
 
 
-# Source: https://stackoverflow.com/questions/7445658/how-to-detect-if-the-console-does-support-ansi-escape-codes-in-python
+# 来源：https://stackoverflow.com/questions/7445658/how-to-detect-if-the-console-does-support-ansi-escape-codes-in-python
 def supports_color():
     """
-    Returns True if the running system's terminal supports color, and False
-    otherwise.
+    如果当前系统的终端支持颜色，返回 True，否则返回 False。
     """
     plat = sys.platform
     supported_platform = plat != 'Pocket PC' and (plat != 'win32' or
                                                   'ANSICON' in os.environ)
-    # isatty is not always implemented, #6223.
+    # 并非所有环境都实现了 isatty，参见 #6223。
     is_a_tty = hasattr(sys.stdout, 'isatty') and sys.stdout.isatty()
     if not supported_platform or not is_a_tty:
         return False

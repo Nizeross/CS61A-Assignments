@@ -50,10 +50,10 @@ test = {
         },
         {
           'code': r"""
-          scm> (let ((a 2) (a 3)) (+ a a)) ; how should we catch something like this?
+          scm> (let ((a 2) (a 3)) (+ a a)) ; 应该如何捕获这样的情况？
           ec908af60f03727428c7ee3f22ec3cd8
           # locked
-          scm> (let ((y 2 3)) (+ y y)) ; should this be an allowable form?
+          scm> (let ((y 2 3)) (+ y y)) ; 这种形式是否应该被允许？
           ec908af60f03727428c7ee3f22ec3cd8
           # locked
           """,
@@ -89,8 +89,8 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # Incorrectly formatted bindings
-          >>> bindings = Pair(Pair('x', Pair(2, nil)), Pair(Pair('y', nil), nil)) # equivalent to ((x 2) (y))
+          >>> # 绑定的格式不正确
+          >>> bindings = Pair(Pair('x', Pair(2, nil)), Pair(Pair('y', nil), nil)) # 等价于 ((x 2) (y))
           >>> make_let_frame(bindings, global_frame)
           SchemeError
           """,
@@ -100,8 +100,8 @@ test = {
         },
         {
           'code': r"""
-          >>> # Improper formals list - used same variable name twice
-          >>> bindings = Pair(Pair('x', Pair(2, nil)), Pair(Pair('x', Pair(3, nil)), nil)) # equivalent to ((x 2) (x 3))
+          >>> # 形参列表不合法：重复使用了同一变量名
+          >>> bindings = Pair(Pair('x', Pair(2, nil)), Pair(Pair('x', Pair(3, nil)), nil)) # 等价于 ((x 2) (x 3))
           >>> make_let_frame(bindings, global_frame)
           SchemeError
           """,
@@ -111,11 +111,11 @@ test = {
         },
         {
           'code': r"""
-          >>> bindings = Pair(Pair('x', Pair(2, nil)), Pair(Pair('y', Pair(3, nil)), nil)) # equivalent to ((x 2) (y 3))
+          >>> bindings = Pair(Pair('x', Pair(2, nil)), Pair(Pair('y', Pair(3, nil)), nil)) # 等价于 ((x 2) (y 3))
           >>> f1 = make_let_frame(bindings, global_frame)
           >>> f1.lookup('x')
           2
-          >>> bindings # make sure bindings isn't mutated
+          >>> bindings # 确保没有修改 bindings
           Pair(Pair('x', Pair(2, nil)), Pair(Pair('y', Pair(3, nil)), nil))
           """,
           'hidden': False,

@@ -70,7 +70,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # Testing NinjaAnt parameters
+          >>> # 测试 NinjaAnt 的参数
           >>> ninja = NinjaAnt()
           >>> ninja.health
           d89cf7c79d5a479b0f636734143ed5e6
@@ -85,7 +85,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing blocks_path
+          >>> # 测试 blocks_path
           >>> NinjaAnt.blocks_path
           03456a09f22295a39ca84d133a26f63d
           # locked
@@ -102,17 +102,17 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing NinjaAnts do not block bees
+          >>> # 测试 NinjaAnt 不阻挡蜜蜂
           >>> p0 = gamestate.places["tunnel_0_0"]
-          >>> p1 = gamestate.places["tunnel_0_1"]  # p0 is p1's exit
+          >>> p1 = gamestate.places["tunnel_0_1"]  # p0 是 p1 的出口
           >>> bee = Bee(2)
           >>> ninja = NinjaAnt()
           >>> thrower = ThrowerAnt()
-          >>> p0.add_insect(thrower)            # Add ThrowerAnt to p0
+          >>> p0.add_insect(thrower)            # 向 p0 添加 ThrowerAnt
           >>> p1.add_insect(bee)
-          >>> p1.add_insect(ninja)              # Add the Bee and NinjaAnt to p1
+          >>> p1.add_insect(ninja)              # 向 p1 添加 Bee 和 NinjaAnt
           >>> bee.action(gamestate)
-          >>> bee.place is ninja.place          # Did NinjaAnt block the Bee from moving?
+          >>> bee.place is ninja.place          # NinjaAnt 是否阻挡了 Bee 的移动？
           03456a09f22295a39ca84d133a26f63d
           # locked
           >>> bee.place is p0
@@ -122,7 +122,7 @@ test = {
           d89cf7c79d5a479b0f636734143ed5e6
           # locked
           >>> bee.action(gamestate)
-          >>> bee.place is p0                   # Did ThrowerAnt block the Bee from moving?
+          >>> bee.place is p0                   # ThrowerAnt 是否阻挡了 Bee 的移动？
           c7a88a0ffd3aef026b98eef6e7557da3
           # locked
           """,
@@ -132,18 +132,18 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing non-blocking ants do not block bees
+          >>> # 测试不阻路的蚂蚁确实不会阻挡蜜蜂
           >>> p0 = gamestate.places["tunnel_0_0"]
-          >>> p1 = gamestate.places["tunnel_0_1"]  # p0 is p1's exit
+          >>> p1 = gamestate.places["tunnel_0_1"]  # p0 是 p1 的出口
           >>> bee = Bee(2)
           >>> ninja_fire = FireAnt(1)
           >>> ninja_fire.blocks_path = False
           >>> thrower = ThrowerAnt()
-          >>> p0.add_insect(thrower)            # Add ThrowerAnt to p0
+          >>> p0.add_insect(thrower)            # 向 p0 添加 ThrowerAnt
           >>> p1.add_insect(bee)
-          >>> p1.add_insect(ninja_fire)              # Add the Bee and NinjaAnt to p1
+          >>> p1.add_insect(ninja_fire)              # 向 p1 添加 Bee 和 NinjaAnt
           >>> bee.action(gamestate)
-          >>> bee.place is ninja_fire.place          # Did the "ninjaish" FireAnt block the Bee from moving?
+          >>> bee.place is ninja_fire.place          # 具有忍者特性的 FireAnt 是否阻挡了 Bee 的移动？
           03456a09f22295a39ca84d133a26f63d
           # locked
           >>> bee.place is p0
@@ -153,7 +153,7 @@ test = {
           d89cf7c79d5a479b0f636734143ed5e6
           # locked
           >>> bee.action(gamestate)
-          >>> bee.place is p0                   # Did ThrowerAnt block the Bee from moving?
+          >>> bee.place is p0                   # ThrowerAnt 是否阻挡了 Bee 的移动？
           c7a88a0ffd3aef026b98eef6e7557da3
           # locked
           """,
@@ -163,13 +163,13 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing NinjaAnt strikes all bees in its place
+          >>> # 测试 NinjaAnt 攻击所在地点的所有蜜蜂
           >>> test_place = gamestate.places["tunnel_0_0"]
           >>> for _ in range(3):
           ...     test_place.add_insect(Bee(2))
           >>> ninja = NinjaAnt()
           >>> test_place.add_insect(ninja)
-          >>> ninja.action(gamestate)   # should strike all bees in place
+          >>> ninja.action(gamestate)   # 应攻击该地点的所有蜜蜂
           >>> [bee.health for bee in test_place.bees]
           [1, 1, 1]
           """,
@@ -179,14 +179,14 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing NinjaAnt doesn't hardcode damage
+          >>> # 测试 NinjaAnt 没有写死伤害值
           >>> test_place = gamestate.places["tunnel_0_0"]
           >>> for _ in range(3):
           ...     test_place.add_insect(Bee(100))
           >>> ninja = NinjaAnt()
           >>> ninja.damage = 50
           >>> test_place.add_insect(ninja)
-          >>> ninja.action(gamestate)   # should strike all bees in place
+          >>> ninja.action(gamestate)   # 应攻击该地点的所有蜜蜂
           >>> [bee.health for bee in test_place.bees]
           [50, 50, 50]
           """,
@@ -196,13 +196,13 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing NinjaAnt strikes all bees, even if some expire
+          >>> # 测试即使有蜜蜂死亡，NinjaAnt 仍会攻击所有蜜蜂
           >>> test_place = gamestate.places["tunnel_0_0"]
           >>> for _ in range(3):
           ...     test_place.add_insect(Bee(1))
           >>> ninja = NinjaAnt()
           >>> test_place.add_insect(ninja)
-          >>> ninja.action(gamestate)   # should strike all bees in place
+          >>> ninja.action(gamestate)   # 应攻击该地点的所有蜜蜂
           >>> len(test_place.bees)
           0
           """,
@@ -212,12 +212,12 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing damage is looked up on the instance
+          >>> # 测试是否从实例上查找 damage
           >>> place = gamestate.places["tunnel_0_0"]
           >>> bee = Bee(900)
           >>> place.add_insect(bee)
           >>> buffNinja = NinjaAnt()
-          >>> buffNinja.damage = 500  # Sharpen the sword
+          >>> buffNinja.damage = 500  # 磨快刀剑
           >>> place.add_insect(buffNinja)
           >>> buffNinja.action(gamestate)
           >>> bee.health
@@ -229,7 +229,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing Ninja ant does not crash when left alone
+          >>> # 测试 NinjaAnt 独处时不会报错
           >>> ninja = NinjaAnt()
           >>> gamestate.places["tunnel_0_0"].add_insect(ninja)
           >>> ninja.action(gamestate)
@@ -240,7 +240,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing Bee does not crash when left alone
+          >>> # 测试 Bee 独处时不会报错
           >>> bee = Bee(3)
           >>> gamestate.places["tunnel_0_1"].add_insect(bee)
           >>> bee.action(gamestate)

@@ -3097,11 +3097,11 @@ test = {
       ],
       'scored': True,
       'setup': r"""
-      >>> # Fuzz Testing
-      >>> # Plays a lot of random games, and calculates a secret value.
-      >>> # Failing this test means something is wrong, but you should
-      >>> # look at other tests to see where the problem might be.
-      >>> # Hint: make sure you're only calling update once per turn!
+      >>> # 模糊测试
+      >>> # 运行大量随机游戏，并计算一个用于校验的隐藏值。
+      >>> # 此测试失败表示某处有问题，但你应该
+      >>> # 查看其他测试，以确定问题可能出在哪里。
+      >>> # 提示：确保每回合只调用一次 update！
       >>> #
       >>> import hog, importlib
       >>> # importlib.reload(hog)

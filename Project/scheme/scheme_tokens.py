@@ -1,14 +1,11 @@
-"""The scheme_tokens module provides functions tokenize_line and tokenize_lines
-for converting (iterators producing) strings into (iterators producing) lists
-of tokens.  A token may be:
+"""scheme_tokens 模块提供 tokenize_line 和 tokenize_lines 函数，用于将字符串（或生成字符串的迭代器）转换为词法单元列表（或生成此类列表的迭代器）。词法单元可以是：
 
-  * A number (represented as an int or float)
-  * A boolean (represented as a bool)
-  * A symbol (represented as a string)
-  * A delimiter, including parentheses, dots, and single quotes
+  * 数字（用 int 或 float 表示）
+    * 布尔值（用 bool 表示）
+    * 符号（用字符串表示）
+    * 分隔符，包括括号、点和单引号
 
-This file also includes some features of Scheme that have not been addressed
-in the course, such as Scheme strings.
+此文件也包含课程中尚未涉及的 Scheme 特性，例如 Scheme 字符串。
 """
 
 from ucb import main
@@ -31,7 +28,7 @@ def chain(*iters):
 
 
 def valid_symbol(s):
-    """Returns whether s is a well-formed symbol."""
+    """返回 s 是否为结构正确的符号。"""
     if len(s) == 0:
         return False
     for c in s:
@@ -40,10 +37,7 @@ def valid_symbol(s):
     return True
 
 def next_candidate_token(line, k):
-    """A tuple (tok, k'), where tok is the next substring of line at or
-    after position k that could be a token (assuming it passes a validity
-    check), and k' is the position in line following that token.  Returns
-    (None, len(line)) when there are no more tokens."""
+    """返回元组 (tok, k')：tok 是 line 中从位置 k 或其后开始的、可能构成词法单元的下一个子串（假设它能通过合法性检查），k' 是该词法单元之后的位置。没有更多词法单元时返回 (None, len(line))。"""
     while k < len(line):
         c = line[k]
         if c == ';':
@@ -54,14 +48,14 @@ def next_candidate_token(line, k):
             if c == ']': c = ')'
             if c == '[': c = '('
             return c, k+1
-        elif c == '#':  # Boolean values #t and #f
+        elif c == '#':  # 布尔值 #t 和 #f
             return line[k:k+2], min(k+2, len(line))
-        elif c == ',': # Unquote; check for @
+        elif c == ',': # 取消引用；检查是否带有 @
             if k+1 < len(line) and line[k+1] == '@':
                 return ',@', k+2
             return c, k+1
         elif c in _STRING_DELIMS:
-            if k+1 < len(line) and line[k+1] == c: # No triple quotes in Scheme
+            if k+1 < len(line) and line[k+1] == c: # Scheme 中没有三引号
                 return c+c, k+2
             s = ""
             k += 1
@@ -92,7 +86,7 @@ def next_candidate_token(line, k):
     return None, len(line)
 
 def tokenize_line(line):
-    """The list of Scheme tokens on line.  Excludes comments and whitespace."""
+    """返回 line 中的 Scheme 词法单元列表，不包含注释和空白。"""
     result = []
     text, i = next_candidate_token(line, 0)
     while text is not None:
@@ -139,12 +133,11 @@ def check_token_length_warning(token, length):
         warnings.warn("Token {} has exceeded the maximum token length {}".format(token, _MAX_TOKEN_LENGTH, length))
 
 def tokenize_lines(inp):
-    """An iterator over lists of tokens, one for each line of the iterable
-    input sequence inp."""
+    """返回一个迭代器：对可迭代输入序列 inp 中的每一行，生成一个词法单元列表。"""
     return (tokenize_line(line) for line in inp)
 
 def count_tokens(inp):
-    """Count the number of non-delimiter tokens in inp."""
+    """统计 inp 中非分隔符词法单元的数量。"""
     return len(list(chain(*tokenize_lines(inp))))
 
 @main

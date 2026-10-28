@@ -1,4 +1,4 @@
-"""Web server for the typing GUI."""
+"""打字图形界面的 Web 服务器。"""
 import base64
 import os
 import random
@@ -20,7 +20,7 @@ SIMILARITY_LIMIT = 2
 
 @route
 def request_paragraph(topics=None):
-    """Return a random paragraph."""
+    """返回一个随机段落。"""
     paragraphs = cats.lines_from_file(PARAGRAPH_PATH)
     random.shuffle(paragraphs)
     select = cats.about(topics) if topics else lambda x: True
@@ -29,7 +29,7 @@ def request_paragraph(topics=None):
 
 @route
 def analyze(prompted_text, typed_text, start_time, end_time):
-    """Return [wpm, accuracy]."""
+    """返回 [wpm, accuracy]（速度和准确率）。"""
     return {
         "wpm": cats.wpm(typed_text, end_time - start_time),
         "accuracy": cats.accuracy(typed_text, prompted_text),
@@ -37,24 +37,24 @@ def analyze(prompted_text, typed_text, start_time, end_time):
 
 
 def similar(w, v, n):
-    """Whether W intersect V contains at least |W|-N and |V|-N elements."""
+    """判断 W 与 V 的交集是否至少同时包含 |W|-N 个和 |V|-N 个元素。"""
     intersect = len(w.intersection(v))
     return intersect >= len(w) - n and intersect >= len(v) - n
 
 
 @route
 def autocorrect(word=""):
-    """Call autocorrect using the best score function available."""
+    """使用当前可用的最佳评分函数调用 autocorrect。"""
     raw_word = word
     word = cats.lower(cats.remove_punctuation(raw_word))
     if word in WORDS_SET or word == "":
         return raw_word
 
-    # Heuristically choose candidate words to score.
+    # 使用启发式方法选择待评分的候选单词。
     letters = set(word)
     candidates = [w for w, s in LETTER_SETS if similar(s, letters, SIMILARITY_LIMIT)]
 
-    # Try various diff functions until one doesn't raise an exception.
+    # 尝试不同的差异函数，直到找到一个不会抛出异常的函数。
     for fn in [cats.final_diff, cats.minimum_mewtations, cats.furry_fixes]:
         try:
             guess = cats.autocorrect(word, candidates, fn, SIMILARITY_LIMIT)
@@ -66,12 +66,12 @@ def autocorrect(word=""):
 
 
 def reformat(word, raw_word):
-    """Reformat WORD to match the capitalization and punctuation of RAW_WORD."""
-    # handle capitalization
+    """调整 WORD 的大小写和标点格式，使其与 RAW_WORD 一致。"""
+    # 处理大小写
     if raw_word != "" and raw_word[0].isupper():
         word = word.capitalize()
 
-    # find the boundaries of the raw word
+    # 找到原始单词的边界
     first = 0
     while first < len(raw_word) and raw_word[first] in string.punctuation:
         first += 1
@@ -79,7 +79,7 @@ def reformat(word, raw_word):
     while last > first and raw_word[last] in string.punctuation:
         last -= 1
 
-    # add wrapping punctuation to the word
+    # 给单词加回两侧的标点符号
     if raw_word != word:
         word = raw_word[:first] + word
         word = word + raw_word[last + 1 :]
@@ -88,7 +88,7 @@ def reformat(word, raw_word):
 
 
 ###############
-# Multiplayer #
+# 多人模式 #
 ###############
 
 
@@ -101,16 +101,16 @@ def request_id():
 
 @route
 def report_progress(id, typed, prompt):
-    """Report progress to the multiplayer server and also return it."""
-    typed = typed.split()  # A list of word strings
-    prompt = prompt.split()  # A list of word strings
+    """向多人服务器报告进度，并返回该进度。"""
+    typed = typed.split()  # 由单词字符串组成的列表
+    prompt = prompt.split()  # 由单词字符串组成的列表
 
     return cats.report_progress(typed, prompt, id, sendto(Server.set_progress))
 
 
 @route
 def fastest_words(prompt, targets):
-    """Return a list of word_speed values describing the match."""
+    """返回描述本场比赛的 word_speed 值列表。"""
     words = prompt.split()
     progress = Server.request_all_progress(targets=targets)
     start_times = [p[0][1] for p in progress]
@@ -122,7 +122,7 @@ def fastest_words(prompt, targets):
 multiplayer.create_multiplayer_server()
 
 ###############
-# Favicons #
+# 网站图标 #
 ###############
 
 

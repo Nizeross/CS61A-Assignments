@@ -37,7 +37,7 @@ test = {
         {
           'code': r"""
           >>> a = roll_dice(4, make_test_dice(1, 2, 3))
-          >>> a # check that the value is being returned, not printed
+          >>> a # 检查是否返回了该值，而不是打印它
           43d176e102c8d95338faf8791aa509b3
           # locked
           """,
@@ -51,9 +51,9 @@ test = {
           >>> roll_dice(3, counted_dice)
           43d176e102c8d95338faf8791aa509b3
           # locked
-          >>> # Make sure you call dice exactly num_rolls times!
-          >>> # If you call it fewer or more than that, it won't be at the right spot in the cycle for the next roll
-          >>> # Note that a return statement within a loop ends the loop
+          >>> # 务必恰好调用 dice 共 num_rolls 次！
+          >>> # 调用次数过多或过少，都会使下次掷骰时不在循环序列的正确位置
+          >>> # 注意：循环内的 return 语句会结束循环
           >>> roll_dice(1, counted_dice)
           327b19ffebddf93982e1ad2a4a6486f4
           # locked
@@ -106,25 +106,25 @@ test = {
         {
           'code': r"""
           >>> dice = make_test_dice(5, 4, 3, 2, 1)
-          >>> roll_dice(1, dice)    # Roll 1 (5)
+          >>> roll_dice(1, dice)    # 掷 1 次（5）
           5
-          >>> roll_dice(4, dice)    # Reset (4, 3, 2, 1)
+          >>> roll_dice(4, dice)    # 重置（4、3、2、1）
           1
-          >>> roll_dice(2, dice)    # Roll 2 (5, 4)
+          >>> roll_dice(2, dice)    # 掷 2 次（5、4）
           9
-          >>> roll_dice(3, dice)    # Reset (3, 2, 1)
+          >>> roll_dice(3, dice)    # 重置（3、2、1）
           1
-          >>> roll_dice(3, dice)    # Roll 3 (5, 4, 3)
+          >>> roll_dice(3, dice)    # 掷 3 次（5、4、3）
           12
-          >>> roll_dice(2, dice)    # Reset (2, 1)
+          >>> roll_dice(2, dice)    # 重置（2、1）
           1
-          >>> roll_dice(4, dice)    # Roll 4 (5, 4, 3, 2)
+          >>> roll_dice(4, dice)    # 掷 4 次（5、4、3、2）
           14
-          >>> roll_dice(1, dice)    # Reset (1)
+          >>> roll_dice(1, dice)    # 重置（1）
           1
-          >>> roll_dice(5, dice)    # Roll 5 (5, 4, 3, 2, 1)
+          >>> roll_dice(5, dice)    # 掷 5 次（5、4、3、2、1）
           1
-          >>> roll_dice(10, dice)    # Roll 10 (5, 4, 3, 2, 1, 5, 4, 3, 2, 1)
+          >>> roll_dice(10, dice)    # 掷 10 次（5、4、3、2、1、5、4、3、2、1）
           1
           """,
           'hidden': False,
@@ -798,7 +798,7 @@ test = {
       ],
       'scored': True,
       'setup': r"""
-      >>> # generated case
+      >>> # 生成的用例
       >>> from hog import *
       """,
       'teardown': '',

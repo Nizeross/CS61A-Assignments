@@ -6,7 +6,7 @@ from .canvas import Canvas
 
 def turtle_method(func):
     """
-    Marks the given method as one that needs to be placed in global.
+    将给定方法标记为需要放入全局命名空间的方法。
     """
     func.is_turtle_method = True
     return func
@@ -46,7 +46,7 @@ formode = make_formode()
 
 class BaseTurtle:
     """
-    Manages all the basic turtle functionality. The other turtle methods can be expressed in terms of these.
+    管理所有基本的海龟功能。其他海龟方法都可以通过这些功能表达。
     """
     def __init__(self, canvas):
         if not isinstance(canvas, Canvas):
@@ -70,14 +70,14 @@ class BaseTurtle:
         self.__turtle_stretch_len = 1
         self.__pixel_size = 1
         self.__mode = Mode.STANDARD
-        self.__speed = 3 # default from the normal turtle module
+        self.__speed = 3 # 普通 turtle 模块的默认值
 
         self.__update_turtle()
 
     @turtle_method
     def goto(self, x, y):
         """
-        Go to the given position (X, Y).
+        移动到给定位置 (X, Y)。
         """
         if self.__pen_down:
             self.__canvas.draw_line(self.__current_pos, Position(x, y), self.__pen_color, self.__line_width)
@@ -91,7 +91,7 @@ class BaseTurtle:
     @turtle_method
     def forward(self, amount):
         """
-        Move forward the given amount.
+        向前移动给定距离。
         """
         self.goto(self.xcor() + amount * cos(self.__theta), self.ycor() + amount * sin(self.__theta))
     fd = forward
@@ -99,7 +99,7 @@ class BaseTurtle:
     @turtle_method
     def setheading(self, heading):
         """
-        Set the heading to the given value in degrees
+        将朝向设置为给定角度值，单位为度
         """
         self.__theta = self.__to_real_angle(heading)
         self.__update_turtle()
@@ -108,9 +108,7 @@ class BaseTurtle:
     @turtle_method
     def circle(self, radius, extent=None):
         """
-        Draw a circle starting at the given point with the given RADIUS and EXTENT. If EXTENT exists, draw only the
-        first EXTENT degrees of the circle. If RADIUS is positive, draw in the counterclockwise direction.
-        Otherwise, draw in the clockwise direction.
+        从给定点开始，按 RADIUS 和 EXTENT 画圆。若指定 EXTENT，则只画圆的前 EXTENT 度。RADIUS 为正时逆时针绘制，否则顺时针绘制。
         """
         if extent is None:
             extent = self.__degrees
@@ -145,8 +143,7 @@ class BaseTurtle:
     @turtle_method
     def dot(self, size=None):
         """
-        Draw a dot at the current location. If size is not specified, set it to
-            (pensize + 4, pensize * 2)
+        在当前位置画点。若未指定 size，则设为 (pensize + 4, pensize * 2)
         """
         if size is None:
             size = max(self.__line_width + 4, self.__line_width * 2)
@@ -156,7 +153,7 @@ class BaseTurtle:
     @turtle_method
     def pixel(self, x, y, *color):
         """
-        Fill in a square of size pixel_size at (x * pixel_size, y * pixel_size) with the given color.
+        在 (x * pixel_size, y * pixel_size) 处，用给定颜色填充边长为 pixel_size 的正方形。
         """
         d = self.__pixel_size
         self.__canvas.axis_aligned_rectangle(
@@ -174,49 +171,49 @@ class BaseTurtle:
     @turtle_method
     def canvas_width(self):
         """
-        Return the current screen size in pixel units
+        返回当前屏幕尺寸，单位为像素
         """
         return self.__canvas.width // self.__pixel_size
 
     @turtle_method
     def canvas_height(self):
         """
-        Return the current screen size in pixel units
+        返回当前屏幕尺寸，单位为像素
         """
         return self.__canvas.height // self.__pixel_size
 
     @turtle_method
     def xcor(self):
         """
-        Get the current x coordinate
+        获取当前 x 坐标
         """
         return self.__x
 
     @turtle_method
     def ycor(self):
         """
-        Get the current y coordinate
+        获取当前 y 坐标
         """
         return self.__y
 
     @turtle_method
     def heading(self):
         """
-        Get the current heading
+        获取当前朝向
         """
         return self.__from_real_angle(self.__theta)
 
     @turtle_method
     def degrees(self, amount=360):
         """
-        Set the number of degrees in a circle
+        设置一整圈所对应的角度单位数
         """
         self.__degrees = amount
 
     @turtle_method
     def pendown(self):
         """
-        Do draw when moving
+        移动时绘图
         """
         self.__pen_down = True
     pd = down = pendown
@@ -224,7 +221,7 @@ class BaseTurtle:
     @turtle_method
     def penup(self):
         """
-        Do not draw when moving
+        移动时不绘图
         """
         self.__pen_down = False
     pu = up = penup
@@ -232,7 +229,7 @@ class BaseTurtle:
     @turtle_method
     def pensize(self, width=None):
         """
-        Set or get the pen size. If WIDTH is None, get it, otherwise set it.
+        设置或获取画笔粗细。WIDTH 为 None 时获取，否则设置。
         """
         if width is None:
             return self.__line_width
@@ -242,42 +239,42 @@ class BaseTurtle:
     @turtle_method
     def isdown(self):
         """
-        Return if the pen is down or not
+        返回画笔是否落下
         """
         return self.__pen_down
 
     @turtle_method
     def pencolor(self, *color):
         """
-        Set the pen color as COLOR
+        将画笔颜色设为 COLOR
         """
         self.__pen_color = self.__convert_color(*color)
 
     @turtle_method
     def fillcolor(self, *color):
         """
-        Set the fill color as COLOR
+        将填充颜色设为 COLOR
         """
         self.__fill_color = self.__convert_color(*color)
 
     @turtle_method
     def filling(self):
         """
-        Return whether the canvas is filling.
+        返回画布是否处于填充状态。
         """
         return self.__path is not None
 
     @turtle_method
     def begin_fill(self):
         """
-        Begin setting the polygon to fill
+        开始定义待填充的多边形
         """
         self.__path = [LineTo(self.__current_pos)]
 
     @turtle_method
     def end_fill(self):
         """
-        End setting the polygon to fill, and fill it in.
+        结束定义待填充的多边形，并进行填充。
         """
         if self.__path is None:
             return
@@ -287,7 +284,7 @@ class BaseTurtle:
     @turtle_method
     def clear(self):
         """
-        Clear the canvas, but do not move the turtle.
+        清空画布，但不移动海龟。
         """
         self.__canvas.clear()
 
@@ -304,7 +301,7 @@ class BaseTurtle:
     @turtle_method
     def hideturtle(self):
         """
-        Hide the turtle from the canvas.
+        在画布上隐藏海龟。
         """
         self.__turtle_is_shown = False
         self.__update_turtle()
@@ -313,7 +310,7 @@ class BaseTurtle:
     @turtle_method
     def showturtle(self):
         """
-        Show the turtle on the canvas
+        在画布上显示海龟
         """
         self.__turtle_is_shown = True
         self.__update_turtle()
@@ -322,7 +319,7 @@ class BaseTurtle:
     @turtle_method
     def isvisible(self):
         """
-        Return whether the turtle is visible
+        返回海龟是否可见
         """
         return self.__turtle_is_shown
 
@@ -387,13 +384,13 @@ class BaseTurtle:
 
 class Turtle(BaseTurtle):
     """
-    This entire class should only use public methods of the BaseTurtle class.
+    此类只能使用 BaseTurtle 类的公开方法。
     """
 
     @turtle_method
     def backward(self, amount):
         """
-        Move backward the given amount.
+        向后移动给定距离。
         """
         self.forward(-amount)
     bk = back = backward
@@ -406,7 +403,7 @@ class Turtle(BaseTurtle):
     @formode(Mode.LOGO)
     def right(self, amount):
         """
-        Rotate right the given amount.
+        向右旋转给定角度。
         """
         self.setheading(self.heading() + amount)
 
@@ -415,7 +412,7 @@ class Turtle(BaseTurtle):
     @turtle_method
     def left(self, amount):
         """
-        Rotate left the given amount.
+        向左旋转给定角度。
         """
         self.right(-amount)
     lt = left
@@ -423,21 +420,21 @@ class Turtle(BaseTurtle):
     @turtle_method
     def setx(self, x):
         """
-        Move so that the x coordinate is X
+        移动至 x 坐标为 X 的位置
         """
         self.goto(x, self.xcor())
 
     @turtle_method
     def sety(self, y):
         """
-        Move so that the y coordinate is Y
+        移动至 y 坐标为 Y 的位置
         """
         self.goto(self.xcor(), y)
 
     @turtle_method
     def home(self):
         """
-        Set location to (0, 0) and set heading to 0
+        移动至 (0, 0)，并将朝向设置为 0
         """
         self.goto(0, 0)
         self.setheading(0)
@@ -445,7 +442,7 @@ class Turtle(BaseTurtle):
     @turtle_method
     def position(self):
         """
-        Get the current position as a tuple
+        以元组形式获取当前位置
         """
         return self.xcor(), self.ycor()
     pos = position
@@ -453,7 +450,7 @@ class Turtle(BaseTurtle):
     @turtle_method
     def distance(self, other):
         """
-        Get the distance between this and the other location/turtle.
+        获取当前位置与另一位置或海龟之间的距离。
         """
         if isinstance(other, Turtle):
             return self.distance(other.position())
@@ -463,14 +460,14 @@ class Turtle(BaseTurtle):
     @turtle_method
     def radians(self):
         """
-        Set angle units to radians
+        将角度单位设置为弧度
         """
         return self.degrees(2 * pi)
 
     @turtle_method
     def color(self, *color):
         """
-        Set both the pen and fill colors
+        同时设置画笔颜色和填充颜色
         """
         self.pencolor(*color)
         self.fillcolor(*color)

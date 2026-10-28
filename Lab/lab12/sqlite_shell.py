@@ -2,7 +2,7 @@
 
 # Licensed under the MIT license
 
-# A simple SQLite shell that uses the built-in Python adapter.
+# 使用 Python 内置适配器的简易 SQLite 命令行工具。
 
 import codecs
 import io
@@ -50,7 +50,7 @@ ENCODING = 'utf-8'
 if sys.version_info[0] < 3:
 	class NotASurrogateError(Exception): pass
 	def surrogateescape_handler(exc):
-		# Source: https://github.com/PythonCharmers/python-future/blob/aef57391c0cd58bf840dff5e2bc2c8c0f5b0a1b4/src/future/utils/surrogateescape.py
+		# 来源：https://github.com/PythonCharmers/python-future/blob/aef57391c0cd58bf840dff5e2bc2c8c0f5b0a1b4/src/future/utils/surrogateescape.py
 		mystring = exc.object[exc.start:exc.end]
 		try:
 			if isinstance(exc, UnicodeDecodeError):
@@ -103,7 +103,7 @@ def sql_commands(read_line):
 	concat = []
 	while True:
 		if line is None:
-			while True:  # process preprocessor directives
+			while True:  # 处理预处理指令
 				counter += 1
 				not_in_the_middle_of_any_input = not in_string and i == j and all(map(lambda chunk_: len(chunk_) == 0, concat))
 				line = read_line(counter - 1, not_in_the_middle_of_any_input, prev_line)
@@ -127,8 +127,8 @@ def sql_commands(read_line):
 					j += len(delim)
 					if delim == ';':
 						i = j
-						concat.append(line[j : j + len(delim)])    # ensure delimeter is the same type as the string (it may not be due to implicit conversion)
-						# Eat up any further spaces until a newline
+						concat.append(line[j : j + len(delim)])    # 确保分隔符与字符串的类型相同（隐式转换可能使二者类型不同）
+						# 跳过后续空格，直到遇到换行符
 						while j < len(line):
 							delim = line[j:j+1]
 							if not delim.isspace(): break
@@ -152,10 +152,10 @@ def sql_commands(read_line):
 			line = None
 
 class WindowsConsoleIOMixin(object):
-	# Ctrl+C handling with ReadFile() is messed up on Windows starting on Windows 8... here's some background reading:
+	# 从 Windows 8 开始，Windows 上 ReadFile() 对 Ctrl+C 的处理存在问题。相关背景资料如下：
 	#   https://stackoverflow.com/a/43260436
 	#   https://github.com/microsoft/terminal/issues/334
-	# We use ReadConsole when we can, so it doesn't affect us, but it's good info to know regardless.
+	# 我们尽可能使用 ReadConsole，因此不受影响，但了解这些信息仍有帮助。
 	def __init__(self, fd):
 		assert isatty(fd), "file descriptor must refer to a console (note that on Windows, NUL satisfies isatty(), but is not a console)"
 		self.fd = fd
@@ -175,9 +175,9 @@ class WindowsConsoleIOMixin(object):
 		if not success: raise ctypes.WinError(error)
 		ERROR_OPERATION_ABORTED = 995
 		if nr.value == 0 and error == ERROR_OPERATION_ABORTED:
-			# Apparently this can trigger pending KeyboardInterrupts?
+			# 这似乎会触发挂起的 KeyboardInterrupt？
 			time.sleep(1.0 / (1 << 64))
-			raise KeyboardInterrupt()  # If Python doesn't raise it, we can
+			raise KeyboardInterrupt()  # 如果 Python 没有抛出该异常，我们可以主动抛出
 		return nr.value
 	def writewchars(self, buf, n):
 		nw = DWORD(n)
@@ -202,13 +202,13 @@ class WindowsConsoleTextIO(WindowsConsoleIOMixin, io.TextIOBase):
 		if buf is None or len(buf) < ncodeunits:
 			self.buf = buf = ctypes.create_unicode_buffer(ncodeunits)
 		return buf
-	@staticmethod  # Don't let classes override this... they can override the caller instead
+	@staticmethod  # 不要让子类重写此方法；可以重写调用它的方法
 	def do_read(self, nchars, translate_newlines):
 		prenewline = os.linesep[:-1]
 		newline = os.linesep[-1:]
 		empty = os.linesep[:0]
 		if nchars is None or nchars < -1: nchars = -1
-		ncodeunits = nchars if nchars >= 0 else io.DEFAULT_BUFFER_SIZE  # Unit mismatch, but doesn't matter; we'll loop
+		ncodeunits = nchars if nchars >= 0 else io.DEFAULT_BUFFER_SIZE  # 单位不匹配，但不影响，因为这里会循环处理
 		buf = None
 		istart = 0
 		while True:
@@ -220,11 +220,11 @@ class WindowsConsoleTextIO(WindowsConsoleIOMixin, io.TextIOBase):
 			istart = len(self.buffered)
 			chunk = buf[:self.readwcharsinto(buf, ncodeunits)]
 			if translate_newlines: chunk = chunk.replace(prenewline, empty)
-			if chunk.startswith('\x1A'):  # EOF on Windows (Ctrl+Z) at the beginning of a line results in the entire rest of the buffer being discarded
+			if chunk.startswith('\x1A'):  # 在 Windows 上，行首输入文件结束符（Ctrl+Z）会丢弃缓冲区剩余的全部内容
 				iend = istart
 				break
-			# Python 2 and Python 3 behaviors differ on Windows... Python 2's sys.stdin.readline() just deletes the next character if it sees EOF in the middle of a string! I won't emulate that here.
-			self.buffered += chunk  # We're relying on Python's concatenation optimization here... we don't do it ourselves, since we want self.buffered to be valid every iteration in case there is an exception raised
+			# Windows 上 Python 2 和 Python 3 的行为不同：Python 2 的 sys.stdin.readline() 在字符串中间遇到 EOF 时只会删除下一个字符！这里不模拟这种行为。
+			self.buffered += chunk  # 这里依赖 Python 的拼接优化，不自行实现；这样每次迭代时 self.buffered 都保持有效，便于处理异常
 		result = self.buffered[:iend]
 		self.buffered = self.buffered[iend:]
 		return result
@@ -252,14 +252,14 @@ def wrap_windows_console_io(stream, is_output):
 class NonOwningTextIOWrapper(io.TextIOWrapper):
 	def __init__(self, base_textiowrapper, **kwargs):
 		assert isinstance(base_textiowrapper, io.TextIOWrapper)
-		self.base = base_textiowrapper  # must keep a reference to this alive so it doesn't get closed
+		self.base = base_textiowrapper  # 必须保留此对象的引用，以免它被关闭
 		super(NonOwningTextIOWrapper, self).__init__(base_textiowrapper.buffer, **kwargs)
 	def close(self):
 		super(NonOwningTextIOWrapper, self).flush()
 
-def wrap_unicode_stdio(stream, is_writer, encoding):  # The underlying stream must NOT be used directly until the stream returned by this function is disposed of
+def wrap_unicode_stdio(stream, is_writer, encoding):  # 在此函数返回的流被释放之前，绝不能直接使用底层流
 	if isinstance(stream, io.TextIOWrapper):
-		stream.flush()  # Make sure nothing is left in the buffer before we re-wrap it
+		stream.flush()  # 重新包装之前，确保缓冲区中没有残留数据
 		none = object()
 		kwargs = {}
 		for key in ['encoding', 'errors', 'newline', 'line_buffering', 'write_through']:
@@ -307,16 +307,16 @@ class Database(object):
 	def __init__(self, name, *args, **kwargs):
 		self.connection = sqlite3.connect(name, *args, **kwargs)
 		self.cursor = self.connection.cursor()
-		self.name = name  # assign name only AFTER cursor is created
+		self.name = name  # 仅在创建游标之后才给 name 赋值
 
 def isatty(file_or_fd):
 	result = True
-	method = getattr(file_or_fd, 'isatty', None) if not isinstance(file_or_fd, int) else None  # this check is just an optimization
+	method = getattr(file_or_fd, 'isatty', None) if not isinstance(file_or_fd, int) else None  # 此检查仅用于优化
 	if method is not None:
 		try: tty = method()
 		except io.UnsupportedOperation: tty = None
 		result = result and tty is not None and tty
-	method = getattr(file_or_fd, 'fileno', None) if not isinstance(file_or_fd, int) else None  # this check is just an optimization
+	method = getattr(file_or_fd, 'fileno', None) if not isinstance(file_or_fd, int) else None  # 此检查仅用于优化
 	if method is not None:
 		try: fd = method()
 		except io.UnsupportedOperation: fd = None
@@ -327,7 +327,7 @@ def can_call_input_for_stdio(stream):
 	return stream == sys.stdin and sys.version_info[0] >= 3
 
 class StdIOProxy(object):
-	# Maybe useful later: codecs.StreamRecoder(bytesIO, codec.decode, codec.encode, codec.streamwriter, codec.streamreader, errors='surrogateescape')
+	# 以后可能有用：codecs.StreamRecoder(bytesIO, codec.decode, codec.encode, codec.streamwriter, codec.streamreader, errors='surrogateescape')
 	def __init__(self, stdin, stdout, stderr, codec, allow_set_code_page):
 		self.codec = codec
 		streams = (stdin, stdout, stderr)
@@ -365,7 +365,7 @@ class StdIOProxy(object):
 	def _do_readline(stream, allow_set_code_page, *args):
 		new_code_page = CP_UTF8
 		old_code_page = GetConsoleCP() if msvcrt and GetConsoleCP and isatty(stream) else None
-		if old_code_page == new_code_page: old_code_page = None  # Don't change code page if it's already correct...
+		if old_code_page == new_code_page: old_code_page = None  # 如果代码页已经正确，就不要更改
 		if old_code_page is not None:
 			if not SetConsoleCP(new_code_page):
 				old_code_page = None
@@ -379,7 +379,7 @@ class StdIOProxy(object):
 	def _do_write(stream, allow_set_code_page, *args):
 		new_code_page = CP_UTF8
 		old_code_page = GetConsoleOutputCP() if msvcrt and GetConsoleOutputCP and isatty(stream) else None
-		if old_code_page == new_code_page: old_code_page = None  # Don't change code page if it's already correct...
+		if old_code_page == new_code_page: old_code_page = None  # 如果代码页已经正确，就不要更改
 		if old_code_page is not None:
 			if not SetConsoleOutputCP(new_code_page):
 				old_code_page = None
@@ -393,7 +393,7 @@ class StdIOProxy(object):
 		stream = streaminfo[0]
 		can_binary = streaminfo[1]
 		allow_set_code_page = streaminfo[3]
-		if can_call_input_for_stdio(stream) and not can_binary:  # input() can't work with binary data
+		if can_call_input_for_stdio(stream) and not can_binary:  # input() 无法处理二进制数据
 			result = self._coerce(streaminfo, codec, "")
 			try:
 				result = input(*((self._coerce(streaminfo, codec, prompt),) if prompt is not None else ()))
@@ -427,8 +427,8 @@ class StdIOProxy(object):
 	def error(self, *args, **kwargs): kwargs.setdefault('end', None); return self._writeln(self.streaminfos[2], self.codec, *args, **kwargs)
 	def errorln(self, *args, **kwargs): return self._writeln(self.streaminfos[2], self.codec, *args, **kwargs)
 
-class bytes_comparable_with_unicode(bytes):  # For Python 2/3 compatibility, to allow implicit conversion between strings and bytes when it is safe. (Used for strings like literals which we know be safe.)
-	codec = codecs.lookup('ascii')  # MUST be a safe encoding
+class bytes_comparable_with_unicode(bytes):  # 为兼容 Python 2/3，在安全的情况下允许字符串与字节串之间进行隐式转换。（用于已知安全的字面量等字符串。）
+	codec = codecs.lookup('ascii')  # 必须使用安全的编码
 	@classmethod
 	def coerce(cls, other, for_output=False):
 		return cls.codec.encode(other)[0] if not isinstance(other, bytes) else bytes_comparable_with_unicode(other) if for_output else other
@@ -436,7 +436,7 @@ class bytes_comparable_with_unicode(bytes):  # For Python 2/3 compatibility, to 
 	def translate_if_bytes(cls, value):
 		if value is not None and isinstance(value, bytes): value = cls(value)
 		return value
-	def __hash__(self): return super(bytes_comparable_with_unicode, self).__hash__()  # To avoid warning
+	def __hash__(self): return super(bytes_comparable_with_unicode, self).__hash__()  # 避免警告
 	def __eq__(self, other): return super(bytes_comparable_with_unicode, self).__eq__(self.coerce(other))
 	def __ne__(self, other): return super(bytes_comparable_with_unicode, self).__ne__(self.coerce(other))
 	def __lt__(self, other): return super(bytes_comparable_with_unicode, self).__lt__(self.coerce(other))
@@ -462,8 +462,8 @@ def wrap_bytes_comparable_with_unicode_readline(readline):
 		return line
 	return callback
 
-def main(program, *args, **kwargs):  # **kwargs = dict(stdin=file, stdout=file, stderr=file); useful for callers who import this module
-	import argparse  # slow import (compiles regexes etc.), so don't import it until needed
+def main(program, *args, **kwargs):  # **kwargs = dict(stdin=file, stdout=file, stderr=file)；供导入此模块的调用方使用
+	import argparse  # 导入较慢（需要编译正则表达式等），因此在需要时才导入
 	argparser = argparse.ArgumentParser(
 		prog=os.path.basename(program),
 		usage=None,
@@ -496,12 +496,12 @@ def main(program, *args, **kwargs):  # **kwargs = dict(stdin=file, stdout=file, 
 		stdin = wrap_windows_console_io(stdin, False)
 		stdout = wrap_windows_console_io(stdout, True)
 		stderr = wrap_windows_console_io(stderr, True)
-	allow_set_code_page = sys.version_info[0] < 3 and False  # This is only necessary on Python 2 if we use the default I/O functions instead of bypassing to ReadConsole()/WriteConsole()
+	allow_set_code_page = sys.version_info[0] < 3 and False  # 仅当 Python 2 使用默认输入输出函数，而没有直接调用 ReadConsole()/WriteConsole() 时才需要这样处理
 	stdio = StdIOProxy(stdin, stdout, stderr, codec, allow_set_code_page)
 	db = None
 	no_args = len(args) == 0
 	init_sql = parsed_args.sql
-	is_nonpipe_input = stdin.isatty()  # NOT the same thing as TTY! (NUL and /dev/null are the difference)
+	is_nonpipe_input = stdin.isatty()  # 这与 TTY 不同！（区别在于 NUL 和 /dev/null）
 	init_show_prompt = not parsed_args.batch and is_nonpipe_input
 	if not parsed_args.batch and isatty(stdin) and (parsed_args.readline == "true" or __name__ == '__main__') and parsed_args.readline != "false":
 		try:
@@ -517,7 +517,7 @@ def main(program, *args, **kwargs):  # **kwargs = dict(stdin=file, stdout=file, 
 		db = Database(filename, isolation_level=None)
 	def exec_script(db, filename, ignore_io_errors):
 		try:
-			with io.open(filename, 'r', encoding=codec.name) as f:  # Assume .sql files are text -- any binary data inside them should be X'' encoded, not embedded directly
+			with io.open(filename, 'r', encoding=codec.name) as f:  # 假定 .sql 文件是文本；其中的二进制数据应采用 X'' 编码，而不是直接嵌入
 				for command in sql_commands(wrap_bytes_comparable_with_unicode_readline(lambda *args: (lambda s: (s) or None)(f.readline()))):
 					result = exec_command(db, command, False and ignore_io_errors)
 					if result is not None:
@@ -634,7 +634,7 @@ def main(program, *args, **kwargs):  # **kwargs = dict(stdin=file, stdout=file, 
 					line = stdio.inputln("".join(to_write))
 				except KeyboardInterrupt:
 					line = ""
-					raise  # just kidding, don't handle it for now...
+					raise  # 暂时不处理这种情况
 			return line
 		for command in sql_commands(wrap_bytes_comparable_with_unicode_readline(read_stdin)):
 			result = exec_command(db, command, True)
@@ -660,7 +660,7 @@ def test_query():
 def cross_test(sqlite_cmdline, codec):
 	(query_bytes, expected_bytes) = test_query()
 	(official_output, official_error) = call_program(sqlite_cmdline, query_bytes)
-	# We can't use os.linesep here since binaries may belong to different platforms (Win32/MinGW vs. MSYS/Cygwin vs. WSL...)
+	# 这里不能使用 os.linesep，因为二进制程序可能属于不同平台（Win32/MinGW、MSYS/Cygwin 或 WSL 等）
 	official_output = official_output.replace(b"\r\n", b"\n")
 	official_error = official_error.replace(b"\r\n", b"\n")
 	if official_output != expected_bytes:

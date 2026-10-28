@@ -6,8 +6,8 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # If nothing would be output by Python, type Nothing
-          >>> # If the code would error, type Error
+          >>> # 如果 Python 不会输出任何内容，输入 Nothing
+          >>> # 如果代码会报错，输入 Error
           >>> s = [6, 7, 8]
           >>> print(s.append(6))
           84065bc2161626528de8ac041e7b4659

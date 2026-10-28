@@ -85,11 +85,11 @@ test = {
           >>> friend.place = place
           >>> bee = Bee(3)
           >>> place.add_insect(bee)
-          >>> container.action(gamestate)  # Container holds a HungryAnt that loves to eat!
+          >>> container.action(gamestate)  # 容器中装着一只喜欢进食的 HungryAnt！
           >>> bee.health
           73b94a1326ae2e803c3421016112207b
           # locked
-          >>> container.can_contain(FireAnt()) # Container already holds another ant!
+          >>> container.can_contain(FireAnt()) # 容器中已经装着另一只蚂蚁！
           03456a09f22295a39ca84d133a26f63d
           # locked
           """,
@@ -100,7 +100,7 @@ test = {
         {
           'code': r"""
           >>> container = ContainerAnt(1)
-          >>> container.action(gamestate) # ContainerAnt does not have an ant contained, should not have any action taken!
+          >>> container.action(gamestate) # ContainerAnt 中没有蚂蚁，不应执行任何行动！
           """,
           'hidden': False,
           'locked': False,

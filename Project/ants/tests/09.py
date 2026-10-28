@@ -28,7 +28,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # Testing TankAnt parameters
+          >>> # 测试 TankAnt 的参数
           >>> TankAnt.food_cost
           50ae32be3e31df6c59633df7fdfb3a72
           # locked
@@ -46,7 +46,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing TankAnt action
+          >>> # 测试 TankAnt 的行动
           >>> tank = TankAnt()
           >>> place = gamestate.places['tunnel_0_1']
           >>> other_place = gamestate.places['tunnel_0_2']
@@ -66,7 +66,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing TankAnt container methods
+          >>> # 测试 TankAnt 的容器方法
           >>> tank = TankAnt()
           >>> thrower = ThrowerAnt()
           >>> place = gamestate.places['tunnel_0_1']
@@ -76,7 +76,7 @@ test = {
           True
           >>> bee = Bee(3)
           >>> place.add_insect(bee)
-          >>> tank.action(gamestate)   # Both ants attack bee
+          >>> tank.action(gamestate)   # 两只蚂蚁都攻击蜜蜂
           >>> bee.health
           1
           """,
@@ -101,14 +101,14 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # Testing TankAnt action
+          >>> # 测试 TankAnt 的行动
           >>> tank = TankAnt()
           >>> place = gamestate.places['tunnel_0_1']
           >>> place.add_insect(tank)
-          >>> for _ in range(3):  # Add three bees with 1 health each
+          >>> for _ in range(3):  # 添加三只各有 1 点生命值的蜜蜂
           ...     place.add_insect(Bee(1))
           >>> tank.action(gamestate)
-          >>> len(place.bees)  # Bees removed from places because of TankAnt damage
+          >>> len(place.bees)  # 蜜蜂因 TankAnt 的伤害而被从地点移除
           0
           """,
           'hidden': False,
@@ -117,7 +117,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing TankAnt.damage
+          >>> # 测试 TankAnt.damage
           >>> tank = TankAnt()
           >>> tank.damage = 100
           >>> place = gamestate.places['tunnel_0_1']
@@ -134,11 +134,11 @@ test = {
         },
         {
           'code': r"""
-          >>> # Placement of ants
+          >>> # 放置蚂蚁
           >>> tank = TankAnt()
           >>> harvester = HarvesterAnt()
           >>> place = gamestate.places['tunnel_0_0']
-          >>> # Add tank before harvester
+          >>> # 先添加 tank，再添加 harvester
           >>> place.add_insect(tank)
           >>> place.add_insect(harvester)
           >>> gamestate.food = 0
@@ -170,11 +170,11 @@ test = {
         },
         {
           'code': r"""
-          >>> # Placement of ants
+          >>> # 放置蚂蚁
           >>> tank = TankAnt()
           >>> harvester = HarvesterAnt()
           >>> place = gamestate.places['tunnel_0_0']
-          >>> # Add harvester before tank
+          >>> # 先添加 harvester，再添加 tank
           >>> place.add_insect(harvester)
           >>> place.add_insect(tank)
           >>> gamestate.food = 0
@@ -206,7 +206,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Removing ants
+          >>> # 移除蚂蚁
           >>> tank = TankAnt()
           >>> test_ant = Ant()
           >>> place = Place('Test')
@@ -232,7 +232,7 @@ test = {
           >>> tank = TankAnt()
           >>> place = Place('Test')
           >>> place.add_insect(tank)
-          >>> tank.action(gamestate) # Action without ant_contained should not error
+          >>> tank.action(gamestate) # 没有 ant_contained 时，执行行动不应报错
           """,
           'hidden': False,
           'locked': False,
@@ -240,7 +240,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # test proper call to zero-health callback
+          >>> # 测试是否正确调用生命值归零时的回调函数
           >>> original_zero_health_callback = Insect.zero_health_callback
           >>> Insect.zero_health_callback = lambda x: print("insect died")
           >>> place = gamestate.places["tunnel_0_0"]
@@ -253,7 +253,7 @@ test = {
           >>> bee.action(gamestate)
           >>> bee.action(gamestate)
           insect died
-          >>> bee.action(gamestate) # if you fail this test you probably didn't correctly call Ant.reduce_health or Insect.reduce_health
+          >>> bee.action(gamestate) # 如果此测试失败，可能是没有正确调用 Ant.reduce_health 或 Insect.reduce_health
           insect died
           >>> Insect.zero_health_callback = original_zero_health_callback
           """,
@@ -289,9 +289,9 @@ test = {
         {
           'code': r"""
           >>> from ants import *
-          >>> # Abstraction tests
+          >>> # 抽象测试
           >>> original = Ant.__init__
-          >>> Ant.__init__ = lambda self, health: print("init") #If this errors, you are not calling the parent constructor correctly.
+          >>> Ant.__init__ = lambda self, health: print("init") #如果报错，说明没有正确调用父类构造函数。
           >>> tank = TankAnt()
           init
           >>> Ant.__init__ = original

@@ -12,7 +12,7 @@ test = {
           (lambda (x) (* x x))
           scm> (square 21)
           441
-          scm> square ; check to make sure lambda body hasn't changed
+          scm> square ; 检查 lambda 的过程体是否保持不变
           (lambda (x) (* x x))
           scm> (define square (lambda (x) (* x x)))
           square
@@ -25,7 +25,7 @@ test = {
         },
         {
           'code': r"""
-          scm> ((lambda (x) (list x (list (quote quote) x))) (quote (lambda (x) (list x (list (quote quote) x))))) ; if you're failing this test case and have checked your implementation of Q9, you may want to check your Q5 solution
+          scm> ((lambda (x) (list x (list (quote quote) x))) (quote (lambda (x) (list x (list (quote quote) x))))) ; 如果此测试失败，且你已检查过第 9 题的实现，请检查第 5 题的解答
           ((lambda (x) (list x (list (quote quote) x))) (quote (lambda (x) (list x (list (quote quote) x)))))
           """,
           'hidden': False,
@@ -42,7 +42,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          scm> (define double (lambda (n) (* 2 n))) ; make double a LambdaProcedure that doubles a number
+          scm> (define double (lambda (n) (* 2 n))) ; 将 double 定义为使数字翻倍的 LambdaProcedure
           double
           scm> (double 5)
           10
@@ -102,7 +102,7 @@ test = {
           scm> (define inner (outer 2))
           1e0787dce99b0bae31afaf95cb7dddff
           # locked
-          scm> (inner) ;; which x is accessed? which frame is the parent?
+          scm> (inner) ;; 访问的是哪个 x？哪个环境帧是父帧？
           2b7cdec3904f986982cbd24a0bc12887
           # locked
           """,

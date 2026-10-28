@@ -7,18 +7,18 @@ test = {
         {
           'code': r"""
           >>> expr = read_line('(+ 2 2)')
-          >>> scheme_eval(expr, create_global_frame()) # Type SchemeError if you think this errors
+          >>> scheme_eval(expr, create_global_frame()) # 如果你认为会报错，输入 SchemeError
           46beb7deeeb5e9af1c8d785b12558317
           # locked
-          >>> scheme_eval(Pair('+', Pair(2, Pair(2, nil))), create_global_frame()) # Type SchemeError if you think this errors
+          >>> scheme_eval(Pair('+', Pair(2, Pair(2, nil))), create_global_frame()) # 如果你认为会报错，输入 SchemeError
           46beb7deeeb5e9af1c8d785b12558317
           # locked
           >>> expr = read_line('(+ (+ 2 2) (+ 1 3) (* 1 4))')
-          >>> scheme_eval(expr, create_global_frame()) # Type SchemeError if you think this errors
+          >>> scheme_eval(expr, create_global_frame()) # 如果你认为会报错，输入 SchemeError
           4c5d1a42692bacbca88ab48bbcf75c52
           # locked
           >>> expr = read_line('(yolo)')
-          >>> scheme_eval(expr, create_global_frame()) # Type SchemeError if you think this errors
+          >>> scheme_eval(expr, create_global_frame()) # 如果你认为会报错，输入 SchemeError
           ec908af60f03727428c7ee3f22ec3cd8
           # locked
           """,
@@ -39,10 +39,10 @@ test = {
       'cases': [
         {
           'code': r"""
-          scm> (* (+ 3 2) (+ 1 7)) ; Type SchemeError if you think this errors
+          scm> (* (+ 3 2) (+ 1 7)) ; 如果你认为会报错，输入 SchemeError
           a692eb3d6b9f6889d113635424465221
           # locked
-          scm> (1 2) ; Type SchemeError if you think this errors
+          scm> (1 2) ; 如果你认为会报错，输入 SchemeError
           ec908af60f03727428c7ee3f22ec3cd8
           # locked
           """,
@@ -52,7 +52,7 @@ test = {
         },
         {
           'code': r"""
-          scm> (+ 2 3) ; Type SchemeError if you think this errors
+          scm> (+ 2 3) ; 如果你认为会报错，输入 SchemeError
           5
           scm> (+)
           0
@@ -94,17 +94,17 @@ test = {
         },
         {
           'code': r"""
-          scm> ((print-then-return 6 print) (print-then-return 1 "a")) ; operator should be evaluated before operands
+          scm> ((print-then-return 6 print) (print-then-return 1 "a")) ; 应先对运算符求值，再对操作数求值
           6
           1
           "a"
-          scm> (null? (print 5)) ; operands should only be evaluated once
+          scm> (null? (print 5)) ; 操作数只能求值一次
           5
           #f
-          scm> ((print-then-return 1 +) 1 2)  ; operator should only be evaluated once
+          scm> ((print-then-return 1 +) 1 2)  ; 运算符只能求值一次
           1
           3
-          scm> (+ (print-then-return 1 1) (print-then-return 2 2)) ; operands should be evaluated left to right
+          scm> (+ (print-then-return 1 1) (print-then-return 2 2)) ; 操作数应从左到右求值
           1
           2
           3

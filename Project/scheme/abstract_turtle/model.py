@@ -27,7 +27,7 @@ class Color(namedtuple('Color', ['red', 'green', 'blue'])):
 
     @staticmethod
     def hexcolor(color):
-        if len(color) == 3:  # shorthand hex
+        if len(color) == 3:  # 简写的十六进制颜色
             color = "".join(x * 2 for x in color)
         if len(color) == 6:
             vals = [Color.hexparse(color[i:i+2]) for i in range(0, 6, 2)]
@@ -88,14 +88,14 @@ class Path(ABC):
     @abstractmethod
     def to_points(self, divisions=100):
         """
-        Return an iterable of points corresponding to this path element
+        返回与此路径元素对应的点所组成的可迭代对象
         """
 
     @property
     @abstractmethod
     def json_friendly(self):
         """
-        Converts the given path to a JSON compatible object.
+        将给定路径转换为与 JSON 兼容的对象。
         """
 
 
@@ -111,8 +111,7 @@ class LineTo(Path, namedtuple("LineTo", ["position"])):
 
 class Arc(Path, namedtuple("Arc", ["center", "radius", "start_angle", "end_angle"])):
     """
-    CENTER is the center of the arc
-    START_ANGLE and END_ANGLE are the starting and ending angles of the arc measured in radians CCW from the x-axis
+    CENTER 是圆弧中心。START_ANGLE 和 END_ANGLE 是圆弧的起始角与终止角，以 x 轴为起点，逆时针计量，单位为弧度。
     """
 
     def to_points(self, divisions=100):

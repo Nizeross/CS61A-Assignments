@@ -1,43 +1,41 @@
-"""CS 61A presents Ants Vs. SomeBees."""
+"""CS 61A 出品：蚂蚁大战蜜蜂。"""
 
 import random
 from ucb import main, interact, trace
 from collections import OrderedDict
 
 ################
-# Core Classes #
+# 核心类 #
 ################
 
 
 class Place:
-    """A Place holds insects and has an exit to another Place."""
+    """Place 容纳昆虫，并有一个通向另一个 Place 的出口。"""
     is_hive = False
 
     def __init__(self, name, exit=None):
-        """Create a Place with the given NAME and EXIT.
+        """用给定的 NAME 和 EXIT 创建 Place。
 
-        name -- A string; the name of this Place.
-        exit -- The Place reached by exiting this Place (may be None).
+        name：字符串，此地点的名称。
+        exit：从此地点离开时到达的 Place（可以为 None）。
         """
         self.name = name
         self.exit = exit
-        self.bees = []        # A list of Bees
-        self.ant = None       # An Ant
-        self.entrance = None  # A Place
-        # Phase 1: Add an entrance to the exit
+        self.bees = []        # 蜜蜂列表
+        self.ant = None       # 一只蚂蚁
+        self.entrance = None  # 一个地点
+        # 第一阶段：为出口添加入口
         # BEGIN Problem 2
         "*** YOUR CODE HERE ***"
         # END Problem 2
 
     def add_insect(self, insect):
-        """Asks the insect to add itself to this place. This method exists so
-        that it can be overridden in subclasses.
+        """让昆虫将自身添加到此地点。提供此方法是为了允许子类重写。
         """
         insect.add_to(self)
 
     def remove_insect(self, insect):
-        """Asks the insect to remove itself from this place. This method exists so
-        that it can be overridden in subclasses.
+        """让昆虫将自身从此地点移除。提供此方法是为了允许子类重写。
         """
         insect.remove_from(self)
 
@@ -46,24 +44,23 @@ class Place:
 
 
 class Insect:
-    """An Insect, the base class of Ant and Bee, has health and a Place."""
+    """Insect 是 Ant 和 Bee 的基类，具有生命值 health 和所在地点 Place。"""
 
-    next_id = 0  # Every insect gets a unique id number
+    next_id = 0  # 每只昆虫都有唯一的编号
     damage = 0
-    # ADD CLASS ATTRIBUTES HERE
+    # 在此添加类属性
 
     def __init__(self, health, place=None):
-        """Create an Insect with a health amount and a starting PLACE."""
+        """用给定的生命值和起始地点 PLACE 创建 Insect。"""
         self.health = health
         self.place = place
 
-        # assign a unique ID to every insect
+        # 为每只昆虫分配唯一的 ID
         self.id = Insect.next_id
         Insect.next_id += 1
 
     def reduce_health(self, amount):
-        """Reduce health by AMOUNT, and remove the insect from its place if it
-        has no health remaining.
+        """将生命值减少 AMOUNT；如果生命值耗尽，则将昆虫从所在地点移除。
 
         >>> test_insect = Insect(5)
         >>> test_insect.reduce_health(2)
@@ -76,10 +73,10 @@ class Insect:
             self.place.remove_insect(self)
 
     def action(self, gamestate):
-        """The action performed each turn."""
+        """每回合执行的行动。"""
 
     def zero_health_callback(self):
-        """Called when health reaches 0 or below."""
+        """生命值降至 0 或以下时调用。"""
 
     def add_to(self, place):
         self.place = place
@@ -93,12 +90,12 @@ class Insect:
 
 
 class Ant(Insect):
-    """An Ant occupies a place and does work for the colony."""
+    """Ant 占据一个地点，并为蚁群工作。"""
 
-    implemented = False  # Only implemented Ant classes should be instantiated
+    implemented = False  # 只能实例化已实现的 Ant 类
     food_cost = 0
     is_container = False
-    # ADD CLASS ATTRIBUTES HERE
+    # 在此添加类属性
 
     def __init__(self, health=1):
         super().__init__(health)
@@ -131,23 +128,23 @@ class Ant(Insect):
         Insect.remove_from(self, place)
 
     def double(self):
-        """Double this ants's damage, if it has not already been doubled."""
+        """如果这只蚂蚁的伤害尚未翻倍，则将其伤害翻倍。"""
         # BEGIN Problem 12
         "*** YOUR CODE HERE ***"
         # END Problem 12
 
 
 class HarvesterAnt(Ant):
-    """HarvesterAnt produces 1 additional food per turn for the colony."""
+    """HarvesterAnt 每回合为蚁群额外生产 1 单位食物。"""
 
     name = 'Harvester'
     implemented = True
-    # OVERRIDE CLASS ATTRIBUTES HERE
+    # 在此重写类属性
 
     def action(self, gamestate):
-        """Produce 1 additional food for the colony.
+        """为蚁群额外生产 1 单位食物。
 
-        gamestate -- The GameState, used to access game state information.
+        gamestate：GameState 对象，用于访问游戏状态信息。
         """
         # BEGIN Problem 1
         "*** YOUR CODE HERE ***"
@@ -155,105 +152,102 @@ class HarvesterAnt(Ant):
 
 
 class ThrowerAnt(Ant):
-    """ThrowerAnt throws a leaf each turn at the nearest Bee in its range."""
+    """ThrowerAnt 每回合向射程内最近的 Bee 投掷一片树叶。"""
 
     name = 'Thrower'
     implemented = True
     damage = 1
-    # ADD/OVERRIDE CLASS ATTRIBUTES HERE
+    # 在此添加或重写类属性
 
     def nearest_bee(self):
-        """Return the nearest Bee in a Place (that is not the hive) connected to
-        the ThrowerAnt's Place by following entrances.
+        """沿入口方向查找与 ThrowerAnt 所在地点相连的地点，返回其中最近的 Bee，蜂巢除外。
 
-        This method returns None if there is no such Bee (or none in range).
+        如果没有这样的蜜蜂，或射程内没有蜜蜂，此方法返回 None。
         """
         # BEGIN Problem 3 and 4
-        return random_bee(self.place.bees) # REPLACE THIS LINE
+        return random_bee(self.place.bees) # 替换此行
         # END Problem 3 and 4
 
     def throw_at(self, target):
-        """Throw a leaf at the target Bee, reducing its health."""
+        """向目标 Bee 投掷一片树叶，降低其生命值。"""
         if target is not None:
             target.reduce_health(self.damage)
 
     def action(self, gamestate):
-        """Throw a leaf at the nearest Bee in range."""
+        """向射程内最近的 Bee 投掷一片树叶。"""
         self.throw_at(self.nearest_bee())
 
 
 def random_bee(bees):
-    """Return a random bee from a list of bees, or return None if bees is empty."""
+    """从蜜蜂列表中随机返回一只蜜蜂；如果 bees 为空，返回 None。"""
     assert isinstance(bees, list), \
         "random_bee's argument should be a list but was a %s" % type(bees).__name__
     if bees:
         return random.choice(bees)
 
 ##############
-# Extensions #
+# 扩展功能 #
 ##############
 
 
 class ShortThrower(ThrowerAnt):
-    """A ThrowerAnt that only throws leaves at Bees at most 3 places away."""
+    """只向距离不超过 3 个地点的蜜蜂投掷树叶的 ThrowerAnt。"""
 
     name = 'Short'
     food_cost = 2
-    # OVERRIDE CLASS ATTRIBUTES HERE
+    # 在此重写类属性
     # BEGIN Problem 4
-    implemented = False   # Change to True to view in the GUI
+    implemented = False   # 改为 True 后即可在图形界面中查看
     # END Problem 4
 
 
 class LongThrower(ThrowerAnt):
-    """A ThrowerAnt that only throws leaves at Bees at least 5 places away."""
+    """只向距离至少为 5 个地点的蜜蜂投掷树叶的 ThrowerAnt。"""
 
     name = 'Long'
     food_cost = 2
-    # OVERRIDE CLASS ATTRIBUTES HERE
+    # 在此重写类属性
     # BEGIN Problem 4
-    implemented = False   # Change to True to view in the GUI
+    implemented = False   # 改为 True 后即可在图形界面中查看
     # END Problem 4
 
 
 class FireAnt(Ant):
-    """FireAnt cooks any Bee in its Place when it expires."""
+    """FireAnt 死亡时，会灼伤其所在地点的所有蜜蜂。"""
 
     name = 'Fire'
     damage = 3
     food_cost = 5
-    # OVERRIDE CLASS ATTRIBUTES HERE
+    # 在此重写类属性
     # BEGIN Problem 5
-    implemented = False   # Change to True to view in the GUI
+    implemented = False   # 改为 True 后即可在图形界面中查看
     # END Problem 5
 
     def __init__(self, health=3):
-        """Create an Ant with a HEALTH quantity."""
+        """创建生命值为 HEALTH 的 Ant。"""
         super().__init__(health)
 
     def reduce_health(self, amount):
-        """Reduce health by AMOUNT, and remove the FireAnt from its place if it
-        has no health remaining.
+        """将生命值减少 AMOUNT；如果生命值耗尽，则将 FireAnt 从所在地点移除。
 
-        Make sure to reduce the health of each bee in the current place, and apply
-        the additional damage if the fire ant dies.
+        务必降低当前地点中每只蜜蜂的生命值，并在火蚁死亡时施加额外伤害。
         """
         # BEGIN Problem 5
         "*** YOUR CODE HERE ***"
         # END Problem 5
 
 # BEGIN Problem 6
-# The WallAnt class
+# WallAnt 类
 # END Problem 6
 
 # BEGIN Problem 7
-# The HungryAnt Class
+# HungryAnt 类
 # END Problem 7
 
 
 class ContainerAnt(Ant):
     """
-    ContainerAnt can share a space with other ants by containing them.
+    ContainerAnt 可以通过容纳其他蚂蚁，与它们共享一个地点。
     """
     is_container = True
 
@@ -277,13 +271,13 @@ class ContainerAnt(Ant):
         self.ant_contained = None
 
     def remove_from(self, place):
-        # Special handling for container ants
+        # 对容器蚂蚁进行特殊处理
         if place.ant is self:
-            # Container was removed. Contained ant should remain in the game
+            # 容器已被移除，其中的蚂蚁应继续留在游戏中
             place.ant = place.ant.ant_contained
             Insect.remove_from(self, place)
         else:
-            # default to normal behavior
+            # 默认使用正常行为
             Ant.remove_from(self, place)
 
     def action(self, gamestate):
@@ -293,56 +287,53 @@ class ContainerAnt(Ant):
 
 
 class BodyguardAnt(ContainerAnt):
-    """BodyguardAnt provides protection to other Ants."""
+    """BodyguardAnt 为其他蚂蚁提供保护。"""
 
     name = 'Bodyguard'
     food_cost = 4
-    # OVERRIDE CLASS ATTRIBUTES HERE
+    # 在此重写类属性
     # BEGIN Problem 8c
-    implemented = False   # Change to True to view in the GUI
+    implemented = False   # 改为 True 后即可在图形界面中查看
     # END Problem 8c
 
 # BEGIN Problem 9
-# The TankAnt class
+# TankAnt 类
 # END Problem 9
 
 
 class Water(Place):
-    """Water is a place that can only hold waterproof insects."""
+    """Water 是仅允许防水昆虫存活的地点。"""
 
     def add_insect(self, insect):
-        """Add an Insect to this place. If the insect is not waterproof, reduce
-        its health to 0."""
+        """将 Insect 添加到此地点。如果该昆虫不防水，则将其生命值降至 0。"""
         # BEGIN Problem 10
         "*** YOUR CODE HERE ***"
         # END Problem 10
 
 # BEGIN Problem 11
-# The ScubaThrower class
+# ScubaThrower 类
 # END Problem 11
 
 
 class QueenAnt(ThrowerAnt):
-    """QueenAnt boosts the damage of all ants behind her."""
+    """QueenAnt 提升她身后所有蚂蚁的伤害。"""
 
     name = 'Queen'
     food_cost = 7
-    # OVERRIDE CLASS ATTRIBUTES HERE
+    # 在此重写类属性
     # BEGIN Problem 12
-    implemented = False   # Change to True to view in the GUI
+    implemented = False   # 改为 True 后即可在图形界面中查看
     # END Problem 12
 
     def action(self, gamestate):
-        """A queen ant throws a leaf, but also doubles the damage of ants
-        in her tunnel.
+        """蚁后投掷一片树叶，同时将其隧道中蚂蚁的伤害翻倍。
         """
         # BEGIN Problem 12
         "*** YOUR CODE HERE ***"
         # END Problem 12
 
     def reduce_health(self, amount):
-        """Reduce health by AMOUNT, and if the QueenAnt has no health
-        remaining, signal the end of the game.
+        """将生命值减少 AMOUNT；如果 QueenAnt 的生命值耗尽，则发出游戏结束信号。
         """
         # BEGIN Problem 12
         "*** YOUR CODE HERE ***"
@@ -350,16 +341,16 @@ class QueenAnt(ThrowerAnt):
 
 
 ################
-# Extra Challenge #
+# 额外挑战 #
 ################
 
 class SlowThrower(ThrowerAnt):
-    """ThrowerAnt that causes Slow on Bees."""
+    """使蜜蜂减速的 ThrowerAnt。"""
 
     name = 'Slow'
     food_cost = 6
     # BEGIN Problem EC 1
-    implemented = False   # Change to True to view in the GUI
+    implemented = False   # 改为 True 后即可在图形界面中查看
     # END Problem EC 1
 
     def throw_at(self, target):
@@ -369,12 +360,12 @@ class SlowThrower(ThrowerAnt):
 
 
 class ScaryThrower(ThrowerAnt):
-    """ThrowerAnt that intimidates Bees, making them back away instead of advancing."""
+    """恐吓蜜蜂，使其后退而不是前进的 ThrowerAnt。"""
 
     name = 'Scary'
     food_cost = 6
     # BEGIN Problem EC 2
-    implemented = False   # Change to True to view in the GUI
+    implemented = False   # 改为 True 后即可在图形界面中查看
     # END Problem EC 2
 
     def throw_at(self, target):
@@ -384,14 +375,14 @@ class ScaryThrower(ThrowerAnt):
 
 
 class NinjaAnt(Ant):
-    """NinjaAnt does not block the path and damages all bees in its place."""
+    """NinjaAnt 不阻挡道路，并对所在地点的所有蜜蜂造成伤害。"""
 
     name = 'Ninja'
     damage = 1
     food_cost = 5
-    # OVERRIDE CLASS ATTRIBUTES HERE
+    # 在此重写类属性
     # BEGIN Problem EC 3
-    implemented = False   # Change to True to view in the GUI
+    implemented = False   # 改为 True 后即可在图形界面中查看
     # END Problem EC 3
 
     def action(self, gamestate):
@@ -401,13 +392,13 @@ class NinjaAnt(Ant):
 
 
 class LaserAnt(ThrowerAnt):
-    """ThrowerAnt that damages all Insects standing in its path."""
+    """对其路径上的所有昆虫造成伤害的 ThrowerAnt。"""
 
     name = 'Laser'
     food_cost = 10
-    # OVERRIDE CLASS ATTRIBUTES HERE
+    # 在此重写类属性
     # BEGIN Problem EC 4
-    implemented = False   # Change to True to view in the GUI
+    implemented = False   # 改为 True 后即可在图形界面中查看
     # END Problem EC 4
 
     def __init__(self, health=1):
@@ -434,11 +425,11 @@ class LaserAnt(ThrowerAnt):
 
 
 ########
-# Bees #
+# 蜜蜂 #
 ########
 
 class Bee(Insect):
-    """A Bee moves from place to place, following exits and stinging ants."""
+    """Bee 沿出口在各个地点之间移动，并蜇刺蚂蚁。"""
 
     name = 'Bee'
     damage = 1
@@ -446,26 +437,25 @@ class Bee(Insect):
 
 
     def sting(self, ant):
-        """Attack an ANT, reducing its health by 1."""
+        """攻击 ANT，使其生命值减少 1。"""
         ant.reduce_health(self.damage)
 
     def move_to(self, place):
-        """Move from the Bee's current Place to a new PLACE."""
+        """将蜜蜂从当前地点移动到新的 PLACE。"""
         self.place.remove_insect(self)
         place.add_insect(self)
 
     def blocked(self):
-        """Return True if this Bee cannot advance to the next Place."""
-        # Special handling for NinjaAnt
+        """如果此蜜蜂无法前进到下一个地点，返回 True。"""
+        # 对 NinjaAnt 进行特殊处理
         # BEGIN Problem EC 3
         return self.place.ant is not None
         # END Problem EC 3
 
     def action(self, gamestate):
-        """A Bee's action stings the Ant that blocks its exit if it is blocked,
-        or moves to the exit of its current place otherwise.
+        """蜜蜂行动时，如果出口被蚂蚁挡住，则蜇刺该蚂蚁；否则移动到当前地点的出口。
 
-        gamestate -- The GameState, used to access game state information.
+        gamestate：GameState 对象，用于访问游戏状态信息。
         """
         destination = self.place.exit
 
@@ -485,8 +475,7 @@ class Bee(Insect):
 
     def scare(self, length):
         """
-        If this Bee has not been scared before, cause it to attempt to
-        go backwards LENGTH times.
+        如果这只蜜蜂之前未被恐吓过，则使其尝试后退 LENGTH 次。
         """
         # BEGIN Problem EC 2
         "*** YOUR CODE HERE ***"
@@ -494,13 +483,13 @@ class Bee(Insect):
 
 
 class Wasp(Bee):
-    """Class of Bee that has higher damage."""
+    """伤害更高的 Bee 类。"""
     name = 'Wasp'
     damage = 2
 
 
 class Boss(Wasp):
-    """The leader of the bees. Damage to the boss by any attack is capped.
+    """蜜蜂首领。每次攻击对首领造成的伤害都有上限。
     """
     name = 'Boss'
     damage_cap = 8
@@ -510,9 +499,9 @@ class Boss(Wasp):
 
 
 class Hive(Place):
-    """The Place from which the Bees launch their assault.
+    """蜜蜂发起进攻的地点。
 
-    assault_plan -- An AssaultPlan; when & where bees enter the colony.
+    assault_plan：AssaultPlan 对象，指定蜜蜂何时、从何处进入蚁群。
     """
     is_hive = True
 
@@ -522,7 +511,7 @@ class Hive(Place):
         self.bees = []
         for bee in assault_plan.all_bees():
             self.add_insect(bee)
-        # The following attributes are always None for a Hive
+        # 对于 Hive，以下属性始终为 None
         self.entrance = None
         self.ant = None
         self.exit = None
@@ -534,27 +523,27 @@ class Hive(Place):
             gamestate.active_bees.append(bee)
 
 ###################
-# Game Components #
+# 游戏组件 #
 ###################
 
 class GameState:
-    """An ant collective that manages global game state and simulates time.
+    """管理全局游戏状态并模拟时间推进的蚁群。
 
-    Attributes:
-    time -- elapsed time
-    food -- the colony's available food total
-    places -- A list of all places in the colony (including a Hive)
-    bee_entrances -- A list of places that bees can enter
+    属性：
+    time：已过去的时间。
+    food：蚁群可用的食物总量。
+    places：蚁群中所有地点的列表（包括 Hive）。
+    bee_entrances：蜜蜂可以进入的地点列表。
     """
 
     def __init__(self, beehive, ant_types, create_places, dimensions, food=2):
-        """Create an GameState for simulating a game.
+        """创建用于模拟游戏的 GameState。
 
-        Arguments:
-        beehive -- a Hive full of bees
-        ant_types -- a list of ant classes
-        create_places -- a function that creates the set of places
-        dimensions -- a pair containing the dimensions of the game layout
+        参数：
+        beehive：装有蜜蜂的 Hive。
+        ant_types：蚂蚁类的列表。
+        create_places：创建地点集合的函数。
+        dimensions：包含游戏地图尺寸的一对数值。
         """
         self.time = 0
         self.food = food
@@ -565,7 +554,7 @@ class GameState:
         self.configure(beehive, create_places)
 
     def configure(self, beehive, create_places):
-        """Configure the places in the colony."""
+        """配置蚁群中的地点。"""
         self.base = AntHomeBase('Ant Home Base')
         self.places = OrderedDict()
         self.bee_entrances = []
@@ -579,32 +568,32 @@ class GameState:
         create_places(self.base, register_place,
                       self.dimensions[0], self.dimensions[1])
 
-    def ants_take_actions(self): # Ask ants to take actions
+    def ants_take_actions(self): # 让蚂蚁执行行动
         for ant in self.ants:
             if ant.health > 0:
                 ant.action(self)
 
-    def bees_take_actions(self, num_bees): # Ask bees to take actions
+    def bees_take_actions(self, num_bees): # 让蜜蜂执行行动
         for bee in self.active_bees[:]:
             if bee.health > 0:
                 bee.action(self)
             if bee.health <= 0:
                 num_bees -= 1
                 self.active_bees.remove(bee)
-        if num_bees == 0: # Check if player won
+        if num_bees == 0: # 检查玩家是否获胜
             raise AntsWinException()
         return num_bees
 
     def simulate(self):
-        """Simulate an attack on the ant colony. This is called by the GUI to play the game."""
+        """模拟对蚁群的进攻。图形界面调用此方法来运行游戏。"""
         num_bees = len(self.bees)
         try:
             while True:
-                self.beehive.strategy(self) # Bees invade from hive
-                yield None # After yielding, players have time to place ants
+                self.beehive.strategy(self) # 蜜蜂从蜂巢入侵
+                yield None # yield 之后，玩家有时间放置蚂蚁
                 self.ants_take_actions()
                 self.time += 1
-                yield None # After yielding, wait for throw leaf animation to play, then ask bees to take action
+                yield None # yield 之后，等待投掷树叶动画播放完毕，再让蜜蜂行动
                 num_bees = self.bees_take_actions(num_bees)
         except AntsWinException:
             print('All bees are vanquished. You win!')
@@ -614,9 +603,9 @@ class GameState:
             yield False
 
     def deploy_ant(self, place_name, ant_type_name):
-        """Place an ant if enough food is available.
+        """如果有足够食物，则放置一只蚂蚁。
 
-        This method is called by the current strategy to deploy ants.
+        当前策略调用此方法来部署蚂蚁。
         """
         ant_type = self.ant_types[ant_type_name]
         if ant_type.food_cost > self.food:
@@ -628,7 +617,7 @@ class GameState:
             return ant
 
     def remove_ant(self, place_name):
-        """Remove an Ant from the game."""
+        """从游戏中移除一只 Ant。"""
         place = self.places[place_name]
         if place.ant is not None:
             place.remove_insect(place.ant)
@@ -651,31 +640,29 @@ class GameState:
 
 
 class AntHomeBase(Place):
-    """AntHomeBase at the end of the tunnel, where the queen normally resides."""
+    """位于隧道末端的 AntHomeBase，蚁后通常居住于此。"""
 
     def add_insect(self, insect):
-        """Add an Insect to this Place.
+        """将一只 Insect 添加到此 Place。
 
-        Can't actually add Ants to a AntHomeBase. However, if a Bee attempts to
-        enter the AntHomeBase, a AntsLoseException is raised, signaling the end
-        of a game.
+        不能真正将蚂蚁添加到 AntHomeBase。但如果蜜蜂尝试进入 AntHomeBase，则抛出 AntsLoseException，表示游戏结束。
         """
         assert isinstance(insect, Bee), 'Cannot add {0} to AntHomeBase'
         raise AntsLoseException()
 
 
 def ants_win():
-    """Signal that Ants win."""
+    """发出蚂蚁获胜的信号。"""
     raise AntsWinException()
 
 
 def ants_lose():
-    """Signal that Ants lose."""
+    """发出蚂蚁失败的信号。"""
     raise AntsLoseException()
 
 
 def ant_types():
-    """Return a list of all implemented Ant classes."""
+    """返回所有已实现的 Ant 类组成的列表。"""
     all_ant_types = []
     new_types = [Ant]
     while new_types:
@@ -685,7 +672,7 @@ def ant_types():
 
 
 def bee_types():
-    """Return a list of all implemented Bee classes."""
+    """返回所有已实现的 Bee 类组成的列表。"""
     all_bee_types = []
     new_types = [Bee]
     while new_types:
@@ -695,27 +682,27 @@ def bee_types():
 
 
 class GameOverException(Exception):
-    """Base game over Exception."""
+    """游戏结束异常的基类。"""
     pass
 
 
 class AntsWinException(GameOverException):
-    """Exception to signal that the ants win."""
+    """表示蚂蚁获胜的异常。"""
     pass
 
 
 class AntsLoseException(GameOverException):
-    """Exception to signal that the ants lose."""
+    """表示蚂蚁失败的异常。"""
     pass
 
 
 ###########
-# Layouts #
+# 地图布局 #
 ###########
 
 
 def wet_layout(queen, register_place, tunnels=3, length=9, moat_frequency=3):
-    """Register a mix of wet and and dry places."""
+    """注册包含水域与陆地的混合地点布局。"""
     for tunnel in range(tunnels):
         exit = queen
         for step in range(length):
@@ -727,29 +714,29 @@ def wet_layout(queen, register_place, tunnels=3, length=9, moat_frequency=3):
 
 
 def dry_layout(queen, register_place, tunnels=3, length=9):
-    """Register dry tunnels."""
+    """注册陆地隧道。"""
     wet_layout(queen, register_place, tunnels, length, 0)
 
 
 #################
-# Assault Plans #
+# 进攻计划 #
 #################
 
 class AssaultPlan(dict):
-    """The Bees' plan of attack for the colony.  Attacks come in timed waves.
+    """蜜蜂进攻蚁群的计划。进攻按定时波次进行。
 
-    An AssaultPlan is a dictionary from times (int) to waves (list of Bees).
+    AssaultPlan 是从时间（int）到进攻波次（Bee 列表）的字典。
 
     >>> AssaultPlan().add_wave(4, 2)
     {4: [Bee(3, None), Bee(3, None)]}
     """
 
     def add_wave(self, bee_type, bee_health, time, count):
-        """Add a wave at time with count Bees that have the specified health."""
+        """在 time 时刻添加一波进攻，包含 count 只具有指定生命值的蜜蜂。"""
         bees = [bee_type(bee_health) for _ in range(count)]
         self.setdefault(time, []).extend(bees)
         return self
 
     def all_bees(self):
-        """Place all Bees in the beehive and return the list of Bees."""
+        """将所有蜜蜂放入蜂巢，并返回蜜蜂列表。"""
         return [bee for wave in self.values() for bee in wave]

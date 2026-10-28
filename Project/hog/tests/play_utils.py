@@ -18,8 +18,8 @@ def trace_play(play, strategy0, strategy1, update, score0, score1, dice, goal, s
         if game_trace:
             prev_total_score = game_trace[-1]["s0_start"] + game_trace[-1]["s1_start"]
             if prev_total_score == my_score + opponent_score:
-                # game is still on last turn since the total number of points
-                # goes up every turn
+                # 游戏仍处于最后一轮，因为总分
+                # 每一轮都会增加
                 return game_trace[-1]["num_dice"]
         current_num_dice = (strategy0, strategy1)[who](my_score, opponent_score)
         current_turn = {
@@ -27,7 +27,7 @@ def trace_play(play, strategy0, strategy1, update, score0, score1, dice, goal, s
             "s1_start": [my_score, opponent_score][1 - who],
             "who": who,
             "num_dice": current_num_dice,
-            "dice_values": [],  # no dice rolled yet
+            "dice_values": [],  # 尚未掷骰子
         }
         game_trace.append(current_turn)
         return current_num_dice
@@ -98,9 +98,9 @@ def random_strat(seed):
     Makes a random strategy from based on the given seed
     """
     def random_strat(score, opponent_score):
-        # Save the state of the random generator, so strategy calls don't
-        # impact dice rolls.
-        # using this because python's hash function is NOT CONSISTENT ACROSS OSs!!!!!!!!!!!!11!!22!!2!
+        # 保存随机数生成器的状态，以免策略调用
+        # 影响掷骰结果。
+        # 使用此方法，因为 Python 的 hash 函数在不同操作系统上不一致！
         conditional_seed = score * 314159265358979 + opponent_score * 27182818284590452353602874713527 + seed * 161803398874989484820
         return run_with_seed(conditional_seed % (2 ** 32), lambda: random.randrange(0, 11))
     return random_strat

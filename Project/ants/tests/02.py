@@ -52,7 +52,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # Simple test for Place
+          >>> # Place 的简单测试
           >>> place0 = Place('place_0')
           >>> print(place0.exit)
           044ef3c0c6fd739b6260fe6f6cae71dd
@@ -74,7 +74,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing if entrances are properly initialized
+          >>> # 测试入口是否正确初始化
           >>> tunnel_len = 9
           >>> len(gamestate.bee_entrances)
           1
@@ -104,7 +104,7 @@ test = {
       >>> from ants import *
       >>> from ants_plans import *
       >>> #
-      >>> # Create a test layout where the gamestate is a single row with 3 tiles
+      >>> # 创建单行、包含 3 个地块的游戏状态作为测试布局
       >>> beehive, layout = Hive(make_test_assault_plan()), dry_layout
       >>> dimensions = (1, 3)
       >>> gamestate = GameState(beehive, ant_types(), layout, dimensions)

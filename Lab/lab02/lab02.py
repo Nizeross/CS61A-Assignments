@@ -1,12 +1,10 @@
 
 def composite_identity(f, g):
     """
-    Return a function with one parameter x that returns True if f(g(x)) is
-    equal to g(f(x)). You can assume the result of g(x) is a valid input for f
-    and vice versa.
+    返回一个只有参数 x 的函数：当 f(g(x)) 等于 g(f(x)) 时返回 True。可以假定 g(x) 的结果是 f 的有效输入，反之亦然。
 
-    >>> add_one = lambda x: x + 1        # adds one to x
-    >>> square = lambda x: x**2          # squares x [returns x^2]
+    >>> add_one = lambda x: x + 1        # 将 x 加一
+    >>> square = lambda x: x**2          # 将 x 平方（返回 x^2）
     >>> b1 = composite_identity(square, add_one)
     >>> b1(0)                            # (0 + 1) ** 2 == 0 ** 2 + 1
     True
@@ -17,14 +15,14 @@ def composite_identity(f, g):
 
 
 def sum_digits(y):
-    """Return the sum of the digits of non-negative integer y."""
+    """返回非负整数 y 的各位数字之和。"""
     total = 0
     while y > 0:
         total, y = total + y % 10, y // 10
     return total
 
 def is_prime(n):
-    """Return whether positive integer n is prime."""
+    """返回正整数 n 是否为质数。"""
     if n == 1:
         return False
     k = 2
@@ -35,10 +33,7 @@ def is_prime(n):
     return True
 
 def count_cond(condition):
-    """Returns a function with one parameter N that counts all the numbers from
-    1 to N that satisfy the two-argument predicate function Condition, where
-    the first argument for Condition is N and the second argument is the
-    number from 1 to N.
+    """返回一个只有参数 N 的函数，用于统计 1 到 N 中满足双参数谓词函数 Condition 的数的个数。调用 Condition 时，第一个参数为 N，第二个参数为 1 到 N 中当前检查的数。
 
     >>> count_fives = count_cond(lambda n, i: sum_digits(n * i) == 5)
     >>> count_fives(10)   # 50 (10 * 5)
@@ -46,7 +41,7 @@ def count_cond(condition):
     >>> count_fives(50)   # 50 (50 * 1), 500 (50 * 10), 1400 (50 * 28), 2300 (50 * 46)
     4
 
-    >>> is_i_prime = lambda n, i: is_prime(i) # need to pass 2-argument function into count_cond
+    >>> is_i_prime = lambda n, i: is_prime(i) # 需要向 count_cond 传入一个接受两个参数的函数
     >>> count_primes = count_cond(is_i_prime)
     >>> count_primes(2)    # 2
     1
@@ -63,7 +58,7 @@ def count_cond(condition):
 
 
 def multiple(a, b):
-    """Return the smallest number n that is a multiple of both a and b.
+    """返回同时是 a 和 b 的倍数的最小数 n。
 
     >>> multiple(3, 4)
     12
@@ -75,7 +70,7 @@ def multiple(a, b):
 
 
 def cycle(f1, f2, f3):
-    """Returns a function that is itself a higher-order function.
+    """返回一个本身也是高阶函数的函数。
 
     >>> def add1(x):
     ...     return x + 1

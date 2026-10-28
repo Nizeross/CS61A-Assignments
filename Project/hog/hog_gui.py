@@ -1,4 +1,4 @@
-"""Web server for the hog GUI."""
+"""Hog 图形界面的 Web 服务器。"""
 import io
 import os
 import logging
@@ -22,7 +22,7 @@ class HogLoggingException(Exception):
 
 @route
 def take_turn(prev_rolls, move_history, goal, game_rules):
-    """Simulate the whole game up to the current turn."""
+    """模拟整局游戏，直到当前回合。"""
     fair_dice = dice.make_fair_dice(6)
     dice_results = []
 
@@ -96,7 +96,7 @@ def strategy(name, scores):
 @route("dice_graphic.svg")
 def draw_dice_graphic(num):
     num = int(num[0])
-    # Either draw student-provided dice or our default dice
+    # 绘制学生提供的骰子图案或默认骰子图案
     if hasattr(hog, "draw_dice"):
         graphic = hog.draw_dice(num)
         return str(graphic)
@@ -104,14 +104,7 @@ def draw_dice_graphic(num):
 
 
 def trace_play(play, strategy0, strategy1, update, score0, score1, dice, goal):
-    """Wraps the user's play function and
-        (1) ensures that strategy0 and strategy1 are called exactly once per turn
-        (2) records the entire game, returning the result as a list of dictionaries,
-            each with keys "s0_start", "s1_start", "who", "num_dice", "dice_values"
-    Returns (s0, s1, trace) where s0, s1 are the return values from play and trace
-        is the trace as specified above.
-    This might seem a bit overcomplicated but it will also used to create the game
-        traces for the fuzz test (when run against the staff solution).
+    """包装用户的 play 函数：（1）确保每回合恰好调用一次 strategy0 和 strategy1；（2）记录整局游戏，将其保存为字典列表，每个字典包含键 "s0_start"、"s1_start"、"who"、"num_dice"、"dice_values"。返回 (s0, s1, trace)，其中 s0 和 s1 是 play 的返回值，trace 是上述记录。这看起来可能有些复杂，但在运行教学团队的参考实现时，也会用它生成模糊测试所需的游戏记录。
     """
     game_trace = []
 
@@ -119,8 +112,8 @@ def trace_play(play, strategy0, strategy1, update, score0, score1, dice, goal):
         if game_trace:
             prev_total_score = game_trace[-1]["s0_start"] + game_trace[-1]["s1_start"]
             if prev_total_score == my_score + opponent_score:
-                # game is still on last turn since the total number of points
-                # goes up every turn
+                # 游戏仍处于最后一轮，因为总分
+                # 每一轮都会增加
                 return game_trace[-1]["num_dice"]
         current_num_dice = (strategy0, strategy1)[who](my_score, opponent_score)
         current_turn = {
@@ -128,7 +121,7 @@ def trace_play(play, strategy0, strategy1, update, score0, score1, dice, goal):
             "s1_start": [my_score, opponent_score][1 - who],
             "who": who,
             "num_dice": current_num_dice,
-            "dice_values": [],  # no dice rolled yet
+            "dice_values": [],  # 尚未掷骰子
         }
         game_trace.append(current_turn)
         return current_num_dice

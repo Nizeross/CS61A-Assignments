@@ -31,19 +31,19 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> True and 1 / 0  # If this errors, just type Error.
+          >>> True and 1 / 0  # 如果报错，输入 Error。
           ab06d135c02ab203238caafbf77976ce
           # locked
-          >>> True or 1 / 0  # If this errors, just type Error.
+          >>> True or 1 / 0  # 如果报错，输入 Error。
           2363e0cf1475978bc3373849c76acf77
           # locked
-          >>> -1 and 1 > 0 # If this errors, just type Error.
+          >>> -1 and 1 > 0 # 如果报错，输入 Error。
           2363e0cf1475978bc3373849c76acf77
           # locked
           >>> -1 or 5
           6b4205ba72f3ab35b0da9ecb25ba19dc
           # locked
-          >>> (1 + 1) and 1  # If this errors, just type Error. If this is blank, just type Nothing.
+          >>> (1 + 1) and 1  # 如果报错，输入 Error。如果没有显示内容，输入 Nothing。
           cf2e1ad2c681425ba709dfa2ee9bde0f
           # locked
           """,

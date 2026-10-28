@@ -83,7 +83,7 @@ def create_multiplayer_server():
             >= MAX_WAIT
             and len(State.queue) >= MIN_PLAYERS
         ):
-            # start game!
+            # 开始游戏！
             import cats_gui
 
             curr_text = cats_gui.request_paragraph()
@@ -109,7 +109,7 @@ def create_multiplayer_server():
     @route
     @server_only
     def set_progress(id, progress):
-        """Record progress message."""
+        """记录进度消息。"""
         State.progress[id].append((progress, time.time()))
         return ""
 
@@ -204,18 +204,18 @@ def create_multiplayer_server():
         if user != challenge_user:
             return
 
-        # frontend may include empty/null words
+        # 前端可能包含空单词或 null 值
         typed = [word for word in typed if word]
 
         accuracy = cats.accuracy(" ".join(typed), " ".join(reference))
         wpm = cats.wpm(" ".join(reference), end_time - start_time)
 
         if wpm < claimed_wpm * CAPTCHA_SLOWDOWN_FACTOR:
-            # too slow!
+            # 速度太慢！
             return {"success": False, "message": "Your captcha was typed too slowly!"}
 
         if accuracy < CAPTCHA_ACCURACY_THRESHOLD:
-            # too inaccurate!
+            # 准确率太低！
             return {"success": False, "message": "You made too many mistakes!"}
 
         return {"success": True, "token": create_wpm_authorization(user, claimed_wpm)}

@@ -57,11 +57,11 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # Container ant added before another ant
+          >>> # 先添加容器蚂蚁，再添加另一只蚂蚁
           >>> container = ContainerAnt(1)
           >>> other_ant = ThrowerAnt()
           >>> place = gamestate.places['tunnel_0_0']
-          >>> place.add_insect(container)  # ContainerAnt in place first
+          >>> place.add_insect(container)  # 先将 ContainerAnt 放入地点
           >>> place.add_insect(other_ant)
           >>> place.ant is other_ant
           False
@@ -71,7 +71,7 @@ test = {
           True
           >>> container.place is place
           True
-          >>> other_ant.place is container.place  # ThrowerAnt should have the same place attribute as ContainerAnt
+          >>> other_ant.place is container.place  # ThrowerAnt 的 place 属性应与 ContainerAnt 相同
           True
           """,
           'hidden': False,
@@ -80,11 +80,11 @@ test = {
         },
         {
           'code': r"""
-          >>> # Any Container Ant can be added after another ant
+          >>> # 任意容器蚂蚁都可以在另一只蚂蚁之后添加
           >>> container = ContainerAnt(1)
           >>> other_ant = ThrowerAnt()
           >>> place = gamestate.places['tunnel_0_0']
-          >>> place.add_insect(other_ant)  # Other ant in place first
+          >>> place.add_insect(other_ant)  # 先将其他蚂蚁放入地点
           >>> place.ant is other_ant
           True
           >>> place.add_insect(container)
@@ -94,7 +94,7 @@ test = {
           True
           >>> container.place is place
           True
-          >>> other_ant.place is container.place  # ThrowerAnt should have the same place attribute as ContainerAnt
+          >>> other_ant.place is container.place  # ThrowerAnt 的 place 属性应与 ContainerAnt 相同
           True
           """,
           'hidden': False,
@@ -103,7 +103,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Only one ant can be added to a container
+          >>> # 一个容器中只能添加一只蚂蚁
           >>> container = ContainerAnt(1)
           >>> a = ThrowerAnt()
           >>> b = ThrowerAnt()
@@ -121,7 +121,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Combination of add and remove
+          >>> # 组合测试添加和移除操作
           >>> container = ContainerAnt(1)
           >>> a = ThrowerAnt()
           >>> b = ThrowerAnt()

@@ -54,18 +54,18 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # If Python displays <function...>, type Function, if it errors type Error, if it displays nothing type Nothing
-          >>> lambda x: x  # A lambda expression with one parameter x
+          >>> # 如果 Python 显示 <function...>，输入 Function；如果报错，输入 Error；如果没有显示内容，输入 Nothing
+          >>> lambda x: x  # 只有一个参数 x 的 lambda 表达式
           4f02258d689b15b516174b381ad2aef8
           # locked
-          >>> a = lambda x: x  # Assigning a lambda function to the name a
+          >>> a = lambda x: x  # 将 lambda 函数赋给名称 a
           >>> a(5)
           d330e4294a4387ed4475ee0e95da5386
           # locked
-          >>> (lambda: 3)()  # Using a lambda expression as an operator in a call exp.
+          >>> (lambda: 3)()  # 在调用表达式中使用 lambda 表达式作为运算符
           0f10194daf41a11a30f4adc80d959f28
           # locked
-          >>> b = lambda x, y: lambda: x + y # Lambdas can return other lambdas!
+          >>> b = lambda x, y: lambda: x + y # lambda 可以返回其他 lambda！
           >>> c = b(8, 4)
           >>> c
           4f02258d689b15b516174b381ad2aef8
@@ -73,7 +73,7 @@ test = {
           >>> c()
           bb673dbcb74b8a503ccca3a123f8ac69
           # locked
-          >>> d = lambda f: f(4)  # They can have functions as arguments as well
+          >>> d = lambda f: f(4)  # 它们也可以接受函数作为参数
           >>> def square(x):
           ...     return x * x
           >>> d(square)
@@ -86,10 +86,10 @@ test = {
         },
         {
           'code': r"""
-          >>> # Try drawing an environment diagram if you get stuck!
+          >>> # 如果卡住了，试着画环境图！
           >>> higher_order_lambda = lambda f: lambda x: f(x)
           >>> g = lambda x: x * x
-          >>> higher_order_lambda(2)(g) # Which argument belongs to which function call?
+          >>> higher_order_lambda(2)(g) # 哪个实参属于哪次函数调用？
           ab06d135c02ab203238caafbf77976ce
           # locked
           >>> higher_order_lambda(g)(2)
@@ -99,14 +99,14 @@ test = {
           >>> call_thrice(lambda y: y + 1)(0)
           0f10194daf41a11a30f4adc80d959f28
           # locked
-          >>> print_lambda = lambda z: print(z) # When is the return expression of a lambda expression executed?
+          >>> print_lambda = lambda z: print(z) # lambda 表达式的返回表达式在什么时候执行？
           >>> print_lambda
           4f02258d689b15b516174b381ad2aef8
           # locked
           >>> one_thousand = print_lambda(1000)
           406c98af0b3aa9a2c9dbd76d898bcda3
           # locked
-          >>> one_thousand # What did the call to print_lambda return? If it displays nothing, write Nothing
+          >>> one_thousand # 调用 print_lambda 返回了什么？如果没有显示内容，输入 Nothing
           358b0ae001277273d8cd480ce5dbfb82
           # locked
           """,

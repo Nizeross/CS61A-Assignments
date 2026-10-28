@@ -6,7 +6,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # Testing status parameters
+          >>> # 测试状态参数
           >>> slow = SlowThrower()
           >>> scary = ScaryThrower()
           >>> SlowThrower.food_cost
@@ -28,7 +28,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing Slow
+          >>> # 测试减速效果
           >>> slow = SlowThrower()
           >>> bee = Bee(3)
           >>> gamestate.places["tunnel_0_0"].add_insect(slow)
@@ -57,22 +57,22 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing Scare
+          >>> # 测试恐吓效果
           >>> scary = ScaryThrower()
           >>> bee = Bee(3)
           >>> gamestate.places["tunnel_0_0"].add_insect(scary)
           >>> gamestate.places["tunnel_0_4"].add_insect(bee)
           >>> scary.action(gamestate)
           >>> bee.action(gamestate)
-          >>> bee.place.name # ScaryThrower should scare for two turns (first turn)
+          >>> bee.place.name # ScaryThrower 应使恐吓持续两回合（第一回合）
           46f9851313dc368f747e69f1670450da
           # locked
           >>> bee.action(gamestate)
-          >>> bee.place.name # ScaryThrower should scare for two turns (second turn)
+          >>> bee.place.name # ScaryThrower 应使恐吓持续两回合（第二回合）
           32a5320f2c5021a9b66582af8b364dc7
           # locked
           >>> bee.action(gamestate)
-          >>> bee.place.name # ScaryThrower effects have worn off
+          >>> bee.place.name # ScaryThrower 的效果已消失
           46f9851313dc368f747e69f1670450da
           # locked
           """,
@@ -82,7 +82,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Scary stings an ant
+          >>> # Scary 蜜蜂蜇刺一只蚂蚁
           >>> scary = ScaryThrower()
           >>> harvester = HarvesterAnt()
           >>> bee = Bee(3)
@@ -91,7 +91,7 @@ test = {
           >>> gamestate.places["tunnel_0_5"].add_insect(harvester)
           >>> scary.action(gamestate)
           >>> bee.action(gamestate)
-          >>> bee.place.name # ScaryThrower should scare for two turns
+          >>> bee.place.name # ScaryThrower 应使恐吓持续两回合
           46f9851313dc368f747e69f1670450da
           # locked
           >>> harvester.health
@@ -108,44 +108,44 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing if statuses stack
+          >>> # 测试状态效果是否可以叠加
           >>> slow = SlowThrower()
           >>> bee = Bee(3)
           >>> slow_place = gamestate.places["tunnel_0_0"]
           >>> bee_place = gamestate.places["tunnel_0_8"]
           >>> slow_place.add_insect(slow)
           >>> bee_place.add_insect(bee)
-          >>> slow.action(gamestate)    # slow bee two times
+          >>> slow.action(gamestate)    # 对蜜蜂施加两次减速
           >>> slow.action(gamestate)
           >>> gamestate.time = 1
-          >>> bee.action(gamestate) # do nothing. There are 5 turns left with the bee slowed.
+          >>> bee.action(gamestate) # 不行动。减速效果剩余 5 回合。
           >>> bee.place.name
           'tunnel_0_8'
           >>> gamestate.time = 2
-          >>> bee.action(gamestate) # moves forward. There are 4 turns left with the bee slowed.
+          >>> bee.action(gamestate) # 向前移动。减速效果剩余 4 回合。
           >>> bee.place.name
           'tunnel_0_7'
           >>> gamestate.time = 3
-          >>> bee.action(gamestate) # do nothing. There are 3 turns left with the bee slowed.
+          >>> bee.action(gamestate) # 不行动。减速效果剩余 3 回合。
           >>> bee.place.name
           'tunnel_0_7'
           >>> gamestate.time = 4
-          >>> bee.action(gamestate) # moves forward. There are 2 turns left with the bee slowed.
+          >>> bee.action(gamestate) # 向前移动。减速效果剩余 2 回合。
           >>> bee.place.name
           'tunnel_0_6'
           >>> gamestate.time = 5
-          >>> bee.action(gamestate) # does nothing. There is 1 turn left with the bee slowed.
+          >>> bee.action(gamestate) # 不行动。减速效果剩余 1 回合。
           >>> bee.place.name
           'tunnel_0_6'
-          >>> gamestate.time = 6      # moves forward. The slow status has now worn off
+          >>> gamestate.time = 6      # 向前移动。减速状态现已消失
           >>> bee.action(gamestate)
           >>> bee.place.name
           'tunnel_0_5'
-          >>> gamestate.time = 7      # slow status has worn off
+          >>> gamestate.time = 7      # 减速状态已消失
           >>> bee.action(gamestate)
           >>> bee.place.name
           'tunnel_0_4'
-          >>> gamestate.time = 8      # slow status has worn off
+          >>> gamestate.time = 8      # 减速状态已消失
           >>> bee.action(gamestate)
           >>> bee.place.name
           'tunnel_0_3'
@@ -156,7 +156,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing multiple scared bees
+          >>> # 测试多只被恐吓的蜜蜂
           >>> scare1 = ScaryThrower()
           >>> scare2 = ScaryThrower()
           >>> bee1 = Bee(3)
@@ -204,7 +204,7 @@ test = {
           >>> bee.place.name
           'tunnel_0_3'
           >>> #
-          >>> # Same bee should not be scared more than once
+          >>> # 同一只蜜蜂不应被恐吓多次
           >>> scare.action(gamestate)
           >>> bee.action(gamestate)
           >>> bee.place.name
@@ -216,50 +216,50 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing long status stack
+          >>> # 测试持续多回合的状态叠加
           >>> scary = ScaryThrower()
           >>> slow = SlowThrower()
           >>> bee = Bee(3)
           >>> gamestate.places["tunnel_0_0"].add_insect(scary)
           >>> gamestate.places["tunnel_0_1"].add_insect(slow)
           >>> gamestate.places["tunnel_0_3"].add_insect(bee)
-          >>> scary.action(gamestate) # scare bee once
+          >>> scary.action(gamestate) # 恐吓蜜蜂一次
           >>> gamestate.time = 0
-          >>> bee.action(gamestate) # scared
+          >>> bee.action(gamestate) # 受到恐吓
           >>> bee.place.name
           'tunnel_0_4'
-          >>> for _ in range(3): # slow bee three times, for a total of 5 turns
+          >>> for _ in range(3): # 对蜜蜂施加三次减速，总共持续 5 回合
           ...    slow.action(gamestate)
           >>> gamestate.time = 1
-          >>> bee.action(gamestate) # scared, but also slowed for 5 more turns, so it doesn't move back yet
+          >>> bee.action(gamestate) # 受到恐吓，同时还有 5 回合减速，因此暂时不后退
           >>> bee.place.name
           'tunnel_0_4'
           >>> gamestate.time = 2
-          >>> bee.action(gamestate) # after this, no longer scared, but still slowed for 4 turns
-          >>> bee.place.name #  it's an even turn, so it can be scared and move backwards
+          >>> bee.action(gamestate) # 此后不再受到恐吓，但仍有 4 回合减速
+          >>> bee.place.name #  这是偶数回合，因此蜜蜂可以因恐吓而后退
           'tunnel_0_5'
           >>> gamestate.time = 3
-          >>> bee.action(gamestate) # slowed for 3 more turns
+          >>> bee.action(gamestate) # 减速还剩 3 回合
           >>> bee.place.name
           'tunnel_0_5'
           >>> gamestate.time = 4
-          >>> bee.action(gamestate) # slowed for 2 more turns
+          >>> bee.action(gamestate) # 减速还剩 2 回合
           >>> bee.place.name
           'tunnel_0_4'
           >>> gamestate.time = 5
-          >>> bee.action(gamestate) # slowed for 1 more turns
+          >>> bee.action(gamestate) # 减速还剩 1 回合
           >>> bee.place.name
           'tunnel_0_4'
           >>> gamestate.time = 6
-          >>> bee.action(gamestate) # no longer slowed
+          >>> bee.action(gamestate) # 不再减速
           >>> bee.place.name
           'tunnel_0_3'
           >>> gamestate.time = 7
-          >>> bee.action(gamestate) # no longer slowed
+          >>> bee.action(gamestate) # 不再减速
           >>> bee.place.name
           'tunnel_0_2'
           >>> gamestate.time = 8
-          >>> bee.action(gamestate) # no longer slowed
+          >>> bee.action(gamestate) # 不再减速
           >>> bee.place.name
           'tunnel_0_1'
           """,
@@ -275,36 +275,36 @@ test = {
           >>> gamestate.places["tunnel_0_0"].add_insect(scary)
           >>> gamestate.places["tunnel_0_1"].add_insect(slow)
           >>> gamestate.places["tunnel_0_3"].add_insect(bee)
-          >>> slow.action(gamestate) # slow bee
-          >>> scary.action(gamestate) # scare bee
+          >>> slow.action(gamestate) # 使蜜蜂减速
+          >>> scary.action(gamestate) # 恐吓蜜蜂
           >>> bee.place.name
           'tunnel_0_3'
           >>> gamestate.time = 0
-          >>> bee.action(gamestate) # scared and slowed - even game time, so *can* back away
+          >>> bee.action(gamestate) # 同时受到恐吓和减速；游戏时间为偶数，因此可以后退
           >>> bee.place.name
           'tunnel_0_4'
           >>> gamestate.time = 1
-          >>> bee.action(gamestate) # scared and slowed - odd game time, so *cannot* back away
+          >>> bee.action(gamestate) # 同时受到恐吓和减速；游戏时间为奇数，因此不能后退
           >>> bee.place.name
           'tunnel_0_4'
           >>> gamestate.time = 2
-          >>> bee.action(gamestate) # scared and slowed - even game time, so *can* back away, no longer scared after this
+          >>> bee.action(gamestate) # 同时受到恐吓和减速；游戏时间为偶数，因此可以后退，此后不再受到恐吓
           >>> bee.place.name
           'tunnel_0_5'
           >>> gamestate.time = 3
-          >>> bee.action(gamestate) # slowed - odd game time, cannot move forward
+          >>> bee.action(gamestate) # 减速中，游戏时间为奇数，不能前进
           >>> bee.place.name
           'tunnel_0_5'
           >>> gamestate.time = 4
-          >>> bee.action(gamestate) # slowed - even game time, moves forward
+          >>> bee.action(gamestate) # 减速中，游戏时间为偶数，可以前进
           >>> bee.place.name
           'tunnel_0_4'
           >>> gamestate.time = 3
-          >>> bee.action(gamestate) # neither scared nor slowed
+          >>> bee.action(gamestate) # 既不受恐吓，也不减速
           >>> bee.place.name
           'tunnel_0_3'
           >>> gamestate.time = 2
-          >>> bee.action(gamestate) # neither scared nor slowed
+          >>> bee.action(gamestate) # 既不受恐吓，也不减速
           >>> bee.place.name
           'tunnel_0_2'
           """,

@@ -66,7 +66,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          scm> (my-filter even? '(1 2 3 4)) ; checks you dont use builtin filter
+          scm> (my-filter even? '(1 2 3 4)) ; 检查是否没有使用内置 filter
           2e37dffeac959437a227984e265073d8
           # locked
           """,

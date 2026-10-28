@@ -71,10 +71,10 @@ test = {
           'code': r"""
           >>> from lab08 import *
           >>> link = Link(5, Link(6, Link(7)))
-          >>> link                  # Look at the __repr__ method of Link
+          >>> link                  # 查看 Link 的 __repr__ 方法
           a353eddb3d8856d2db7bf086df685a3d
           # locked
-          >>> print(link)          # Look at the __str__ method of Link
+          >>> print(link)          # 查看 Link 的 __str__ 方法
           aa98ad5fd41e907f0178362d6e9cf5b7
           # locked
           """,

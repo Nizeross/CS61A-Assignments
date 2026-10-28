@@ -123,32 +123,32 @@ def limited(f):
 
 class Logger:
     def __init__(self):
-        self._out = [[]]  # text printed to console
+        self._out = [[]]  # 打印到控制台的文字
 
-        self.i = 0  # number of "steps" in the substitution tree
-        self.start = 0  # the step of the current expr
+        self.i = 0  # 替换树中的步骤数
+        self.start = 0  # 当前 expr 所处的步骤
 
-        self.f_delta = 0  # the index of the first frame to generate
-        self.frame_lookup: Dict[int, StoredFrame] = {}  # lookup of all previous frames TODO: use weakrefs or something
-        self.active_frames: List[StoredFrame] = []  # new frames to be added to the js frame store
-        self.frame_updates = []  # when the env diagram is updated
+        self.f_delta = 0  # 第一个待生成环境帧的索引
+        self.frame_lookup: Dict[int, StoredFrame] = {}  # 用于查找之前所有环境帧的表。TODO：使用弱引用或类似机制
+        self.active_frames: List[StoredFrame] = []  # 待添加到 JavaScript 环境帧存储中的新环境帧
+        self.frame_updates = []  # 更新环境图时使用
         self.global_frame: StoredFrame = None
 
-        self.dotted = False  # Whether dotted lists are allowed (i.e. fa18 vs sp19 Scheme)
-        self.strict_mode = False  # legacy - used for okpy testing of the interpreter
-        self.fragile = False  # flag for if new assignments prohibited, like in previewing
+        self.dotted = False  # 是否允许点列表（即 2018 秋季版与 2019 春季版 Scheme 的差异）
+        self.strict_mode = False  # 旧版功能：用于通过 okpy 测试解释器
+        self.fragile = False  # 是否禁止新增赋值的标志，例如预览时使用
 
         self.autodraw = True
 
         self.show_thunks = True
 
-        self.node_cache: Dict[str, Node] = {}  # a cache of visual expressions
-        self.export_states = []  # all the nodes generated in the current evaluation, in exported form
-        self.roots = []  # the root node of each expr we are currently evaluating
+        self.node_cache: Dict[str, Node] = {}  # 可视化表达式的缓存
+        self.export_states = []  # 本次求值中生成的所有节点，以导出形式保存
+        self.roots = []  # 当前正在求值的每个 expr 的根节点
 
-        self.eval_stack = []  # the eval stack for use in tracebacks
+        self.eval_stack = []  # 用于错误回溯的求值栈
 
-        self.heap: Heap = Heap()  # heap of all non-atomic objects
+        self.heap: Heap = Heap()  # 存放所有非原子对象的堆
 
         self.graphics_lookup = {}
         self.graphics_open = False
@@ -322,7 +322,7 @@ class StoredFrame:
 
 
 class Heap:
-    HeapKey = Tuple[bool, Union[int, str]]  # the bool means that I'm NOT a pointer!
+    HeapKey = Tuple[bool, Union[int, str]]  # 此布尔值表示我不是指针！
     HeapObject = Union[List['HeapObject'], HeapKey]
 
     def __init__(self):
@@ -358,7 +358,7 @@ class Heap:
             elif isinstance(expr, UndefinedType):
                 return False, "undefined"
             else:
-                # assume the repr method is good enough
+                # 假设 repr 方法已经足够
                 val = [(False, repr(expr))]
             self.curr[expr.id] = val
         return True, expr.id

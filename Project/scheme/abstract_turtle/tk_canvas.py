@@ -12,7 +12,7 @@ from .model import Color, Position, Arc
 
 class TkCanvas(Canvas):
     """
-    Draw the given results on a pillow canvas.
+    将给定结果绘制到 Pillow 画布上。
     """
     def __init__(self, width, height, init_hook=lambda: None):
         super().__init__(width, height)
@@ -96,8 +96,8 @@ class TkCanvas(Canvas):
         self.__ensure_init_hook()
         x, y = bottom_left
         blx, bly = self.tr_pos(bottom_left)
-        # bounding box in pixel space, make this exactly w*h
-        # subtract one to have blx, blx+1, ..., blx+w-1, etc.
+        # 像素空间中的边界框，使其尺寸恰好为 w*h
+        # 减去一以得到 blx、blx+1、……、blx+w-1 等坐标
         tlx, tly = blx + (width - 1), bly - (height - 1)
         turtle.getcanvas().create_rectangle(blx, bly, tlx, tly, fill=self.tr_color(color), width=0)
 
@@ -125,7 +125,7 @@ class TkCanvas(Canvas):
 
     def export(self, path):
         """
-        Exports the current image as a postscript, to the given path
+        将当前图像以 PostScript 格式导出到给定路径
         """
         turtle.getscreen().getcanvas().postscript(file=path)
 

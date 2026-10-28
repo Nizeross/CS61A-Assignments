@@ -67,7 +67,7 @@ test = {
         },
         {
           'code': r"""
-          scm> (define (f 1 2 3) 4) ; check that you have valid formals
+          scm> (define (f 1 2 3) 4) ; 检查形参列表是否合法
           SchemeError
           """,
           'hidden': False,
@@ -89,7 +89,7 @@ test = {
           'f'
           >>> scheme_eval('f', env)
           LambdaProcedure(Pair('x', nil), Pair('x', nil), <Global Frame>)
-          >>> inp == read_line("(define (f x) x)") # Don't mutate the input expression!
+          >>> inp == read_line("(define (f x) x)") # 不要修改输入表达式！
           True
           """,
           'hidden': False,

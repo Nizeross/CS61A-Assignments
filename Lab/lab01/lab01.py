@@ -1,5 +1,5 @@
 def digit(n, k):
-    """Return the digit that is k from the right of n for positive integers n and k.
+    """对于正整数 n 和 k，返回 n 从右往左数第 k 位的数字。
 
     >>> digit(3579, 2)
     5
@@ -12,8 +12,7 @@ def digit(n, k):
 
 
 def middle(a, b, c):
-    """Return the number among a, b, and c that is not the smallest or largest.
-    Assume a, b, and c are all different numbers.
+    """返回 a、b、c 中既不是最大值也不是最小值的数。假设三者互不相同。
 
     >>> middle(3, 5, 4)
     4
@@ -30,7 +29,7 @@ def middle(a, b, c):
 
 
 def falling(n, k):
-    """Compute the falling factorial of n to depth k.
+    """计算 n 的 k 阶下降阶乘。
 
     >>> falling(6, 3)  # 6 * 5 * 4
     120
@@ -46,7 +45,7 @@ def falling(n, k):
 
 def divisible_by_k(n, k):
     """
-    >>> a = divisible_by_k(10, 2)  # 2, 4, 6, 8, and 10 are divisible by 2
+    >>> a = divisible_by_k(10, 2)  # 2、4、6、8 和 10 都能被 2 整除
     2
     4
     6
@@ -54,13 +53,13 @@ def divisible_by_k(n, k):
     10
     >>> a
     5
-    >>> b = divisible_by_k(3, 1)  # 1, 2, and 3 are divisible by 1
+    >>> b = divisible_by_k(3, 1)  # 1、2 和 3 都能被 1 整除
     1
     2
     3
     >>> b
     3
-    >>> c = divisible_by_k(6, 7)  # There are no integers up to 6 divisible by 7
+    >>> c = divisible_by_k(6, 7)  # 不超过 6 的正整数中，没有能被 7 整除的数
     >>> c
     0
     """
@@ -68,7 +67,7 @@ def divisible_by_k(n, k):
 
 
 def sum_digits(y):
-    """Sum all the digits of y.
+    """求 y 的各位数字之和。
 
     >>> sum_digits(10) # 1 + 0 = 1
     1
@@ -76,7 +75,7 @@ def sum_digits(y):
     12
     >>> sum_digits(1234567890)
     45
-    >>> a = sum_digits(123) # make sure that you are using return rather than print
+    >>> a = sum_digits(123) # 确保使用 return，而不是 print
     >>> a
     6
     """
@@ -84,7 +83,7 @@ def sum_digits(y):
 
 
 def double_eights(n):
-    """Return true if n has two eights in a row.
+    """如果 n 中存在两个相邻的数字 8，返回真。
     >>> double_eights(8)
     False
     >>> double_eights(88)

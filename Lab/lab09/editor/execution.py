@@ -24,7 +24,7 @@ def string_exec(strings, out, visualize_tail_calls, global_frame=None):
         from environment import build_global_frame
         log.logger.f_delta -= 1
         global_frame = build_global_frame()
-        log.logger.active_frames.pop(0)  # clear builtin frame
+        log.logger.active_frames.pop(0)  # 清空内置环境帧
         log.logger.f_delta += 1
         log.logger.global_frame = log.logger.frame_lookup[id(global_frame)]
         log.logger.graphics_lookup[id(global_frame)] = Canvas()

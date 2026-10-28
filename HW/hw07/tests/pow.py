@@ -33,7 +33,7 @@ test = {
         },
         {
           'code': r"""
-          scm> (pow 1 100000000000000) ; make sure this doesn't run forever!
+          scm> (pow 1 100000000000000) ; 确保不会无限运行！
           1
           """,
           'hidden': False,

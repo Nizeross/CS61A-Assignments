@@ -1,22 +1,22 @@
 
-# Tree Data Abstraction
+# 树的数据抽象
 
 def tree(label, branches=[]):
-    """Construct a tree with the given label value and a list of branches."""
+    """用给定的标签值和分支列表构造一棵树。"""
     for branch in branches:
         assert is_tree(branch), 'branches must be trees'
     return [label] + list(branches)
 
 def label(tree):
-    """Return the label value of a tree."""
+    """返回树的标签值。"""
     return tree[0]
 
 def branches(tree):
-    """Return the list of branches of the given tree."""
+    """返回给定树的分支列表。"""
     return tree[1:]
 
 def is_tree(tree):
-    """Returns True if the given tree is a tree, and False otherwise."""
+    """如果给定对象是有效的树，返回 True，否则返回 False。"""
     if type(tree) != list or len(tree) < 1:
         return False
     for branch in branches(tree):
@@ -25,14 +25,12 @@ def is_tree(tree):
     return True
 
 def is_leaf(tree):
-    """Returns True if the given tree's list of branches is empty, and False
-    otherwise.
+    """如果给定树的分支列表为空，返回 True，否则返回 False。
     """
     return not branches(tree)
 
 def print_tree(t, indent=0):
-    """Print a representation of this tree in which each node is
-    indented by two spaces times its depth from the root.
+    """打印树的表示形式；每个节点的缩进空格数为它距根节点的深度乘以二。
 
     >>> print_tree(tree(1))
     1
@@ -54,7 +52,7 @@ def print_tree(t, indent=0):
         print_tree(b, indent + 1)
 
 def copy_tree(t):
-    """Returns a copy of t. Only for testing purposes.
+    """返回 t 的副本。仅用于测试。
 
     >>> t = tree(5)
     >>> copy = copy_tree(t)

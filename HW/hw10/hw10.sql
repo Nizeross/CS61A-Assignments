@@ -24,26 +24,26 @@ CREATE TABLE sizes AS
   SELECT "standard"   , 45       , 60;
 
 
--- All dogs with parents ordered by decreasing height of their parent
+-- 所有有父母记录的狗，按其父母的身高降序排列
 CREATE TABLE by_parent_height AS
   SELECT "REPLACE THIS LINE WITH YOUR SOLUTION";
 
 
--- The size of each dog
+-- 每只狗的体型分类
 CREATE TABLE size_of_dogs AS
   SELECT "REPLACE THIS LINE WITH YOUR SOLUTION";
 
 
--- [Optional] Filling out this helper table is recommended
+-- 【可选】建议填写此辅助表
 CREATE TABLE siblings AS
   SELECT "REPLACE THIS LINE WITH YOUR SOLUTION";
 
--- Sentences about siblings that are the same size
+-- 描述体型相同的兄弟姐妹的句子
 CREATE TABLE sentences AS
   SELECT "REPLACE THIS LINE WITH YOUR SOLUTION";
 
 
--- Height range for each fur type where all of the heights differ by no more than 30% from the average height
+-- 对于所有身高与平均身高的偏差均不超过 30% 的毛发类型，求其身高范围
 CREATE TABLE low_variance AS
   SELECT "REPLACE THIS LINE WITH YOUR SOLUTION";
 

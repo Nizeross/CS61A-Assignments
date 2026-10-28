@@ -39,7 +39,7 @@ test = {
           'code': r"""
           >>> dice = make_test_dice(3, 1, 5, 6)
           >>> averaged_dice = make_averaged(dice, 1000)
-          >>> # Average of calling dice 1000 times
+          >>> # 调用 dice 1000 次的平均值
           >>> averaged_dice()
           ae54f398e6c98b4c11197ca202bbf4fb
           # locked
@@ -52,8 +52,8 @@ test = {
           'code': r"""
           >>> dice = make_test_dice(3, 1, 5, 6)
           >>> averaged_roll_dice = make_averaged(roll_dice, 1000)
-          >>> # Average of calling roll_dice 1000 times
-          >>> # Enter a float (e.g. 1.0) instead of an integer
+          >>> # 调用 roll_dice 1000 次的平均值
+          >>> # 输入浮点数（例如 1.0），而非整数
           >>> averaged_roll_dice(2, dice)
           0381158de1e7a3a31f3fcfeb3944e0dc
           # locked

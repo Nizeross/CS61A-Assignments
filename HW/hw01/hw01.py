@@ -1,7 +1,7 @@
 from operator import add, sub
 
 def a_plus_abs_b(a, b):
-    """Return a+abs(b), but without calling abs.
+    """返回 a+abs(b)，但不能调用 abs。
 
     >>> a_plus_abs_b(2, 3)
     5
@@ -13,25 +13,24 @@ def a_plus_abs_b(a, b):
     3
     """
     if b < 0:
-        f = _____
+        f = a - b
     else:
-        f = _____
-    return f(a, b)
+        f = a + b
+    return f
 
 def a_plus_abs_b_syntax_check():
-    """Check that you didn't change the return statement of a_plus_abs_b.
+    """检查你是否没有修改 a_plus_abs_b 的 return 语句。
 
-    >>> # You aren't expected to understand the code of this test.
+    >>> # 你不需要理解此测试的代码。
     >>> import inspect, re
     >>> re.findall(r'^\s*(return .*)', inspect.getsource(a_plus_abs_b), re.M)
     ['return f(a, b)']
     """
-    # You don't need to edit this function. It's just here to check your work.
+    # 你不需要修改此函数。它只是用来检查你的答案。
 
 
 def two_of_three(i, j, k):
-    """Return m*m + n*n, where m and n are the two smallest members of the
-    positive numbers i, j, and k.
+    """返回 m*m + n*n，其中 m 和 n 是正数 i、j、k 中最小的两个数。
 
     >>> two_of_three(1, 2, 3)
     5
@@ -42,35 +41,38 @@ def two_of_three(i, j, k):
     >>> two_of_three(5, 5, 5)
     50
     """
-    return _____
+    return i * i + j * j + k * k - max(i, j, k) ** 2
 
 def two_of_three_syntax_check():
-    """Check that your two_of_three code consists of nothing but a return statement.
+    """检查 two_of_three 的代码是否只有一条 return 语句。
 
-    >>> # You aren't expected to understand the code of this test.
+    >>> # 你不需要理解此测试的代码。
     >>> import inspect, ast
     >>> [type(x).__name__ for x in ast.parse(inspect.getsource(two_of_three)).body[0].body]
     ['Expr', 'Return']
     """
-    # You don't need to edit this function. It's just here to check your work.
+    # 你不需要修改此函数。它只是用来检查你的答案。
 
 
 def largest_factor(n):
-    """Return the largest factor of n that is smaller than n.
+    """返回 n 的小于 n 的最大因数。
 
-    >>> largest_factor(15) # factors are 1, 3, 5
+    >>> largest_factor(15) # 因数为 1、3、5
     5
-    >>> largest_factor(80) # factors are 1, 2, 4, 5, 8, 10, 16, 20, 40
+    >>> largest_factor(80) # 因数为 1、2、4、5、8、10、16、20、40
     40
-    >>> largest_factor(13) # factor is 1 since 13 is prime
+    >>> largest_factor(13) # 因为 13 是质数，所以因数只有 1
     1
     """
     "*** YOUR CODE HERE ***"
+    k = n - 1
+    while n % k != 0:
+        k -= 1
+    return k
 
 
 def hailstone(n):
-    """Print the hailstone sequence starting at n and return its
-    length.
+    """打印从 n 开始的冰雹序列，并返回其长度。
 
     >>> a = hailstone(10)
     10
@@ -88,4 +90,14 @@ def hailstone(n):
     1
     """
     "*** YOUR CODE HERE ***"
+    length = 1
+    print(n)
+    while n != 1:
+        if n % 2 == 0:
+            n = n // 2
+        else:
+            n = n * 3 + 1
+        print(n)
+        length += 1
+    return length
 

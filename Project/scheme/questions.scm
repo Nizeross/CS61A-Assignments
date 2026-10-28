@@ -3,27 +3,27 @@
 (define (cdar x) (cdr (car x)))
 (define (cddr x) (cdr (cdr x)))
 
-;; Problem 15
-;; Returns a list of two-element lists
+;; 第 15 题
+;; 返回由双元素列表组成的列表
 (define (enumerate s)
   ; BEGIN PROBLEM 15
   'replace-this-line
   )
   ; END PROBLEM 15
 
-;; Problem 16
+;; 第 16 题
 
-;; Merge two lists S1 and S2 according to ORDERED? and return
-;; the merged lists.
+;; 按照 ORDERED? 合并两个列表 S1 和 S2，并返回
+;; 合并后的列表。
 (define (merge ordered? s1 s2)
   ; BEGIN PROBLEM 16
   'replace-this-line
   )
   ; END PROBLEM 16
 
-;; Optional Problem 2
+;; 选做题 2
 
-;; Returns a function that checks if an expression is the special form FORM
+;; 返回一个函数，用于检查表达式是否为特殊形式 FORM
 (define (check-special form)
   (lambda (expr) (equal? form (car expr))))
 
@@ -32,7 +32,7 @@
 (define quoted? (check-special 'quote))
 (define let?    (check-special 'let))
 
-;; Converts all let special forms in EXPR into equivalent forms using lambda
+;; 将 EXPR 中所有 let 特殊形式转换为使用 lambda 的等价形式
 (define (let-to-lambda expr)
   (cond ((atom? expr)
          ; BEGIN OPTIONAL PROBLEM 2
@@ -66,7 +66,7 @@
          ; END OPTIONAL PROBLEM 2
          )))
 
-; Some utility functions that you may find useful to implement for let-to-lambda
+; 实现 let-to-lambda 时可能有用的一些辅助函数
 
 (define (zip pairs)
   'replace-this-line)

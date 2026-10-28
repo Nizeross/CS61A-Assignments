@@ -50,7 +50,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # Testing QueenAnt parameters
+          >>> # 测试 QueenAnt 的参数
           >>> QueenAnt.food_cost
           7cd035adf49fc93a635b4e8bb2e28bd4
           # locked
@@ -78,7 +78,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # QueenAnt Placement
+          >>> # 放置 QueenAnt
           >>> queen = ants.QueenAnt()
           >>> front_ant, back_ant = ants.ThrowerAnt(), ants.ThrowerAnt()
           >>> tunnel = [gamestate.places['tunnel_0_{0}'.format(i)]
@@ -87,13 +87,13 @@ test = {
           >>> tunnel[7].add_insect(front_ant)
           >>> tunnel[4].ant is None
           True
-          >>> back_ant.damage           # Ants should not have double damage yet
+          >>> back_ant.damage           # 此时蚂蚁的伤害尚不应翻倍
           1
           >>> front_ant.damage
           1
           >>> tunnel[4].add_insect(queen)
           >>> queen.action(gamestate)
-          >>> back_ant.damage           # Ants behind queen should have double damage
+          >>> back_ant.damage           # 蚁后身后的蚂蚁应具有双倍伤害
           2
           >>> front_ant.damage
           1
@@ -104,12 +104,12 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing damage multiplier
+          >>> # 测试伤害倍增效果
           >>> queen_tunnel, side_tunnel = [[gamestate.places['tunnel_{0}_{1}'.format(i, j)]
           ...         for j in range(9)] for i in range(2)]
-          >>> # layout
-          >>> # queen_tunnel: [Back, Guard/Guarded, Queen, Front, Bee     ]
-          >>> # side_tunnel : [Side,              ,      ,      , Side Bee]
+          >>> # 布局
+          >>> # queen_tunnel：[后方、保镖/被保护者、蚁后、前方、蜜蜂]
+          >>> # side_tunnel：[侧方、空、空、空、侧方蜜蜂]
           >>> queen = ants.QueenAnt()
           >>> back = ants.ThrowerAnt()
           >>> front = ants.ThrowerAnt()
@@ -136,7 +136,7 @@ test = {
           >>> bee.health
           6
           >>> guard.action(gamestate)
-          >>> bee.health # if this is 5 you probably forgot to double the damage of the guard's contents
+          >>> bee.health # 如果结果为 5，你可能忘了将保镖内部蚂蚁的伤害翻倍
           4
           >>> side.action(gamestate)
           >>> side_bee.health
@@ -164,16 +164,16 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> # Testing game over
+          >>> # 测试游戏结束
           >>> queen = ants.QueenAnt()
           >>> tunnel = [gamestate.places['tunnel_0_{0}'.format(i)]
           ...           for i in range(9)]
           >>> tunnel[4].add_insect(queen)
           >>> bee = ants.Bee(3)
-          >>> tunnel[6].add_insect(bee)     # Bee in a different place from the queen
-          >>> bee.action(gamestate)         # Game should not end
-          >>> bee.move_to(tunnel[4])        # Bee moved to place with queen
-          >>> bee.action(gamestate)         # Game should end
+          >>> tunnel[6].add_insect(bee)     # 蜜蜂与蚁后位于不同地点
+          >>> bee.action(gamestate)         # 游戏不应结束
+          >>> bee.move_to(tunnel[4])        # 蜜蜂移动到蚁后所在地点
+          >>> bee.action(gamestate)         # 游戏应结束
           AntsLoseException
           """,
           'hidden': False,
@@ -182,15 +182,15 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing if queen will not crash with no one to double
+          >>> # 测试没有可增强的蚂蚁时蚁后不会报错
           >>> queen = ants.QueenAnt()
           >>> gamestate.places['tunnel_0_2'].add_insect(queen)
           >>> queen.action(gamestate)
-          >>> # Attack a bee
+          >>> # 攻击蜜蜂
           >>> bee = ants.Bee(3)
           >>> gamestate.places['tunnel_0_4'].add_insect(bee)
           >>> queen.action(gamestate)
-          >>> bee.health # Queen should still hit the bee
+          >>> bee.health # 蚁后仍应击中蜜蜂
           2
           """,
           'hidden': False,
@@ -199,7 +199,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Testing QueenAnt action method
+          >>> # 测试 QueenAnt 的 action 方法
           >>> queen = ants.QueenAnt()
           >>> bee = ants.Bee(10)
           >>> ant = ants.ThrowerAnt()
@@ -207,14 +207,14 @@ test = {
           >>> gamestate.places['tunnel_0_1'].add_insect(queen)
           >>> gamestate.places['tunnel_0_4'].add_insect(bee)
           >>> queen.action(gamestate)
-          >>> bee.health   # Queen should damage bee
+          >>> bee.health   # 蚁后应对蜜蜂造成伤害
           9
-          >>> ant.damage  # Queen should double damage
+          >>> ant.damage  # 蚁后应将伤害翻倍
           2
           >>> ant.action(gamestate)
-          >>> bee.health   # If failed, ThrowerAnt has incorrect damage
+          >>> bee.health   # 若失败，则 ThrowerAnt 的伤害不正确
           7
-          >>> queen.health   # Long live the Queen
+          >>> queen.health   # 蚁后万岁
           1
           """,
           'hidden': False,
@@ -223,12 +223,12 @@ test = {
         },
         {
           'code': r"""
-          >>> # Extensive damage doubling tests
+          >>> # 全面测试伤害翻倍
           >>> queen_tunnel, side_tunnel = [[gamestate.places['tunnel_{0}_{1}'.format(i, j)]
           ...         for j in range(9)] for i in range(2)]
           >>> queen = ants.QueenAnt()
           >>> queen_tunnel[7].add_insect(queen)
-          >>> # Turn 0
+          >>> # 第 0 回合
           >>> thrower = ants.ThrowerAnt()
           >>> fire = ants.FireAnt()
           >>> side = ants.ThrowerAnt()
@@ -237,7 +237,7 @@ test = {
           >>> queen_tunnel[1].add_insect(fire)
           >>> queen_tunnel[8].add_insect(front)
           >>> side_tunnel[0].add_insect(side)
-          >>> # layout right now
+          >>> # 当前布局
           >>> # [thrower, fire, , , , , , queen, front]
           >>> # [side   ,     , , , , , ,      ,      ]
           >>> thrower.damage, fire.damage = 101, 102
@@ -247,19 +247,19 @@ test = {
           (202, 204)
           >>> (front.damage, side.damage)
           (104, 105)
-          >>> # Turn 1
+          >>> # 第 1 回合
           >>> tank = ants.TankAnt()
           >>> guard = ants.BodyguardAnt()
           >>> queen_tank = ants.TankAnt()
-          >>> queen_tunnel[6].add_insect(tank)          # Not protecting an ant
-          >>> queen_tunnel[1].add_insect(guard)         # Guarding FireAnt
-          >>> queen_tunnel[7].add_insect(queen_tank)    # Guarding QueenAnt
-          >>> # layout right now
+          >>> queen_tunnel[6].add_insect(tank)          # 没有保护任何蚂蚁
+          >>> queen_tunnel[1].add_insect(guard)         # 保护 FireAnt
+          >>> queen_tunnel[7].add_insect(queen_tank)    # 保护 QueenAnt
+          >>> # 当前布局
           >>> # [thrower, guard/fire, , , , , tank, queen_tank/queen, front]
           >>> # [side   ,           , , , , ,     ,                 ,      ]
           >>> tank.damage, guard.damage, queen_tank.damage = 1001, 1002, 1003
           >>> queen.action(gamestate)
-          >>> # unchanged
+          >>> # 保持不变
           >>> (thrower.damage, fire.damage)
           (202, 204)
           >>> (front.damage, side.damage)
@@ -268,12 +268,12 @@ test = {
           (2002, 2004)
           >>> queen_tank.damage
           1003
-          >>> # Turn 2
+          >>> # 第 2 回合
           >>> thrower1 = ants.ThrowerAnt()
           >>> thrower2 = ants.ThrowerAnt()
-          >>> queen_tunnel[6].add_insect(thrower1)      # Add thrower1 in TankAnt
+          >>> queen_tunnel[6].add_insect(thrower1)      # 将 thrower1 放入 TankAnt
           >>> queen_tunnel[5].add_insect(thrower2)
-          >>> # layout right now
+          >>> # 当前布局
           >>> # [thrower, guard/fire, , , , thrower2, tank/thrower1, queen_tank/queen, front]
           >>> # [side   ,           , , , ,         ,              ,                 ,      ]
           >>> thrower1.damage, thrower2.damage = 10001, 10002
@@ -288,8 +288,8 @@ test = {
           1003
           >>> (thrower1.damage, thrower2.damage)
           (20002, 20004)
-          >>> # Turn 3
-          >>> tank.reduce_health(tank.health)             # Expose thrower1
+          >>> # 第 3 回合
+          >>> tank.reduce_health(tank.health)             # 让 thrower1 失去容器保护
           >>> queen.action(gamestate)
           >>> (thrower.damage, fire.damage)
           (202, 204)
@@ -308,7 +308,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # Adding/Removing QueenAnt with Container
+          >>> # 添加或移除带有容器的 QueenAnt
           >>> place = gamestate.places['tunnel_0_3']
           >>> queen = ants.QueenAnt()
           >>> container = ants.TankAnt()
@@ -324,7 +324,7 @@ test = {
           True
           >>> queen.place is place
           True
-          >>> queen.action(gamestate) # should not error
+          >>> queen.action(gamestate) # 不应报错
           """,
           'hidden': False,
           'locked': False,
@@ -332,7 +332,7 @@ test = {
         },
         {
           'code': r"""
-          >>> # test proper call to zero_health_callback
+          >>> # 测试是否正确调用 zero_health_callback
           >>> original_zero_health_callback = ants.Insect.zero_health_callback
           >>> ants.Insect.zero_health_callback = lambda x: print("insect died")
           >>> real = ants.QueenAnt()

@@ -134,7 +134,7 @@ class Canvas:
     def penup(self):
         self.pen_down = False
 
-    # partially adapted from
+    # 部分改编自
     # https://stackoverflow.com/questions/5736398/how-to-calculate-the-svg-path-for-an-arc-of-a-circle
     @graphics_fragile
     def arc(self, signed_radius: float, degrees: float):
@@ -215,7 +215,7 @@ def make_color(expression: Expression) -> str:
     if not isinstance(expression, String) and not isinstance(expression, Symbol):
         raise OperandDeduceError(f"Expected a String or Symbol, received {expression}.")
     color = expression.value.lower()
-    # regex from https://stackoverflow.com/questions/30241375/python-how-to-check-if-string-is-a-hex-color-code
+    # 正则表达式来源：https://stackoverflow.com/questions/30241375/python-how-to-check-if-string-is-a-hex-color-code
     if color not in COLORS and not re.search(r'^#(?:[0-9a-fA-F]{3}){1,2}$', color):
         raise OperandDeduceError(f"Expected a valid CSS or hex color code, received {expression}.")
     return color

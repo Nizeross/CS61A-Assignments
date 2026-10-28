@@ -66,6 +66,21 @@ python3 ok --local
 
 ## 中文说明
 
+
+### 中文注释说明
+
+本仓库已将 `HW/`、`Lab/`、`Project/` 中课程源码的英文说明性注释和 Python 文档字符串翻译为简体中文，包括四个项目 Hog、Cats、Ants、Scheme，以及课程辅助工具、Scheme 编辑器、海龟绘图和测试用例中的代码注释。原本没有说明性注释的文件保持原样。
+
+- 保留函数名、变量名、文件名和命令，便于与 [CS61A 2024 秋季课程镜像](https://insideempire.github.io/CS61A-Website-Archive/) 对照学习。
+- 保留已有解答与待填写代码；本次翻译不补写习题答案。
+- 保留测试输入、预期输出、选择题内容、锁定答案、运行时提示和错误字符串。
+- `BEGIN/END PROBLEM`、`YOUR CODE HERE`、`locked`、`expect`、`doctest:` 等程序或评分工具使用的标记保留原文；注释中的代码、公式和示意布局也保留。
+- 随附的第三方依赖、压缩或打包的网页资源、许可证及署名信息保留原文；README 原有的中英文说明保留。
+
+术语约定：environment frame 译为“环境帧”，procedure 译为“过程”，pair 译为“点对”，abstraction barrier 译为“抽象屏障”，mutation 根据语境译为“原地修改”，mobile 译为“活动雕塑”，hailstone sequence 译为“冰雹序列”。英文标识符仍按源码书写。
+
+翻译校验已对照修改前的本地文件，确认 Python 可执行代码结构与文档测试输入、预期输出一致；测试文件除注释外的内容，以及 Scheme、SQL、JavaScript、CSS 和 HTML 的非注释内容保持一致。这些校验只验证翻译未改变代码与测试，不代表尚未完成的题目已经通过课程测试。
+
 ### 项目简介
 本仓库包含了 UC Berkeley CS61A 课程的所有 **家庭作业 (hw)**、**实验 (labs)** 和 **项目 (projects)**。通过 Fork 本仓库，您可以创建自己的工作环境，跟踪学习进度并保存作业的解答。同时，您还可以访问我们提供的 [**CS61A 网站镜像**](https://insideempire.github.io/CS61A-Website-Archive/)，用于参考和学习。
 
